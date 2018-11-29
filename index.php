@@ -18,9 +18,62 @@
 	
 	    <!-- Custom styles for this template -->
 	    <link href="./css/resume.min.css" rel="stylesheet" />
+	    
+	    <script type="text/javascript">
+			function getCookie (c_name) {
+				var c_value = document.cookie;
+				var c_start = c_value.indexOf(" " + c_name + "=");
+				if (c_start == -1) {
+					c_start = c_value.indexOf(c_name + "=");
+				}
+				if (c_start == -1) {
+					c_value = null;
+				} else {
+					c_start = c_value.indexOf("=", c_start) + 1;
+					var c_end = c_value.indexOf(";", c_start);
+					if (c_end == -1) {
+						c_end = c_value.length;
+					}
+					c_value = unescape(c_value.substring(c_start, c_end));
+				}
+				return c_value;
+			}
+			 
+			function setCookie (c_name, value, exdays) {
+				var exdate = new Date();
+				exdate.setDate(exdate.getDate() + exdays);
+				var c_value = escape(value) + ((exdays == null) ? "" : "; expires=" + exdate.toUTCString());
+				document.cookie=c_name + "=" + c_value;
+			}
+			 
+			if (getCookie('cookiesaviso') != "1") {
+				document.getElementById("barraaceptacion").style.display = "block";
+			}
+			
+			function PonerCookie () {
+				setCookie('cookiesaviso', '1', 365);
+				document.getElementById("barraaceptacion").style.display = "none";
+			}
+			
+			function formValidate () {
+				if (document.getElementById("politics").checked) {
+					document.getElementById("sendMessageButton").disabled = false;
+				} else {
+					document.getElementById("sendMessageButton").disabled = true;
+				}
+			}
+		</script>
 	</head>
 
 	<body id="page-top" onload="openTab(event, 'bikesTab');">
+		<!--//BLOQUE COOKIES-->
+		<div id="barraaceptacion" style="display: block;">
+			<div class="inner">
+				Solicitamos su permiso para estad&iacute;sticas de su navegaci&oacute;n en esta web, en cumplimiento del RDL 13/2012. Si contin&uacute;a navegando consideramos que acepta el uso de cookies.
+				<a href="javascript:void(0);" class="ok" onclick="PonerCookie();"><b>OK</b></a> | 
+				<a href="./content/politicaCookies.php" target="_blank" class="info">M&aacute;s informaci&oacute;n</a>
+			</div>
+		</div>
 		<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
 	    	<a class="navbar-brand js-scroll-trigger" href="#page-top">
 	        	<span class="d-block d-lg-none">Maroto Bikes</span>
@@ -43,10 +96,10 @@
 						<a class="nav-link js-scroll-trigger" href="#contact">Contacto</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link js-scroll-trigger" href="#skills">Pol&iacute;tica de Cookies</a>
+						<a class="nav-link js-scroll-trigger" href="./content/politicaCookies.php" target="_blank">Pol&iacute;tica de Cookies</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link js-scroll-trigger" href="#interests">Aviso Legal</a>
+						<a class="nav-link js-scroll-trigger" href="./content/avisoLegal.php" target="_blank">Aviso Legal</a>
 					</li>
 				</ul>
 			</div>
@@ -72,9 +125,13 @@
 						<br />
 						925 74 57 59
 						<br />
+						691 58 52 74
+						<br />
 						<a href="mailto:name@email.com">info@marotobikes.com</a>
 					</div>
-					<p class="lead mb-5">I am experienced in leveraging agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition.</p>
+					<p class="lead mb-5">Maroto Bikes somos una empresa ubicada en La Puebla de Montalb&aacute;n con mucha experiencia en el &aacute;mbito de las dos ruedas, ya sean motos o bicicletas.
+						Vendemos todo tipo de bicicletas, asesorando en todos los detalles al comprador. De igual forma reparamos aver&iacute;as y realizamos todo el mantenimiento que pueda necesitar.
+					</p>
 					<div class="social-icons">
 						<!--a href="#">
     							<i class="fab fa-twitter"></i>
@@ -172,8 +229,42 @@
             											</div>
             										</div>
             									</div>
-            									<div id="bikesPages" class="pages">
-            										1, 2, 3
+            									<div id="bikesPages" class="pagination">
+            										<a class="page-item first-child">
+                										<span class="page-link">
+                											&lt;&lt;
+                										</span>
+            										</a>
+            										<a class="page-item">
+                										<span class="page-link">
+                											&lt;
+                										</span>
+            										</a>
+            										<a class="page-item active">
+                										<span class="page-link">
+                											1
+                										</span>
+            										</a>
+            										<a class="page-item">
+                										<span class="page-link">
+                											2
+                										</span>
+            										</a>
+            										<a class="page-item">
+                										<span class="page-link">
+                											3
+                										</span>
+            										</a>
+            										<a class="page-item">
+                										<span class="page-link">
+                											&gt;
+                										</span>
+            										</a>
+            										<a class="page-item last-child">
+                										<span class="page-link">
+                											&gt;&gt;
+                										</span>
+            										</a>
             									</div>
             								</div>
             							</div>
@@ -219,7 +310,7 @@
 						</div>
 					</div>
 	
-    				<div class="resume-item d-flex flex-column flex-md-row mb-5">
+    				<!-- div class="resume-item d-flex flex-column flex-md-row mb-5">
     					<div class="resume-content mr-auto">
     						<h3 class="mb-0">Web Developers</h3>
     						<div class="subheading mb-3">Intelitec Solutions</div>
@@ -228,7 +319,7 @@
     					<div class="resume-date text-md-right">
     						<span class="text-primary">December 2011 - March 2013</span>
     					</div>
-    				</div>
+    				</div-->
  
     			</div>
     		</section>
@@ -304,87 +395,58 @@
 	
 			<hr class="m-0" />
 			-->
-	
-			<section class="resume-section p-3 p-lg-5 d-flex flex-column" id="contact">
-				<div class="my-auto">
-					<h2 class="mb-5">Contacto</h2>
-					<ul class="fa-ul mb-0">
-						<li>
-							<i class="fa-li fa fa-trophy text-warning"></i>
-							Google Analytics Certified Developer
-						</li>
-						<li>
-							<i class="fa-li fa fa-trophy text-warning"></i>
-							Mobile Web Specialist - Google Certification
-						</li>
-						<li>
-							<i class="fa-li fa fa-trophy text-warning"></i>
-							1<sup>st</sup>
-							Place - University of Colorado Boulder - Emerging Tech Competition 2009
-						</li>
-						<li>
-							<i class="fa-li fa fa-trophy text-warning"></i>
-							1<sup>st</sup>
-							Place - University of Colorado Boulder - Adobe Creative Jam 2008 (UI Design Category)
-						</li>
-						<li>
-							<i class="fa-li fa fa-trophy text-warning"></i>
-							2<sup>nd</sup>
-							Place - University of Colorado Boulder - Emerging Tech Competition 2008
-						</li>
-						<li>
-							<i class="fa-li fa fa-trophy text-warning"></i>
-							1<sup>st</sup>
-							Place - James Buchanan High School - Hackathon 2006
-						</li>
-						<li>
-							<i class="fa-li fa fa-trophy text-warning"></i>
-							3<sup>rd</sup>
-							Place - James Buchanan High School - Hackathon 2005
-						</li>
-					</ul>
-				</div>
-				<div class="row">
-				<div class="col-lg-12">
-					<form id="contactForm" name="sentMessage" novalidate>
-						<div class="row">
-							<div class="col-md-6">
-								<div class="form-group">
-									<input class="form-control" id="name" type="text" placeholder="Nombre *" required="required" data-validation-required-message="Por favor, introduzca su nombre." />
-									<p class="help-block text-danger"></p>
-								</div>
-								<div class="form-group">
-									<input class="form-control" id="email" type="email" placeholder="Correo electr&oacute;nico *" required="required" data-validation-required-message="Por favor, introduzca su correo electr&oacute;nico." />
-									<p class="help-block text-danger"></p>
-								</div>
-								<div class="form-group">
-									<input class="form-control" id="phone" type="tel" placeholder="Tel&eacute;fono *" required="required" data-validation-required-message="Por favor, introduzca su tel&eacute;fono." />
-									<p class="help-block text-danger"></p>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<textarea class="form-control" id="message" placeholder="Mensaje *" required data-validation-required-message="Por favor, introduzca su mensaje."></textarea>
-									<p class="help-block text-danger"></p>
-								</div>
-							</div>
-							<div class="col-lg-12 text-center">
-								<label class="checkboxcontainer">
-									<input type="checkbox" name="politics" id="politics" onclick="formValidate();" required data-validation-required-message="La aceptación de los términos es obligatorio para enviar la solicitud" />
-									Antes de enviar su solicitud, lea y acepte nuestra información básica sobre nuestra <a data-toggle="modal" href="#avisoLegal">política de uso de datos</a> *
-								</label>
-							</div>
-							<div class="col-lg-12 text-center">
-								<div id="success"></div>
-								<br />
-								<button id="sendMessageButton" class="btn btn-primary btn-xl text-uppercase" disabled type="submit">Enviar</button>
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>
-			</section>
-	
+			
+    		<!-- Contacto -->
+    		<section class="resume-section p-3 p-lg-5 d-flex flex-column" id="contact">
+    			<div class="myAuto">
+    				<h2 class="mb-5">Contacto</h2>
+    				<p class="lead mb-5">
+    					Introduzca sus datos en el siguiente formulario y nos pondremos en contacto con usted lo antes posible
+    					<br />
+    					<label>(Los campos marcados con asterisco (*) son obligatorios)</label>
+    				</p>
+    			</div>
+    			<div class="row">
+    				<div class="col-lg-12">
+    					<form id="contactForm" name="sentMessage">
+    						<div class="row">
+    							<div class="col-md-6">
+    								<div class="form-group">
+    									<input class="form-control" id="name" type="text" placeholder="Nombre *" required="required" data-validation-required-message="Por favor, introduzca su nombre." />
+    									<p class="help-block text-danger"></p>
+    								</div>
+    								<div class="form-group">
+    									<input class="form-control" id="email" type="email" placeholder="Correo electr&oacute;nico *" required="required" data-validation-required-message="Por favor, introduzca su correo electr&oacute;nico." />
+    									<p class="help-block text-danger"></p>
+    								</div>
+    								<div class="form-group">
+    									<input class="form-control" id="phone" type="tel" placeholder="Tel&eacute;fono *" required="required" data-validation-required-message="Por favor, introduzca su tel&eacute;fono." />
+    									<p class="help-block text-danger"></p>
+    								</div>
+    							</div>
+    							<div class="col-md-6">
+    								<div class="form-group">
+    									<textarea class="form-control" id="message" placeholder="Mensaje *" required data-validation-required-message="Por favor, introduzca su mensaje."></textarea>
+    									<p class="help-block text-danger"></p>
+    								</div>
+    							</div>
+    							<div class="col-lg-12 text-center">
+    								<label class="checkboxcontainer">
+    									<input type="checkbox" name="politics" id="politics" onclick="formValidate();" required data-validation-required-message="La aceptaci&oacute;n de los términos es obligatorio para enviar la solicitud" />
+    									Antes de enviar su solicitud, lea y acepte nuestra informaci&oacute;n b&aacute;sica sobre nuestra <a data-toggle="modal" href="#avisoLegal">pol&iacute;tica de uso de datos</a> *
+    								</label>
+    							</div>
+    							<div class="col-lg-12 text-center">
+    								<div id="success"></div>
+    								<br />
+    								<button id="sendMessageButton" class="btn btn-primary btn-xl text-uppercase" disabled type="submit">Enviar</button>
+    							</div>
+    						</div>
+    					</form>
+    				</div>
+    			</div>
+    		</section>
+		
 		</div>
 	
 	    <!-- Bootstrap core JavaScript -->
