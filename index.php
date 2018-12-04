@@ -10,7 +10,7 @@
 
 	    <!-- Bootstrap core CSS -->
 	    <link href="./vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-	
+	    
 	    <!-- Custom fonts for this template -->
 	    <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet" />
 	    <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet" />
@@ -18,6 +18,7 @@
 	
 	    <!-- Custom styles for this template -->
 	    <link href="./css/resume.min.css" rel="stylesheet" />
+	    <link rel='icon' type='image/x-icon' href='./img/mm_logo.ico' />
 	    
 	    <script type="text/javascript">
 			function getCookie (c_name) {
@@ -151,177 +152,173 @@
 			<section class="resume-section p-3 p-lg-5 d-flex flex-column" id="catalogue">
 				<div class="my-auto">
 					<h2 class="mb-5">Cat&aacute;logo</h2>
-		
-					<div class="resume-item d-flex flex-column flex-md-row mb-5">
-						<div class="resume-content">
-							<div id="tab" class="tab">
-								<button id="bikesTabButton" class="tablinks" onclick="openTab(event, 'bikesTab');">Bicicletas</button>
-								<button id="motosTabButton" class="tablinks" onclick="openTab(event, 'motosTab');">Motos</button>
-								<button id="othersTabButton" class="tablinks" onclick="openTab(event, 'othersTab');">Otros productos</button>
-                            </div>
+				</div>	
+				<div class="resume-item d-flex flex-column flex-md-row mb-5">
+					<div class="resume-content">
+						<div id="tab" class="tab">
+							<button id="bikesTabButton" class="tablinks" onclick="openTab(event, 'bikesTab');">Bicicletas</button>
+							<button id="motosTabButton" class="tablinks" onclick="openTab(event, 'motosTab');">Motos</button>
+							<button id="othersTabButton" class="tablinks" onclick="openTab(event, 'othersTab');">Otros productos</button>
+						</div>
                             
-                            <div class="tabcontainer">
-    							<!-- Tab content -->
+						<div class="tabcontainer">
+    						<!-- Tab content -->
     							
-    							<!-- BICICLETAS -->
-                                <div id="bikesTab" class="tabcontent">
-                                	<span id="closeBikes" onclick="closeTab(event, this);" class="topright">&times;</span>
-    								<h3>Bicicletas</h3>
-    								<form>
-    									<span class="resultsNumber">Total resultados: <span class="blackResultsNumber">2</span></span>
-        								<div id="bikesOrder" class="order">
-        									<select id="bikesSelect" title="Seleccionar orden de resultados">
-        										<option value="ASC">Orden: Ascendente</option>
-        										<option value="DESC">Orden: Descendente</option>
-        									</select>
-        								</div>
-        								<div id="bikesForm" class="formDiv">
-            								<div id="bikesFilter" class="categoriesFilter">
-            									<span id="minFilterBikes" class="topright" onclick="minFilter(event, 'bikesFilters', 'maxFilterBikes', 'minFilterBikes');">-</span>
-            									<span id="maxFilterBikes" class="topright" onclick="maxFilter(event, 'bikesFilters', 'minFilterBikes', 'maxFilterBikes');">+</span>
-            									<span id="bikeFilterTitle" class="filterTitle">Filtros de b&uacute;squeda:</span>
-            									<div id="bikesFilters" class="categoriesFilters">
-                									<span class="parentFilter">
-                										<input id="bikeFilter1" type="checkbox" name="bikes" onchange="markChildren(event, this, 'bikes');" />Bicicletas
-                										<span class="childFilter">
-                    										<input id="bikeFilter1-1" type="checkbox" name="bikes" />Monta&ntilde;a
-                    									</span>
-                    									<span class="childFilter">
-                    										<input id="bikeFilter1-2" type="checkbox" name="bikes" />Carretera
-                    									</span>
-                									</span>
-                									<span class="parentFilter">
-                										<input type="checkbox" />Equipaci&oacute;n
-                									</span>
-                									<span class="parentFilter">
-                										<input type="checkbox" />Accesorios
-                									</span>
-            									</div>
-            								</div>
-            								<div id="bikesResultContainer" class="resultContainer">
-            									<div id="bikesSelectedFilter" class="selectedFilter">
-            										<label>Tus filtros: TODOS</label>
-            									</div>
-            									<div id="bikesResults" class="results">
-            										<div id="result1" class="result">
-            											<div id="image1" class="resultImage">
-            												<img src="./img/products/nyxtralight-acqua-sh-105fsa.jpg" />
-            											</div>
-            											<div id="title1" class="resultTitle">
-            												<span>Nyxtralight Acqua SH 105 R7/FSA</span>
-            											</div>
-            											<div id="subtitle1" class="resultSubtitle">
-            												<span>Resistencia, reactividad y peso</span>
-            											</div>
-            											<div id="price1" class="resultPrice">
-            												<span>650,00&euro;</span>
-            											</div>
-            										</div>
-            										<div id="result2" class="result">
-            											<div id="image2" class="resultImage">
-            												<img src="./img/products/nyxtralight-acqua-sh-105fsa.jpg" />
-            											</div>
-            											<div id="title2" class="resultTitle">
-            												<span>Nyxtralight Acqua SH 105 R7/FSA</span>
-            											</div>
-            											<div id="subtitle2" class="resultSubtitle">
-            												<span>Resistencia, reactividad y peso</span>
-            											</div>
-            										</div>
-            									</div>
-            									<div id="bikesPages" class="pagination">
-            										<a class="page-item first-child">
-                										<span class="page-link">
-                											&lt;&lt;
-                										</span>
-            										</a>
-            										<a class="page-item">
-                										<span class="page-link">
-                											&lt;
-                										</span>
-            										</a>
-            										<a class="page-item active">
-                										<span class="page-link">
-                											1
-                										</span>
-            										</a>
-            										<a class="page-item">
-                										<span class="page-link">
-                											2
-                										</span>
-            										</a>
-            										<a class="page-item">
-                										<span class="page-link">
-                											3
-                										</span>
-            										</a>
-            										<a class="page-item">
-                										<span class="page-link">
-                											&gt;
-                										</span>
-            										</a>
-            										<a class="page-item last-child">
-                										<span class="page-link">
-                											&gt;&gt;
-                										</span>
-            										</a>
-            									</div>
+    						<!-- BICICLETAS -->
+                            <div id="bikesTab" class="tabcontent">
+                             	<span id="closeBikes" onclick="closeTab(event, this);" class="topright">&times;</span>
+    							<h3>Bicicletas</h3>
+    							<form>
+    								<span class="resultsNumber">Total resultados: <span class="blackResultsNumber">2</span></span>
+        							<div id="bikesOrder" class="order">
+        								<select id="bikesSelect" title="Seleccionar orden de resultados">
+        									<option value="ASC">Orden: Ascendente</option>
+        									<option value="DESC">Orden: Descendente</option>
+        								</select>
+        							</div>
+        							<div id="bikesForm" class="formDiv">
+            							<div id="bikesFilter" class="categoriesFilter">
+            								<span id="minFilterBikes" class="topright" onclick="minFilter(event, 'bikesFilters', 'maxFilterBikes', 'minFilterBikes');">-</span>
+            								<span id="maxFilterBikes" class="topright" onclick="maxFilter(event, 'bikesFilters', 'minFilterBikes', 'maxFilterBikes');">+</span>
+            								<span id="bikeFilterTitle" class="filterTitle">Filtros de b&uacute;squeda:</span>
+            								<div id="bikesFilters" class="categoriesFilters">
+                								<span class="parentFilter">
+                									<input id="bikeFilter1" type="checkbox" name="bikes" onchange="markChildren(event, this, 'bikes');" />Bicicletas
+                									<span class="childFilter">
+                    									<input id="bikeFilter1-1" type="checkbox" name="bikes" />Monta&ntilde;a
+                    								</span>
+                    								<span class="childFilter">
+                    									<input id="bikeFilter1-2" type="checkbox" name="bikes" />Carretera
+                    								</span>
+                								</span>
+                								<span class="parentFilter">
+                									<input type="checkbox" />Equipaci&oacute;n
+                								</span>
+                								<span class="parentFilter">
+                									<input type="checkbox" />Accesorios
+                								</span>
             								</div>
             							</div>
-        							</form>
-                                </div>
+            							<div id="bikesResultContainer" class="resultContainer">
+            								<div id="bikesSelectedFilter" class="selectedFilter">
+            									<label>Tus filtros: TODOS</label>
+            								</div>
+            								<div id="bikesResults" class="results">
+            									<div id="result1" class="result">
+            										<div id="image1" class="resultImage">
+            											<img src="./img/products/nyxtralight-acqua-sh-105fsa.jpg" />
+            										</div>
+            										<div id="title1" class="resultTitle">
+            											<span>Nyxtralight Acqua SH 105 R7/FSA</span>
+            										</div>
+            										<div id="subtitle1" class="resultSubtitle">
+            											<span>Resistencia, reactividad y peso</span>
+            										</div>
+            										<div id="price1" class="resultPrice">
+            											<span>650,00&euro;</span>
+            										</div>
+            									</div>
+            									<div id="result2" class="result">
+            										<div id="image2" class="resultImage">
+            											<img src="./img/products/nyxtralight-acqua-sh-105fsa.jpg" />
+            										</div>
+            										<div id="title2" class="resultTitle">
+            											<span>Nyxtralight Acqua SH 105 R7/FSA</span>
+            										</div>
+            										<div id="subtitle2" class="resultSubtitle">
+            											<span>Resistencia, reactividad y peso</span>
+            										</div>
+            									</div>
+            								</div>
+            								<div id="bikesPages" class="pagination">
+            									<a class="page-item first-child">
+                									<span class="page-link">
+                										&lt;&lt;
+                									</span>
+            									</a>
+            									<a class="page-item">
+                									<span class="page-link">
+                										&lt;
+                									</span>
+            									</a>
+            									<a class="page-item active">
+                									<span class="page-link">
+                										1
+                									</span>
+            									</a>
+            									<a class="page-item">
+                									<span class="page-link">
+                										2
+                									</span>
+            									</a>
+            									<a class="page-item">
+                									<span class="page-link">
+                										3
+                									</span>
+            									</a>
+            									<a class="page-item">
+                									<span class="page-link">
+                										&gt;
+                									</span>
+            									</a>
+            									<a class="page-item last-child">
+                									<span class="page-link">
+                										&gt;&gt;
+                									</span>
+            									</a>
+            								</div>
+            							</div>
+            						</div>
+        						</form>
+							</div>
                                 
-                                <!-- MOTOS -->
-                                <div id="motosTab" class="tabcontent">
-                                	<span onclick="closeTab(event, this);" class="topright">&times;</span>
-    								<h3>Motos</h3>
-    								<p>Paris is the capital of France.</p>
-                                </div>
+							<!-- MOTOS -->
+							<div id="motosTab" class="tabcontent">
+								<span onclick="closeTab(event, this);" class="topright">&times;</span>
+								<h3>Motos</h3>
+							</div>
                                 
-                                <!-- OTROS -->
-                                <div id="othersTab" class="tabcontent">
-                                	<span onclick="closeTab(event, this);" class="topright">&times;</span>
-    								<h3>Otros</h3>
-    								<p>Paris is the capital of France.</p>
-                                </div>
-    						</div>
-						</div>
+							<!-- OTROS -->
+                            <div id="othersTab" class="tabcontent">
+                              	<span onclick="closeTab(event, this);" class="topright">&times;</span>
+    							<h3>Otros</h3>
+                            </div>
+    					</div>
 					</div>
+				</div>
 					
-					<!-- PARTNERS -->					
-					<div class="resume-item d-flex flex-column flex-md-row mb-5">
-						<div class="resume-content mr-auto">
-							<div class="subheading mb-3">Somos Partners oficiales de:</div>
-							<div class="partner">
-								<a href="https://www.vitoriabikes.es">
-									<img src="./img/logos/vitoria-bikes-logo.png" />
-								</a>	
-							</div>
-							<div class="partner">
-								<a href="https://www.sellesmp.com/es/">
-									<img src="./img/logos/selle-smp.png" />
-								</a>	
-							</div>
-							<div class="partner">
-								<a href="https://www.amv.es/">
-									<img src="./img/logos/logo_amv.png" />
-								</a>	
-							</div>
+				<!-- PARTNERS -->					
+				<div class="resume-item d-flex flex-column flex-md-row mb-5">
+					<div class="resume-content mr-auto">
+						<div class="subheading mb-3">Somos Partners oficiales de:</div>
+						<div class="partner">
+							<a href="https://www.vitoriabikes.es">
+								<img src="./img/logos/vitoria-bikes-logo.png" />
+							</a>	
+						</div>
+						<div class="partner">
+							<a href="https://www.sellesmp.com/es/">
+								<img src="./img/logos/selle-smp.png" />
+							</a>	
+						</div>
+						<div class="partner">
+							<a href="https://www.amv.es/">
+								<img src="./img/logos/logo_amv.png" />
+							</a>	
 						</div>
 					</div>
+				</div>
 	
-    				<!-- div class="resume-item d-flex flex-column flex-md-row mb-5">
-    					<div class="resume-content mr-auto">
-    						<h3 class="mb-0">Web Developers</h3>
-    						<div class="subheading mb-3">Intelitec Solutions</div>
-    						<p>Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.</p>
-    					</div>
-    					<div class="resume-date text-md-right">
-    						<span class="text-primary">December 2011 - March 2013</span>
-    					</div>
-    				</div-->
- 
-    			</div>
+    			<!-- div class="resume-item d-flex flex-column flex-md-row mb-5">
+    				<div class="resume-content mr-auto">
+    					<h3 class="mb-0">Web Developers</h3>
+    					<div class="subheading mb-3">Intelitec Solutions</div>
+    					<p>Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.</p>
+    				</div>
+    				<div class="resume-date text-md-right">
+    					<span class="text-primary">December 2011 - March 2013</span>
+    				</div>
+    			</div-->
     		</section>
 	
 			<hr class="m-0" />
@@ -431,9 +428,9 @@
     								</div>
     							</div>
     							<div class="col-lg-12 text-center">
+   									<input type="checkbox" name="politics" id="politics" onclick="formValidate();" required data-validation-required-message="La aceptaci&oacute;n de los términos es obligatorio para enviar la solicitud" />
     								<label class="checkboxcontainer">
-    									<input type="checkbox" name="politics" id="politics" onclick="formValidate();" required data-validation-required-message="La aceptaci&oacute;n de los términos es obligatorio para enviar la solicitud" />
-    									Antes de enviar su solicitud, lea y acepte nuestra informaci&oacute;n b&aacute;sica sobre nuestra <a data-toggle="modal" href="#avisoLegal">pol&iacute;tica de uso de datos</a> *
+    									Antes de enviar su solicitud, lea y acepte nuestra informaci&oacute;n b&aacute;sica sobre nuestra <a href="./content/avisoLegal.php" target="_blank">pol&iacute;tica de uso de datos</a> *
     								</label>
     							</div>
     							<div class="col-lg-12 text-center">
@@ -442,14 +439,19 @@
     								<button id="sendMessageButton" class="btn btn-primary btn-xl text-uppercase" disabled type="submit">Enviar</button>
     							</div>
     						</div>
+    						<div class="espacio"></div>
+    						<div class="row">
+    							<div class="col-lg-12 text-center">
+    								Web dise&ntilde;ada y realizada por "Maroto Bikes". Todos los derechos reservados.
+    							</div>
+    						</div>
     					</form>
     				</div>
     			</div>
     		</section>
-		
 		</div>
-	
-	    <!-- Bootstrap core JavaScript -->
+		
+		<!-- Bootstrap core JavaScript -->
 	    <script src="./vendor/jquery/jquery.min.js"></script>
 	    <script src="./vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	
@@ -458,6 +460,6 @@
 	
 	    <!-- Custom scripts for this template -->
 	    <script src="./js/resume.min.js"></script>
-
+		
 	</body>
 </html>

@@ -287,6 +287,21 @@ section.resume-section .resume-item .resume-date {
     /* min-width: 500px!important; */
 	width: 100%;
 }
+section#admin .resume-item .resume-content .tabcontainer .tabcontent {
+	border-radius:.25rem;
+}
+section#admin .resume-item .resume-content .tabcontainer .tabcontent .adminCategory {
+	float: left;
+	width: 50%;
+}
+section#admin .resume-item .resume-content .tabcontainer .tabcontent .adminCategory .categoryImg {
+}
+section#admin .resume-item .resume-content .tabcontainer .tabcontent .adminCategory .categoryImg img {
+	height: 50px;
+	width: 55px;
+	text-align: center;
+	margin-bottom: 5px;
+}
 .resume-item .resume-content .tabcontainer .tabcontent .resultsNumber {
 	/* color:#bd5d38!important; */
 	color:#ff0000!important;
@@ -589,33 +604,33 @@ section#contact {
 	border-top-width: 3px;
 	*/
 }
-section#contact .section-heading {
+section .section-heading {
 	color:#fff;
 }
-section#contact .form-group {
+section .form-group {
 	margin-bottom:20px;
 }
-section#contact .form-group button {
+section .form-group button {
 	background-color: red;
 	color: white;
 }
-section#contact .form-group input, section#contact .form-group textarea {
+section .form-group input, section .form-group textarea {
 	/*padding:20px;*/
 }
-section#contact .form-group input {
+section .form-group input {
 	border: 1px solid black;
 	height: auto;
 }
-section#contact .form-group textarea {
+section .form-group textarea {
 	border: 1px solid black;
 	height: 154px;
 }
-section#contact .checkboxcontainer input {
+section .checkboxcontainer input {
 	border: 2px solid black;
 	color: red;
 	width: 15px;
 }
-section#contact label {
+section label {
  	/*color: black;*/
 }
 /*
@@ -624,22 +639,22 @@ section#contact .form-control:focus {
 	box-shadow:none;
 }
 */
-section#contact ::-webkit-input-placeholder {
+section ::-webkit-input-placeholder {
 	font-weight:700;
-	/*color:#ced4da;*/
+	color:#ced4da;
 	/*font-family:Montserrat,'Helvetica Neue',Helvetica,Arial,sans-serif*/
 }
-section#contact :-moz-placeholder {
+section :-moz-placeholder {
 	font-weight:700;
 	color:#ced4da;
 	/*font-family:Montserrat,'Helvetica Neue',Helvetica,Arial,sans-serif;*/
 }
-section#contact ::-moz-placeholder {
+section ::-moz-placeholder {
 	font-weight:700;
 	color:#ced4da;
 	/*font-family:Montserrat,'Helvetica Neue',Helvetica,Arial,sans-serif;*/
 }
-section#contact :-ms-input-placeholder {
+section :-ms-input-placeholder {
 	font-weight:700;
 	color:#ced4da;
 	/*font-family:Montserrat,'Helvetica Neue',Helvetica,Arial,sans-serif;*/
@@ -686,4 +701,10 @@ section#contact :-ms-input-placeholder {
 }
 .inner a.ok:hover, .inner a.info:hover {
 	text-decoration: underline;
+}
+
+.espacio {
+	border: thin;
+	height: 250px!important;
+	width: 100%;
 }

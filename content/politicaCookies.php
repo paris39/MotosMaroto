@@ -16,6 +16,7 @@
 
         <!-- Custom styles for this template -->
         <link href="../css/styles.min.css" rel="stylesheet" />
+        <link rel='icon' type='image/x-icon' href='../img/mm_logo.ico' />
 	</head>
 
 	<body>
@@ -28,7 +29,7 @@
 								<div class="modal-body">
 									<!-- Project Details Go Here -->
 									<h2 class="text-uppercase">Pol&iacute;tica de Cookies</h2>
-									<p class="item-intro text-muted">Maroto Bikes</p>
+									<p class="item-intro text-muted">Maroto <span class="place">Bikes</span></p>
 									<p>
 										<ul>
 											<li>¿Qu&eacute; es una "Cookie"?

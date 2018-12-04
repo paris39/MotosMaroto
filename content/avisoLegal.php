@@ -16,6 +16,7 @@
 
         <!-- Custom styles for this template -->
         <link href="../css/styles.min.css" rel="stylesheet" />
+        <link rel='icon' type='image/x-icon' href='../img/mm_logo.ico' />
 	</head>
 
 	<body>
@@ -28,12 +29,12 @@
 								<div class="modal-body">
 									<!-- Project Details Go Here -->
 									<h2 class="text-uppercase">Aviso Legal</h2>
-									<p class="item-intro text-muted">Maroto Bikes</p>
+									<p class="item-intro text-muted">Maroto <span class="place">Bikes</span></p>
 									<p>
 										<ol>
 											<li>Titularidad de la P&aacute;gina Web
 												<dt>
-													De acuerdo con el art&iacute;culo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Informaci&oacute;n y de Comercio se informa al usuario que la p&aacute;gina web es titularidad de JES&Uacute;S MAROTO GARC&Iacute;A, DNI: 04156506S, con direcci&oacute;n en Calle Anastasio Oliva 5, 45516 La Puebla de Montalb&aacute;n (Toledo), el cual es responsable &uacute;nico y exclusivo en relaci&oacute;n a la veracidad de la informaci&oacute;n contenida en la p&aacute;gina web en cuanto a los textos, fotograf&iacute;as, logotipos, cupones, productos, servicios e im&aacute;genes visualizadas.
+													De acuerdo con el art&iacute;culo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Informaci&oacute;n y de Comercio se informa al usuario que la p&aacute;gina web es titularidad de JES&Uacute;S MAROTO GARC&Iacute;A, DNI: 04156506S, con direcci&oacute;n en Calle Anastasio Oliva 12, 45516 La Puebla de Montalb&aacute;n (Toledo), el cual es responsable &uacute;nico y exclusivo en relaci&oacute;n a la veracidad de la informaci&oacute;n contenida en la p&aacute;gina web en cuanto a los textos, fotograf&iacute;as, logotipos, cupones, productos, servicios e im&aacute;genes visualizadas.
 												</dt>
 											</li>
 											<br />
