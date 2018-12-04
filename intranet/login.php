@@ -23,8 +23,7 @@ if (null == $_SESSION || null == $_SESSION['user'] || $_SESSION['user'] == "" ||
         <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
         <title>INTRANET - Bicicletas y Motos Maroto</title>
         <link rel='icon' type='image/x-icon' href='../img/mm_logo.ico' />
-        <script src='./content/js/intranet.js' type='text/javascript'></script>
-        
+              
         <!-- Bootstrap core CSS -->
 	    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 	
@@ -35,6 +34,8 @@ if (null == $_SESSION || null == $_SESSION['user'] || $_SESSION['user'] == "" ||
 	    
 	    <!-- Custom styles for this template -->
 	    <link rel='STYLESHEET' type='text/css' href='../css/resume.min.css' />
+	    
+	    <script src='./content/js/intranet.js' type='text/javascript'></script>
     </head>
     <body style="padding-top: 0px;" id="page-top">
     	<div class="container-fluid p-0">

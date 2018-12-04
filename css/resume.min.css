@@ -24,6 +24,9 @@
  		padding-top:0;
  		padding-left:17rem;
  	}
+ 	body.noMargin {
+ 		padding: 0px;
+ 	}
  }
  
  h1, h2, h3, h4, h5, h6 {
@@ -485,7 +488,7 @@ section#admin .resume-item .resume-content .tabcontainer .tabcontent .adminCateg
 }
 @media (min-width: 630px) {
 	.resume-item .resume-content .tab {
-		width: 320px;
+		width: 321px;
 	}
 	/* Style the buttons that are used to open the tab content */
 	.resume-item .resume-content .tab button {
@@ -705,6 +708,6 @@ section :-ms-input-placeholder {
 
 .espacio {
 	border: thin;
-	height: 250px!important;
+	height: 120px!important;
 	width: 100%;
 }

@@ -21,7 +21,7 @@
 	    <script src="../../js/resume.min.js"></script>	
     </head>
 
-	<body style="padding-top: 0px;" id="page-top" onload="openTab(event, 'adminTab');">
+	<body class="noMargin" id="page-top" onload="openTab(event, 'adminTab');">
     	<div class="container-fluid p-0">
     		<section class="resume-section p-3 p-lg-5 d-flex flex-column" id="admin">
 				<div class="my-auto">
@@ -35,7 +35,7 @@
     					<p>
     						INTRANET
     					</p>
-						<span class="place">&iexcl;Hola, Jes&uacute;s!</span> <br />
+						<span class="redText">&iexcl;Hola, Jes&uacute;s!</span> <br />
 						<form id="adminForm" name="adminForm" method="post" action="../login.php?option=exit" onSubmit="return validate();">
         					<div id="success"></div>
         					<button id="exitAdminButton" class="btn btn-primary btn-xl text-uppercase" type="submit">Cerrar sesi&oacute;n</button>

@@ -1,5 +1,24 @@
 // JavaScript Document
 
+function showProductCategory(selectedIndex) {
+	var divSelected, divs;
+	
+	if (null != selectedIndex && "none" != selectedIndex.value) {
+		divSelected = document.getElementById(selectedIndex.value);
+		divSelected.style.display = "flex";
+	} else {
+		divs = document.getElementsByClassName("productType");
+	    for (i = 0; i < divs.length; i++) {
+	    	divs[i].style.display = "none";
+	    }
+	}
+	
+	
+}
+
+
+
+
 /*** Comprueba cada campo del formulario de Añadir un nuevo producto ***/
 function addProduct() {
 	// Valido la descripción
