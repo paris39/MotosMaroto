@@ -193,6 +193,11 @@ a:not([href]):not([tabindex]):focus, a:not([href]):not([tabindex]):hover {
 a:not([href]):not([tabindex]):focus {
 	outline:0;
 }
+a.noDecoration,
+a.noDecoration:hover,
+a.noDecoration:active {
+	text-decoration: none;
+}
 
 code, kbd, pre, samp {
 	font-family:
@@ -399,9 +404,6 @@ hr {
 	flex-wrap:wrap;
 	margin-right:-15px;
 	margin-left:-15px;
-}
-.row#bikeType {
-	display: none;
 }
 
 .no-gutters{margin-right:0;margin-left:0}.no-gutters>.col,.no-gutters>[class*=col-]{padding-right:0;padding-left:0}

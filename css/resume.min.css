@@ -711,3 +711,11 @@ section :-ms-input-placeholder {
 	height: 120px!important;
 	width: 100%;
 }
+
+.productType,
+.subtypeCategory {
+	display: none;
+}
+.subtypeCategory#exampleSubType {
+	display: flex;
+}

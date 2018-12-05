@@ -3,19 +3,51 @@
 function showProductCategory(selectedIndex) {
 	var divSelected, divs;
 	
-	if (null != selectedIndex && "none" != selectedIndex.value) {
+	if (null != selectedIndex && "0" != selectedIndex && "none" != selectedIndex.value) {
 		divSelected = document.getElementById(selectedIndex.value);
 		divSelected.style.display = "flex";
+		
+		// Cerrar los tipos que no correspondan
+		divs = document.getElementsByClassName("productType");
+	    for (i = 0; i < divs.length; i++) {
+	    	if (divs[i] != divSelected) {
+	    		divs[i].style.display = "none";
+	    	}
+	    }
 	} else {
 		divs = document.getElementsByClassName("productType");
 	    for (i = 0; i < divs.length; i++) {
 	    	divs[i].style.display = "none";
 	    }
-	}
-	
-	
+	}	
 }
 
+
+function showSubtypeCategory(selectedIndex) {
+	var divSelected, divs;
+	
+	if (null != selectedIndex && "0" != selectedIndex && "none" != selectedIndex.value) {
+		divSelected = document.getElementById(selectedIndex.value + "SubType");
+		divSelected.style.display = "flex";
+		
+		// Cerrar los subtipos que no correspondan
+		divs = document.getElementsByClassName("subtypeCategory");
+	    for (i = 0; i < divs.length; i++) {
+	    	if (divs[i] != divSelected) {
+	    		divs[i].style.display = "none";
+	    	}
+	    }
+	} else {
+		divs = document.getElementsByClassName("subtypeCategory");
+	    for (i = 0; i < divs.length; i++) {
+	    	if ("exampleSubType" === divs[i].id) {
+	    		divs[i].style.display = "flex"
+	    	} else {
+	    		divs[i].style.display = "none";
+	    	}
+	    }
+	}
+}
 
 
 
