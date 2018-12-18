@@ -353,9 +353,11 @@
 									</div>
 									<div class="col-md-6">
 										<div class="form-group subtypeCategory" id="exampleSubType">
-	    									<span>Subtipo:</span>
-	    									<select name="exampleSubType" id="cbExampleSubType" title="Subtipo de equipaci&oacute;n">
-												<option value="none">Seleccionar subtipo...</option>
+	    									<span>G&eacute;nero:</span>
+	    									<select name="generoSubType" id="cbGenero" title="G&eacute;nero">
+												<option value="none">Seleccionar g&eacute;nero...</option>
+												<option value="otherChainsaws">Motosierras</option>
+											    <option value="otherPrunings">Podadoras</option>
 											</select>
 										</div>
 									</div>
