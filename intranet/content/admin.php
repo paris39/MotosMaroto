@@ -63,7 +63,7 @@
 												</li>
 												<li>
 													<div>
-														<span><a href="#">Baja o modificaci&oacute;n de productos</a></span>
+														<span><a href="./products/listProducts.php">Baja o modificaci&oacute;n de productos</a></span>
 													</div>
 												</li>
 											</ul>

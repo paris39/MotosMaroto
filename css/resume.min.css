@@ -292,6 +292,7 @@ section.resume-section .resume-item .resume-date {
 }
 section#admin .resume-item .resume-content .tabcontainer .tabcontent {
 	border-radius:.25rem;
+	padding-top: 25px; /* Para igualar el margin de la parte de abajo de los botones */
 }
 section#admin .resume-item .resume-content .tabcontainer .tabcontent .adminCategory {
 	float: left;
@@ -304,6 +305,15 @@ section#admin .resume-item .resume-content .tabcontainer .tabcontent .adminCateg
 	width: 55px;
 	text-align: center;
 	margin-bottom: 5px;
+}
+section#admin .resume-item .resume-content .tabcontainer .tabcontent .table .adminImg img {
+	height: 20px;
+	width: 20px;
+	text-align: center;
+	margin-bottom: 5px;
+}
+section#admin .resume-item .resume-content .tabcontainer .tabcontent .table .adminImg img:hover {
+	cursor: pointer;
 }
 .resume-item .resume-content .tabcontainer .tabcontent .resultsNumber {
 	/* color:#bd5d38!important; */
