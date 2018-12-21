@@ -82,7 +82,7 @@
 													<div class="col-md-6">
 														<div class="form-group">
 															<span>Categor&iacute;a:</span>
-															<select name="productCategory" id="productCategory" title="Categor&iacute;a" onChange="showProductCategory(this);">
+															<select name="productCategory" class="form-control" id="productCategory" title="Categor&iacute;a" onChange="showProductCategory(this);">
 																<option value="none">Seleccionar categor&iacute;a...</option>
 					        									<option value="motoType">Motos</option>
 					        									<option value="bikeType">Bicicletas</option>
@@ -96,7 +96,7 @@
 														</div>
 														<div class="form-group">
 															<span>Colores:</span>
-															<select name="colors" id="colors" size="10" multiple>
+															<select name="colors" class="form-control" id="colors" size="10" multiple>
 															    <option value="yellow">Amarillo</option>
 															    <option value="blue">Azul</option>
 															    <option value="white">Blanco</option>
@@ -127,7 +127,7 @@
 					    							<div class="col-md-6">
 					    								<div class="form-group">
 					    									<span>Tipo de bicicleta:</span>
-															<select name="bikeKind" id="bikeKind" title="Tipo de bicicleta">
+															<select name="bikeKind" class="form-control" id="bikeKind" title="Tipo de bicicleta">
 																<option value="none">Seleccionar tipo...</option>
 																<option value="road">Carretera</option>
 															    <option value="electric">El&eacute;ctrica</option>
@@ -168,7 +168,7 @@
 													<div class="col-md-6">
 														<div class="form-group">
 															<span>Talla:</span>
-															<select name="bikeSize" id="bikeSize" title="Talla">
+															<select name="bikeSize" class="form-control" id="bikeSize" title="Talla">
 																<option value="none">Seleccionar talla...</option>
 															    <option value="S">S</option>
 															    <option value="M">M</option>
@@ -207,7 +207,7 @@
 					    							<div class="col-md-6">
 					    								<div class="form-group">
 					    									<span>Tipo de moto:</span>
-															<select name="motoKind" id="motoKind" title="Tipo de moto">
+															<select name="motoKind" class="form-control" id="motoKind" title="Tipo de moto">
 																<option value="none">Seleccionar tipo...</option>
 																<option value="chopper">Chopper</option>
 															    <option value="custom">Custom</option>
@@ -244,7 +244,7 @@
 													<div class="col-md-6">
 														<div class="form-group">
 															<span>Carnet:</span>
-															<select name="motoLicense" id="motoLicense" title="Carnet de moto">
+															<select name="motoLicense" class="form-control" id="motoLicense" title="Carnet de moto">
 																<option value="none">Seleccionar carnet...</option>
 															    <option value="AM">AM</option>
 															    <option value="A1">A1</option>
@@ -258,7 +258,7 @@
 														</div>
 														<div class="form-group">
 															<span>Combustible:</span>
-															<select name="motoFuel" id="motoFuel" title="Combustible">
+															<select class="form-control" name="motoFuel" id="motoFuel" title="Combustible">
 																<option value="none">Seleccionar combustible...</option>
 															    <option value="electric">El&eacute;ctrico</option>
 															    <option value="gas95">Gasolina 95</option>
@@ -267,7 +267,7 @@
 														</div>
 														<div class="form-group">
 															<span>Distintivo anticontaminaci&oacute;n:</span>
-															<select name="motoContamination" id="motoContamination" title="Combustible">
+															<select class="form-control" name="motoContamination" id="motoContamination" title="Combustible">
 																<option value="none">Seleccionar categor&iacute;a...</option>
 															    <option value="A">No corresponde</option>
 															    <option value="B">B (amarillo)</option>
@@ -278,7 +278,7 @@
 														</div>
 														<div class="form-group">
 															<span>Transmisi&oacute;n:</span>
-															<select name="motoTransmission" id="motoTransmission" title="Transmisi&oacute;n">
+															<select class="form-control" name="motoTransmission" id="motoTransmission" title="Transmisi&oacute;n">
 																<option value="none">Seleccionar transmisi&oacute;n...</option>
 															    <option value="chain">Cadena</option>
 															    <option value="cardan">Card&aacute;n</option>
@@ -296,7 +296,7 @@
 					    							<div class="col-md-6">
 					    								<div class="form-group">
 					    									<span>Equipaci&oacute;n de:</span>
-															<select name="equipmentKind" id="equipmentKind" title="Tipo de equipaci&oacute;n" onChange="showSubtypeCategory(this);">
+															<select class="form-control" name="equipmentKind" id="equipmentKind" title="Tipo de equipaci&oacute;n" onChange="showSubtypeCategory(this);">
 																<option value="none">Seleccionar tipo...</option>
 																<option value="bike">Bicicletas</option>
 															    <option value="moto">Motos</option>
@@ -305,13 +305,13 @@
 														</div>
 														<div class="form-group subtypeCategory" id="exampleSubType">
 					    									<span>Subtipo:</span>
-					    									<select name="exampleSubType" id="cbExampleSubType" title="Subtipo de equipaci&oacute;n">
+					    									<select class="form-control" name="exampleSubType" id="cbExampleSubType" title="Subtipo de equipaci&oacute;n">
 																<option value="none">Seleccionar subtipo...</option>
 															</select>
 														</div>
 														<div class="form-group subtypeCategory" id="bikeSubType">
 					    									<span>Subtipo:</span>
-															<select name="bikeSubType" id="cbBikeSubType" title="Subtipo de equipaci&oacute;n de bicicleta">
+															<select class="form-control" name="bikeSubType" id="cbBikeSubType" title="Subtipo de equipaci&oacute;n de bicicleta">
 																<option value="none">Seleccionar subtipo...</option>
 															    <option value="bikeBottles">Bidones</option>
 															    <option value="bikeSocks">Calcetines</option>
@@ -332,7 +332,7 @@
 														</div>
 														<div class="form-group subtypeCategory" id="motoSubType">
 					    									<span>Subtipo:</span>
-															<select name="motoSubType" id="cbMotoSubType" title="Subtipo de equipaci&oacute;n de moto">
+															<select class="form-control" name="motoSubType" id="cbMotoSubType" title="Subtipo de equipaci&oacute;n de moto">
 																<option value="none">Seleccionar subtipo...</option>
 															    <option value="motoSocks">Calcetines</option>
 															    <option value="motoShirts">Camisetas</option>
@@ -348,7 +348,7 @@
 														</div>
 														<div class="form-group subtypeCategory" id="otherSubType">
 					    									<span>Subtipo:</span>
-															<select name="otherSubType" id="cbOtherSubType" title="Subtipo de equipaci&oacute;n de otros">
+															<select class="form-control" name="otherSubType" id="cbOtherSubType" title="Subtipo de equipaci&oacute;n de otros">
 																<option value="none">Seleccionar subtipo...</option>
 															    <option value="otherChainsaws">Motosierras</option>
 															    <option value="otherPrunings">Podadoras</option>
@@ -358,7 +358,7 @@
 													<div class="col-md-6">
 														<div class="form-group" id="genderSubType">
 					    									<span>G&eacute;nero:</span>
-					    									<select name="generoSubType" id="cbGender" title="G&eacute;nero">
+					    									<select class="form-control" name="generoSubType" id="cbGender" title="G&eacute;nero">
 																<option value="none">Seleccionar g&eacute;nero...</option>
 															    <option value="genderFemale">Femenino</option>
 																<option value="genderMale">Masculino</option>

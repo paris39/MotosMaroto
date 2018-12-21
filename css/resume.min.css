@@ -306,6 +306,9 @@ section#admin .resume-item .resume-content .tabcontainer .tabcontent .adminCateg
 	text-align: center;
 	margin-bottom: 5px;
 }
+section#admin .resume-item .resume-content .tabcontainer .tabcontent .table .adminImg {
+	text-align: center;
+}
 section#admin .resume-item .resume-content .tabcontainer .tabcontent .table .adminImg img {
 	height: 20px;
 	width: 20px;
@@ -334,24 +337,11 @@ section#admin .resume-item .resume-content .tabcontainer .tabcontent .table .adm
 	float: left;
 	width: 100%;
 }
-.resume-item .resume-content .tabcontainer .tabcontent .formDiv .categoriesFilter {
-	background-color: #f1f1f1;
-	border-top-left-radius:.25rem;
- 	clear: left;
-	float: left;
-	padding: 10px;
-	height: 100%;
-	min-width: 180px;
-	width: 100%;
-}
 .resume-item .resume-content .tabcontainer .tabcontent .formDiv .categoriesFilter #maxFilterBikes {
 	display: block;
 }
 .resume-item .resume-content .tabcontainer .tabcontent .formDiv .categoriesFilter #maxFilterBikes {
 	display: none;
-}
-.resume-item .resume-content .tabcontainer .tabcontent .formDiv .categoriesFilter .filterTitle {
-	color: red;
 }
 .resume-item .resume-content .tabcontainer .tabcontent .formDiv .categoriesFilter .categoriesFilters {
 	color: black;
@@ -441,6 +431,21 @@ section#admin .resume-item .resume-content .tabcontainer .tabcontent .table .adm
     font-size: 28px;
     line-height: 20px;
 }
+
+.categoriesFilter {
+	background-color: #f1f1f1;
+	border-top-left-radius:.25rem;
+ 	clear: left;
+	float: left;
+	padding: 10px;
+	height: 100%;
+	min-width: 180px;
+	width: 100%;
+}
+.categoriesFilter .filterTitle {
+	color: red;
+}
+
 /* Fade in tabs */
 @-webkit-keyframes fadeEffect {
     from {opacity: 0;}
@@ -566,15 +571,17 @@ section#admin .resume-item .resume-content .tabcontainer .tabcontent .table .adm
 }
 .resume-item .resume-content .partner {
 	display: inline-table;
-	height: 100px;
+	height: 54px;
 	margin-right: 10px;
+	margin-bottom: 25px;
 	text-align: center;
 	vertical-align: middle;
-	width: 250px;
+	width: 140px;
+	/*border: 1px solid black;*/
 }
 .resume-item .resume-content .partner img {
-	max-height: 100px;
-	max-width: 250px;
+   max-height: 50px;
+   max-width: 125px;
 }
 
 .topright:hover {
@@ -727,5 +734,5 @@ section :-ms-input-placeholder {
 	display: none;
 }
 .subtypeCategory#exampleSubType {
-	display: flex;
+	display: inline;
 }

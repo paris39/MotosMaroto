@@ -171,7 +171,7 @@
     							<form>
     								<span class="resultsNumber">Total resultados: <span class="blackResultsNumber">2</span></span>
         							<div id="bikesOrder" class="order">
-        								<select id="bikesSelect" title="Seleccionar orden de resultados">
+        								<select id="bikesSelect" class="form-control" title="Seleccionar orden de resultados">
         									<option value="ASC">Orden: Ascendente</option>
         									<option value="DESC">Orden: Descendente</option>
         								</select>
@@ -292,18 +292,73 @@
 					<div class="resume-content mr-auto">
 						<div class="subheading mb-3">Somos Partners oficiales de:</div>
 						<div class="partner">
-							<a href="https://www.vitoriabikes.es">
-								<img src="./img/logos/vitoria-bikes-logo.png" />
+							<a href="https://www.vitoriabikes.es" >
+								<img src="./img/logos/logo-vitoria-bikes.png" alt="Vitoria Bikes" title="Vitoria Bikes" />
+							</a>	
+						</div>
+						<div class="partner">
+							<a href="https://www.biocyclespain.com/">
+								<img src="./img/logos/logo-biocycle.jpg" alt="Biocycle Spain" title="Biocycle Spain" />
+							</a>	
+						</div>
+						<div class="partner">
+							<a href="https://www.legnanobici.com/">
+								<img src="./img/logos/logo-legnano.png" alt="Legnano Bici" title="Legnano Bici" />
+							</a>	
+						</div>
+						<div class="partner">
+							<a href="http://www.gistitalia.com">
+								<img src="./img/logos/logo-gist.jpg" alt="Gist Italia" title="Gist Italia" />
 							</a>	
 						</div>
 						<div class="partner">
 							<a href="https://www.sellesmp.com/es/">
-								<img src="./img/logos/selle-smp.png" />
+								<img src="./img/logos/logo-selle-smp.png" alt="Selle SMP" title="Selle SMP" />
+							</a>	
+						</div>
+						<div class="partner">
+							<a href="https://www.santinisms.it/">
+								<img src="./img/logos/logo-santini.jpg" alt="Santini Maglificio Sportivo" title="Santini Maglificio Sportivo" />
+							</a>	
+						</div>
+						<div class="partner">
+							<a href="https://www.evofinance.com/">
+								<img src="./img/logos/logo-evo-finance.png" alt="EVO Finance" title="EVO Finance" />
 							</a>	
 						</div>
 						<div class="partner">
 							<a href="https://www.amv.es/">
-								<img src="./img/logos/logo_amv.png" />
+								<img src="./img/logos/logo-amv.png" alt="Seguros AMV" title="Seguros AMV" />
+							</a>	
+						</div>
+						<div class="partner">
+							<a href="http://www.umglobal.com/es/">
+								<img src="./img/logos/logo-um.png" alt="UM Motos" title="UM Motos" />
+							</a>	
+						</div>
+						<div class="partner">
+							<a href="http://www.agrocel.es/">
+								<img src="./img/logos/logo-agrocel.jpg" alt="Agrocel" title="Agrocel" />
+							</a>	
+						</div>
+						<div class="partner">
+							<a href="http://www.motogarden.com/">
+								<img src="./img/logos/logo-motogarden.jpg" alt="Motogarden" title="Motogarden" />
+							</a>	
+						</div>
+						<div class="partner">
+							<a href="https://www.husqvarna.com/es/">
+								<img src="./img/logos/logo-husqvarna.png" alt="Husqvarna" title="Husqvarna" />
+							</a>	
+						</div>
+						<div class="partner">
+							<a href="https://www.stihl.es/">
+								<img src="./img/logos/logo-stihl.png" alt="Stihl" title="Stihl" />
+							</a>	
+						</div>
+						<div class="partner">
+							<a href="http://ducatigarden.com/home/">
+								<img src="./img/logos/logo-ducati.jpg" alt="Ducati Gardening Collection" title="Ducati Gardening Collection" />
 							</a>	
 						</div>
 					</div>

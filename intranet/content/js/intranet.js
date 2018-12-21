@@ -28,7 +28,7 @@ function showSubtypeCategory(selectedIndex) {
 	
 	if (null != selectedIndex && "0" != selectedIndex && "none" != selectedIndex.value) {
 		divSelected = document.getElementById(selectedIndex.value + "SubType");
-		divSelected.style.display = "flex";
+		divSelected.style.display = "inline";
 		
 		// Cerrar los subtipos que no correspondan
 		divs = document.getElementsByClassName("subtypeCategory");
@@ -41,7 +41,7 @@ function showSubtypeCategory(selectedIndex) {
 		divs = document.getElementsByClassName("subtypeCategory");
 	    for (i = 0; i < divs.length; i++) {
 	    	if ("exampleSubType" === divs[i].id) {
-	    		divs[i].style.display = "flex"
+	    		divs[i].style.display = "inline"
 	    	} else {
 	    		divs[i].style.display = "none";
 	    	}
