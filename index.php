@@ -292,73 +292,87 @@
 					<div class="resume-content mr-auto">
 						<div class="subheading mb-3">Somos Partners oficiales de:</div>
 						<div class="partner">
-							<a href="https://www.vitoriabikes.es" >
-								<img src="./img/logos/logo-vitoria-bikes.png" alt="Vitoria Bikes" title="Vitoria Bikes" />
+							<a href="https://www.vitoriabikes.es" class="nav-link">
+								<img src="./img/logos/logo-vitoria-bikes-bn.png" alt="Vitoria Bikes" title="Vitoria Bikes"
+									onmouseover="this.src='./img/logos/logo-vitoria-bikes.png';" onmouseout="this.src='./img/logos/logo-vitoria-bikes-bn.png';" />
 							</a>	
 						</div>
 						<div class="partner">
 							<a href="https://www.biocyclespain.com/">
-								<img src="./img/logos/logo-biocycle.jpg" alt="Biocycle Spain" title="Biocycle Spain" />
+								<img src="./img/logos/logo-biocycle-bn.jpg" alt="Biocycle Spain" title="Biocycle Spain"
+									onmouseover="this.src='./img/logos/logo-biocycle.jpg';" onmouseout="this.src='./img/logos/logo-biocycle-bn.jpg';" />
 							</a>	
 						</div>
 						<div class="partner">
 							<a href="https://www.legnanobici.com/">
-								<img src="./img/logos/logo-legnano.png" alt="Legnano Bici" title="Legnano Bici" />
+								<img src="./img/logos/logo-legnano-bn.png" alt="Legnano Bici" title="Legnano Bici"
+									onmouseover="this.src='./img/logos/logo-legnano.png';" onmouseout="this.src='./img/logos/logo-legnano-bn.png';" />
 							</a>	
 						</div>
 						<div class="partner">
 							<a href="http://www.gistitalia.com">
-								<img src="./img/logos/logo-gist.jpg" alt="Gist Italia" title="Gist Italia" />
+								<img src="./img/logos/logo-gist-bn.jpg" alt="Gist Italia" title="Gist Italia"
+									onmouseover="this.src='./img/logos/logo-gist.jpg';" onmouseout="this.src='./img/logos/logo-gist-bn.jpg';" />
 							</a>	
 						</div>
 						<div class="partner">
 							<a href="https://www.sellesmp.com/es/">
-								<img src="./img/logos/logo-selle-smp.png" alt="Selle SMP" title="Selle SMP" />
+								<img src="./img/logos/logo-selle-smp-bn.png" alt="Selle SMP" title="Selle SMP"
+									onmouseover="this.src='./img/logos/logo-selle-smp.png';" onmouseout="this.src='./img/logos/logo-selle-smp-bn.png';" />
 							</a>	
 						</div>
 						<div class="partner">
 							<a href="https://www.santinisms.it/">
-								<img src="./img/logos/logo-santini.jpg" alt="Santini Maglificio Sportivo" title="Santini Maglificio Sportivo" />
+								<img src="./img/logos/logo-santini-bn.jpg" alt="Santini Maglificio Sportivo" title="Santini Maglificio Sportivo"
+									onmouseover="this.src='./img/logos/logo-santini.jpg';" onmouseout="this.src='./img/logos/logo-santini-bn.jpg';" />
 							</a>	
 						</div>
 						<div class="partner">
 							<a href="https://www.evofinance.com/">
-								<img src="./img/logos/logo-evo-finance.png" alt="EVO Finance" title="EVO Finance" />
+								<img src="./img/logos/logo-evo-finance-bn.png" alt="EVO Finance" title="EVO Finance"
+									onmouseover="this.src='./img/logos/logo-evo-finance.png';" onmouseout="this.src='./img/logos/logo-evo-finance-bn.png';" />
 							</a>	
 						</div>
 						<div class="partner">
 							<a href="https://www.amv.es/">
-								<img src="./img/logos/logo-amv.png" alt="Seguros AMV" title="Seguros AMV" />
+								<img src="./img/logos/logo-amv-bn.png" alt="Seguros AMV" title="Seguros AMV"
+									onmouseover="this.src='./img/logos/logo-amv.png';" onmouseout="this.src='./img/logos/logo-amv-bn.png';" />
 							</a>	
 						</div>
 						<div class="partner">
 							<a href="http://www.umglobal.com/es/">
-								<img src="./img/logos/logo-um.png" alt="UM Motos" title="UM Motos" />
+								<img src="./img/logos/logo-um-bn.png" alt="UM Motos" title="UM Motos"
+									onmouseover="this.src='./img/logos/logo-um.png';" onmouseout="this.src='./img/logos/logo-um-bn.png';" />
 							</a>	
 						</div>
 						<div class="partner">
 							<a href="http://www.agrocel.es/">
-								<img src="./img/logos/logo-agrocel.jpg" alt="Agrocel" title="Agrocel" />
+								<img src="./img/logos/logo-agrocel-bn.jpg" alt="Agrocel" title="Agrocel"
+									onmouseover="this.src='./img/logos/logo-agrocel.jpg';" onmouseout="this.src='./img/logos/logo-agrocel-bn.jpg';" />
 							</a>	
 						</div>
 						<div class="partner">
 							<a href="http://www.motogarden.com/">
-								<img src="./img/logos/logo-motogarden.jpg" alt="Motogarden" title="Motogarden" />
+								<img src="./img/logos/logo-motogarden-bn.jpg" alt="Motogarden" title="Motogarden"
+									onmouseover="this.src='./img/logos/logo-motogarden.jpg';" onmouseout="this.src='./img/logos/logo-motogarden-bn.jpg';" />
 							</a>	
 						</div>
 						<div class="partner">
 							<a href="https://www.husqvarna.com/es/">
-								<img src="./img/logos/logo-husqvarna.png" alt="Husqvarna" title="Husqvarna" />
+								<img src="./img/logos/logo-husqvarna-bn.png" alt="Husqvarna" title="Husqvarna"
+									onmouseover="this.src='./img/logos/logo-husqvarna.png';" onmouseout="this.src='./img/logos/logo-husqvarna-bn.png';" />
 							</a>	
 						</div>
 						<div class="partner">
 							<a href="https://www.stihl.es/">
-								<img src="./img/logos/logo-stihl.png" alt="Stihl" title="Stihl" />
+								<img src="./img/logos/logo-stihl-bn.png" alt="Stihl" title="Stihl"
+									onmouseover="this.src='./img/logos/logo-stihl.png';" onmouseout="this.src='./img/logos/logo-stihl-bn.png';" />
 							</a>	
 						</div>
 						<div class="partner">
 							<a href="http://ducatigarden.com/home/">
-								<img src="./img/logos/logo-ducati.jpg" alt="Ducati Gardening Collection" title="Ducati Gardening Collection" />
+								<img src="./img/logos/logo-ducati-bn.jpg" alt="Ducati Gardening Collection" title="Ducati Gardening Collection"
+									onmouseover="this.src='./img/logos/logo-ducati.jpg';" onmouseout="this.src='./img/logos/logo-ducati-bn.jpg';" />
 							</a>	
 						</div>
 					</div>

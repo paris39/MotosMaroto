@@ -577,6 +577,7 @@ section#admin .resume-item .resume-content .tabcontainer .tabcontent .table .adm
 	text-align: center;
 	vertical-align: middle;
 	width: 140px;
+	transition: 0.3s;
 	/*border: 1px solid black;*/
 }
 .resume-item .resume-content .partner img {
