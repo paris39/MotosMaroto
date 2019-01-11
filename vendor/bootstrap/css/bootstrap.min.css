@@ -1431,7 +1431,7 @@ a.btn.disabled, fieldset:disabled a.btn {
 	color:rgba(255,255,255,.9);
 	border-color:rgba(255,255,255,.1);
 }
-.navbar-dark .navbar-toggler-icon { /* Botón para desplegar el menú */
+.navbar-dark .navbar-toggler-icon { /* Botï¿½n para desplegar el menï¿½ */
 	background-image:url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.9)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
 .navbar-dark .navbar-text {
@@ -1919,7 +1919,7 @@ a.bg-success:focus,a.bg-success:hover,button.bg-success:focus,button.bg-success:
 }
 .flex-column {
 	-ms-flex-direction:column!important;
-	flex-direction:column!important; /* Evita el margen blanco a la derecha al reducir el tamaño de la ventana */ 
+	flex-direction:column!important; /* Evita el margen blanco a la derecha al reducir el tamaï¿½o de la ventana */ 
 }
 .flex-row-reverse {
 	-ms-flex-direction:row-reverse!important;
