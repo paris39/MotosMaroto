@@ -26,7 +26,14 @@ class BikeDto extends ProductDto {
 	private $pedals;
 	private $cranks;
 	private $cassette;
-
+	
+	
+	/**
+	 * Constructor de la clase
+	 */
+	public function __construct() {
+	}
+	
 	/**
 	 *
 	 * @return mixed

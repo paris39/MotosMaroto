@@ -9,7 +9,13 @@ namespace php\model;
 class BikeSizeDto {
 	private $id;
 	private $name;
-
+	
+	/**
+	 * Constructor de la clase
+	 */
+	public function __construct() {
+	}
+	
 	/**
 	 *
 	 * @return mixed

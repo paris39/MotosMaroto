@@ -2,10 +2,13 @@
 
 namespace php\persistence\dao\Impl;
 
+use php\persistence\dao\IBikeDao;
+use php\config\Config;
+
 /**
  * @author JPD
  */
-class BikeDaoImpl implements BikeDao {
+class BikeDao implements IBikeDao {
 	
 	/**
 	 * Configuración de la Base de Datos
@@ -19,7 +22,7 @@ class BikeDaoImpl implements BikeDao {
 	 * 
 	 * @var integer
 	 */
-	private const BIKE = 1;
+	private final const BIKE = 1;
 
 	/**
 	 * {@inheritdoc}
@@ -32,15 +35,15 @@ class BikeDaoImpl implements BikeDao {
 									PRODUCT P, 
 									PRODUCT_CATEGORY PCTG, 
 									PRODUCT_SUBCATEGORY PSCTG, 
-									PRODUCT-COLOR PC,
+									PRODUCTS_COLORS PC,
 									COLOR CLR,
-									PRODUCT-IMAGE PI,
+									PRODUCTS_IMAGES PI,
 									IMAGE IMG, 
 									BIKE B, 
 									BIKE_TYPE BT, 
 									BIKE_SIZE BS
 								WHERE 
-									P.CATEGORY = " + this::BIKE + "
+									P.CATEGORY = " + BIKE + "
 									AND PCTG.ID = P.CATEGORY
 									AND PSCTG.ID = P.SUBCATEGORY
 									AND PC.PRODUCT = P.ID
@@ -50,13 +53,14 @@ class BikeDaoImpl implements BikeDao {
 									AND B.ID = P.ID
 									AND B.TYPE = BT.ID
 									AND B.SIZE = BS.ID
-								ORDER BY IDVENTA", this::$conection) 
+								ORDER BY P.ID", this::$conection) 
 					or die ("No funciona");
 		$fila = mysql_fetch_array($resul);
 		
 		
 		return null;
 	}
+	
 }
 
 ?>

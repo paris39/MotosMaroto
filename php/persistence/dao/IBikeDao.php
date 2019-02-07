@@ -2,7 +2,7 @@
 
 	namespace php\persistence\dao;
 
-	interface BikeDao {
+	interface IBikeDao {
 	
 		/**
 		 * Función que lista las bicicletas
