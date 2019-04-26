@@ -1,4 +1,19 @@
 <?php
+	
+	namespace intranet\content\products;
+	
+	// Carga de combos
+	require '../../../php/controller/InitController.php';
+	require '../../../php/model/CategoryDto.php';
+	use php\controller\InitController;
+	use php\model\CategoryDto;
+	
+	$initController = new InitController();
+	
+	$categoryList = new \ArrayObject();
+	$categoryList = $initController->categoryList();
+
+	
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -117,11 +132,11 @@
 																id="productCategory" title="Categor&iacute;a"
 																onChange="showProductCategory(this);" required="required">
 																<option value="none">Seleccionar categor&iacute;a...</option>
-																<option value="motoType">Motos</option>
-																<option value="bikeType">Bicicletas</option>
-																<option value="equipmentType">Equipaciones</option>
-																<option value="accesoryType">Accesorios</option>
-																<option value="otherType">Otros</option>
+																<option value="1">Bicicletas</option>
+																<option value="2">Motos</option>
+																<option value="3">Equipaciones</option>
+																<option value="4">Accesorios</option>
+																<option value="5">Otros</option>
 															</select>
 														</div>
 														<div class="form-group">
@@ -290,7 +305,7 @@
 														<div class="form-group">
 															<input class="form-control" type="number" name="motoCubic"
 																id="motoCubic" placeholder="Cilindrada (cc&sup3;)"
-																title="Cilindrada (cc&sup3;) min=" 0" step="10" " />
+																title="Cilindrada (cc&sup3;)" min="0" step="10" />
 														</div>
 														<div class="form-group">
 															<input class="form-control" type="number"
@@ -395,9 +410,9 @@
 																id="equipmentKind" title="Tipo de equipaci&oacute;n"
 																onChange="showSubtypeCategory(this);">
 																<option value="none">Seleccionar tipo...</option>
-																<option value="bike">Bicicletas</option>
-																<option value="moto">Motos</option>
-																<option value="other">Otros</option>
+																<option value="1">Bicicletas</option>
+																<option value="2">Motos</option>
+																<option value="3">Otros</option>
 															</select>
 														</div>
 														<div class="form-group subtypeCategory" id="exampleSubType">

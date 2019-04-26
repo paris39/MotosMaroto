@@ -29,12 +29,22 @@
 		public function __construct() {
 		}
 		
+		/**
+		 * @param ProductDto $productDto
+		 * @return int
+		 */
 		public function newProduct(ProductDto $productDto) : int {
-			$configObj = new Config();
-			$this->connection = $configObj->getConnection();
-			$id = $this->save($this.marshall($productDto)); // Conversión de tipo
+			$id = $this->save($this->marshall($productDto)); // Conversión de tipo
 			
 			return $id;
+		}
+		
+		/**
+		 * @return \ArrayObject
+		 */
+		public function listProducts() : \ArrayObject {
+			
+			return null;
 		}
 		
 		/**
@@ -44,26 +54,33 @@
 		 * @return int
 		 */
 		private function save (Product $product) : int {
-			$query = "INSERT INTO PRODUCT
-						(name, mark, model, description, price, category, subcategory, stock, rent, observarions, active, product_date, create_date, last_modify_date)
-					VALUES
-						(" . $product.getName() . ", "
-							. $product.getMark() . ", "
-							. $product.getModel() . ", "
-							. $product.getDescription() . ", "
-							. $product.getPrice() . ", "
-							. $product.getCategory() . ", "
-							. $product.getSubcategory() . ", "
-							. $product.getStock() . ", "
-							. $product.getRent() . ", "
-							. $product.getObservations() . ", "
-							. $product.getActive() . ", "
-							. $product.getProductDate() . ", "
-							. "CURRENT_TIMESTAMP, "
-							. "CURRENT_TIMESTAMP"
-						. ")";
-			mysqli_query($this.connection, $query);
-			$id = mysqli_insert_id(); // Último ID asignado
+			// Conexión de la base de datos
+			$configObj = new Config();
+			$this->connection = $configObj->getConnection();
+			
+			$query = "INSERT INTO PRODUCT " 
+						. " (name, mark, model, description, price, category, subcategory, stock, rent, observations, active, product_date, create_date, last_modify_date) "
+						. " VALUES "
+						. " ('" . $product->getName() . "', "
+						. "'" . $product->getMark() . "', " 
+						. "'" . $product->getModel() . "', " 
+						. "'" . $product->getDescription() . "', " 
+						. $product->getPrice() . ", " 
+						. $product->getCategory() . ", " 
+						. $product->getSubcategory() . ", " 
+						. $product->getStock() . ", " 
+						. $product->getRent() . ", " 
+						. "'" . $product->getObservations() . "', " 
+						. "'" . $product->getActive() . "', " 
+						. "'" . $product->getProductDate() . "', " 
+						. "CURRENT_TIMESTAMP, " 
+						. "CURRENT_TIMESTAMP "
+						. " )";
+			error_log("Consulta a ejecutar: " . $query, 0);
+			mysqli_query($this->connection, $query);
+			
+			$id = mysqli_insert_id($this->connection); // Último ID asignado
+			error_log("ID Asignado: " . $id, 0);
 			
 			return $id;
 		}
@@ -77,22 +94,22 @@
 		private function marshall (ProductDto $productDto) : Product {
 			$product = new Product();
 			
-			$product.setName($productDto.getName()); // Nombre
-			$product.setMark($productDto.getMark()); // Marca
-			$product.setModel($productDto.getModel()); // Modelo
-			$product.setDescription($productDto.getDescription()); // Descripción
-			$product.setPrice($productDto.getPrice()); // Precio
-			$product.setCategory($productDto.getCategory()); // Categoría
-			$product.setSubcategory($productDto.getSubcategory()); // Subcategoría
-			$product.setStock($productDto.getStock()); // Existencias
-			$product.setRent($productDto.getRent()); // Alquiler
-			$product.setObservations($productDto.getObservations()); // Observaciones
-			$product.setActive($productDto.getActive()); // Activo en la web
+			$product->setName($productDto->getName()); // Nombre
+			$product->setMark($productDto->getMark()); // Marca
+			$product->setModel($productDto->getModel()); // Modelo
+			$product->setDescription($productDto->getDescription()); // Descripción
+			$product->setPrice($productDto->getPrice()); // Precio
+			$product->setCategory($productDto->getCategory()); // Categoría
+			$product->setSubcategory($productDto->getSubcategory()); // Subcategoría
+			$product->setStock($productDto->getStock()); // Existencias
+			$product->setRent($productDto->getRent()); // Alquiler
+			$product->setObservations($productDto->getObservations()); // Observaciones
+			$product->setActive($productDto->getActive()); // Activo en la web
 			// Año de fabricación
-			if (isInt($productDto.getProductDate()) || isNumeric($productDto.getProductDate())) {
-				$product.setProductDate("01/01".$productDto.getProductDate());
+			if (is_int($productDto->getProductDate()) || is_numeric($productDto->getProductDate())) {
+				$product->setProductDate($productDto->getProductDate()."/01/01"); // Fecha en inglés
 			} else {
-				$product.setProductDate($productDto.getProductDate());
+				$product->setProductDate($productDto->getProductDate());
 			}
 			
 			return $product;

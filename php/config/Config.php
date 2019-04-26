@@ -2,7 +2,7 @@
 
 	namespace php\config;
 	
-	use mysqli;
+	use \mysqli;
 	
 	class Config {
 		
@@ -13,25 +13,6 @@
 		 */
 		public function __construct() {
 			$this->connectDatabase();
-		}
-	
-		/**
-		 * Función que configura la Base de Datos
-		 *
-		 * @return $conection
-		 */
-		private function configureDatabase() {
-			$host = "localhost";
-			$user = "root";
-			$pass = "root";
-			$database = "maroto";
-		
-			// Conexión a la base de datos
-			$conection = mysql_connect($host, $user, $pass) or die ("No pudo conectarse a Base de datos");
-			mysql_select_db ($database, $conection);
-			mysql_query ( "SET NAMES 'utf8'" );
-			
-			return $conection;
 		}
 		
 		/**
@@ -49,10 +30,12 @@
 			//$link = new mysqli($host, $user, $pass, $database);
 			//$link->set_charset("utf8");
 			
-			$link = mysqli_connect($host, $user, $pass, $database, $port, null);
-			$this->setConnection(connection);
+			$link = new mysqli($host, $user, $pass, $database, $port, null);
 			
-			mysqli_query($link, $query);
+			//$link = mysqli_connect($host, $user, $pass, $database, $port, null);
+			$this->setConnection($link);
+			
+			//mysqli_query($link, $query);
 		}
 		
 		/**
@@ -62,11 +45,11 @@
 		 */
 		public function getConnection() {
 			// Comprueba de que connection no sea nulo
-			if (null != this.$connection) {
-				$this.connectDatabase();
+			if (null != $this->connection) {
+				$this->connectDatabase();
 			}
 			
-			return $this.connection;
+			return $this->connection;
 		}
 		
 		/**

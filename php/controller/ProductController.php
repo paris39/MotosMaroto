@@ -16,9 +16,7 @@
 		/* CONSTANTES DE SUBCATEGORÍA DE PRODUCTO */
 		private const SUBCATEGORY_BIKE = 1;
 		private const SUBCATEGORY_MOTO = 2;
-		private const SUBCATEGORY_EQUIPMENT = 3;
-		private const SUBCATEGORY_ACCESORY = 4;
-		private const SUBCATEGORY_OTHER = 5;
+		private const SUBCATEGORY_OTHER = 3;
 		
 		/**
 		 * Constructor de la clase
@@ -32,23 +30,23 @@
 		public function newProduct() {
 			if (null != $_POST['productCategory']) {
 				switch ($_POST['productCategory']) {
-					case 'bikeType':
+					case 1:
 						$id = $this->addNewProduct($this->marshallProduct(self::SUBCATEGORY_BIKE));
 						
 						break;
-					case 'motoType': 
+					case 2: 
 						$id = $this->addNewProduct($this->marshallProduct(self::SUBCATEGORY_MOTO));
 
 						break;
-					case 'equipmentType':
-						$id = $this->addNewProduct($this->marshallProduct(self::SUBCATEGORY_EQUIPMENT));
+					case 3:
+						$id = $this->addNewProduct($this->marshallProduct($_POST['equipmentKind']));
 						
 						break;
-					case 'accesoryType':
-						$id = $this->addNewProduct($this->marshallProduct(self::SUBCATEGORY_ACCESORY));
+					case 4:
+						$id = $this->addNewProduct($this->marshallProduct($_POST['equipmentKind']));
 						
 						break;
-					case 'otherType':
+					case 5:
 						$id = $this->addNewProduct($this->marshallProduct(self::SUBCATEGORY_OTHER));
 						
 						break;
@@ -56,12 +54,11 @@
 				}
 			}
 		}
-				
 		
 		/**
 		 * @return ProductDto
 		 */
-		private function marshallProduct(int $subcategory) : ProductDto {
+		private function marshallProduct(int $category) : ProductDto {
 			$productDto = new ProductDto();
 			
 			$productDto->setName($_POST["name"]); // Nombre
@@ -69,17 +66,24 @@
 			$productDto->setModel($_POST["model"]); // Modelo
 			$productDto->setDescription($_POST["description"]); // Descripción
 			$productDto->setPrice($_POST["price"]); // Precio
-			$productDto->setCategory($_POST["productCategory"]); // Categoría
-			$productDto->setSubcategory($subcategory); // Subcategoría
+			$productDto->setCategory($category); // Categoría
+			$productDto->setSubcategory($_POST["productCategory"]); // Subategoría
 			$productDto->setStock($_POST["stock"]); // Existencias
 			$productDto->setRent($_POST["rent"]); // Alquiler
 			$productDto->setObservations($_POST["observations"]); // Observaciones
-			$productDto->setActive($_POST["active"]); // Activo en la web
+			if (null != $_POST["active"]) {  // Activo en la web
+				if (strcasecmp("on", $_POST["active"]) == 0) {
+					$productDto->setActive(1);	
+				} else {
+					$productDto->setActive(0); // No está activo
+				}
+			} else {
+				$productDto->setActive(null);			
+			} 
 			$productDto->setProductDate($_POST["year"]); // Fecha de producto
 						
 			return $productDto;
 		}
-		
 		
 		/**
 		 * Inserta un nuevo producto en Base de Datos
@@ -91,6 +95,15 @@
 			$productDao = new ProductDao();
 			
 			return $productDao->newProduct($productDto);
+		}
+		
+		/**
+		 * 
+		 */
+		private function productList() {
+			$productDao = new ProductDao();
+			
+			return $productDao->listProducts();
 		}
 	}
 	
