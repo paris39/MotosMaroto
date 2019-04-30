@@ -14,6 +14,14 @@
 		 * @return Array
 		 */
 		public function bikeList($order, $filters): Array;
+		
+		
+		/**
+		 * Función que lista todos los tipos de bicicletas
+		 * 
+		 * @return \ArrayObject
+		 */
+		public function listBikeType() : \ArrayObject;
 	}
 
 ?>

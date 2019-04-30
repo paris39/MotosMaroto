@@ -1,23 +1,17 @@
 <?php
 
 	namespace php\model;
-	
+
 	/**
-	 * @author JPD
+	 * @author PIC1813
 	 */
-	class BikeTypeDto {
+	class ColorDto {
 		
 		private $id;
 		private $name;
-		
+		private $originalName;
+	
 		/**
-		 * Constructor de la clase
-		 */
-		public function __construct() {
-		}
-		
-		/**
-		 *
 		 * @return mixed
 		 */
 		public function getId() {
@@ -25,7 +19,6 @@
 		}
 	
 		/**
-		 *
 		 * @return mixed
 		 */
 		public function getName() {
@@ -33,7 +26,13 @@
 		}
 	
 		/**
-		 *
+		 * @return mixed
+		 */
+		public function getOriginalName() {
+			return $this->originalName;
+		}
+	
+		/**
 		 * @param mixed $id
 		 */
 		public function setId($id) {
@@ -41,11 +40,23 @@
 		}
 	
 		/**
-		 *
 		 * @param mixed $name
 		 */
 		public function setName($name) {
 			$this->name = $name;
+		}
+	
+		/**
+		 * @param mixed $originalName
+		 */
+		public function setOriginalName($originalName) {
+			$this->originalName = $originalName;
+		}
+	
+		/**
+		 * Constructor de la clase
+		 */
+		public function __construct() {
 		}
 		
 	}

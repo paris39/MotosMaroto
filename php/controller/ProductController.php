@@ -105,6 +105,7 @@
 			
 			return $productDao->listProducts();
 		}
+
 	}
 	
 	// Control de entrada

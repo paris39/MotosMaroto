@@ -6,6 +6,7 @@
 	 * @author JPD
 	 */
 	class CategoryDto {
+		
 		private $id;
 		private $name;
 		

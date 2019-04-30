@@ -11,12 +11,18 @@
 	//require '../../../php/model/CategoryDto.php';
 	use php\controller\InitController;
 	use php\model\CategoryDto;
+	use php\model\BikeTypeDto;
+	use php\model\ColorDto;
 	
 	error_log("Inicializado");
 	
-	$categoryList = new \ArrayObject();
 	$initController = new InitController();
-	$categoryList = $initController->listCategories();
+	$categoryList = new \ArrayObject();
+	$categoryList = $initController->listCategories(); // Listar categorías de producto
+	$bikeTypeList = new \ArrayObject();
+	$bikeTypeList = $initController->listBikeType(); // Listar tipos de bicicleta
+	$colorList = new \ArrayObject();
+	$colorList = $initController->listColors(); // Listar colores
 	
 ?>
 <!DOCTYPE html>
@@ -137,11 +143,12 @@
 																onChange="showProductCategory(this);" required="required">
 																<option value="none">Seleccionar categor&iacute;a...</option>
 <?php 
-																$categoryAux = new CategoryDto();
+	// Listado de Categorías
+																$categoryDtoAux = new CategoryDto();
 																for ($i = 0; $i < $categoryList->count(); $i++) {
-																	$categoryAux = new CategoryDto();
-																	$categoryAux = $categoryList->offsetGet($i);
-																	echo '<option value="' . $categoryAux->getId() . '">' . $categoryAux->getName() . '</option> ';
+																	$categoryDtoAux = new CategoryDto();
+																	$categoryDtoAux = $categoryList->offsetGet($i);
+																	echo '<option value="' . $categoryDtoAux->getId() . '">' . $categoryDtoAux->getName() . '</option> ' . "\n";
 																}
 ?>
 															</select>
@@ -157,16 +164,15 @@
 														<div class="form-group">
 															<span>Colores:</span> <select name="colors"
 																class="form-control" id="colors" size="10" multiple>
-																<option value="yellow">Amarillo</option>
-																<option value="blue">Azul</option>
-																<option value="white">Blanco</option>
-																<option value="gray">Gris</option>
-																<option value="brown">Marr&oacute;n</option>
-																<option value="orange">Naranja</option>
-																<option value="black">Negro</option>
-																<option value="red">Rojo</option>
-																<option value="pink">Rosa</option>
-																<option value="green">Verde</option>
+<?php 
+	// Listado de Colores	
+																$colorDtoAux = new ColorDto();
+																for ($i = 0; $i < $colorList->count(); $i++) {
+																	$colorDtoAux = new ColorDto();
+																	$colorDtoAux = $colorList->offsetGet($i);
+																	echo '<option value="' . $colorDtoAux->getOriginalName() . '">' . $colorDtoAux->getName() . '</option> ' . "\n";
+																}
+?>
 															</select>
 														</div>
 														<!-- div class="form-group">
@@ -196,15 +202,15 @@
 																class="form-control" id="bikeKind"
 																title="Tipo de bicicleta">
 																<option value="none">Seleccionar tipo...</option>
-																<option value="road">Carretera</option>
-																<option value="electric">El&eacute;ctrica</option>
-																<option value="fat">Fat</option>
-																<option value="fixie">Fixie</option>
-																<option value="hybrid">H&iacute;brida</option>
-																<option value="mbx">MBX</option>
-																<option value="mountain">Monta&ntilde;a</option>
-																<option value="plegable">Plegable</option>
-																<option value="urban">Urbana</option>
+<?php 
+	// Listado de Tipos de bicicleta
+																$bikeTypeDtoAux = new BikeTypeDto();
+																for ($i = 0; $i < $bikeTypeList->count(); $i++) {
+																	$bikeTypeDtoAux = new BikeTypeDto();
+																	$bikeTypeDtoAux = $bikeTypeList->offsetGet($i);
+																	echo '<option value="' . $bikeTypeDtoAux->getId() . '">' . $bikeTypeDtoAux->getName() . '</option> ' . "\n";
+																}
+?>
 															</select>
 														</div>
 														<div class="form-group">

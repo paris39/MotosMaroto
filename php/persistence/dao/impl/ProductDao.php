@@ -1,28 +1,20 @@
 <?php
 
 	namespace php\persistence\dao\impl;
-	
-	require '../config/Config.php';
+
 	require '../persistence/dao/IProductDao.php';
 	require '../persistence/entities/Product.php';
 	
-	use php\persistence\dao\IProductDao;
-	use php\config\Config;
 	use php\model\ProductDto;
+	use php\persistence\dao\IProductDao;
+	use php\persistence\dao\impl\BaseDao;
 	use php\persistence\entities\Product;
 
 	/**
 	 * @author JPD
 	 */
-	class ProductDao implements IProductDao {
-		
-		/**
-		 * Configuración de la Base de Datos
-		 * 
-		 * @var unknown
-		 */
-		private $connection;
-		
+	class ProductDao extends BaseDao implements IProductDao {
+				
 		/**
 		 * Constructor de la clase
 		 */
@@ -55,8 +47,7 @@
 		 */
 		private function save (Product $product) : int {
 			// Conexión de la base de datos
-			$configObj = new Config();
-			$this->connection = $configObj->getConnection();
+			$this->getConnection();
 			
 			$query = "INSERT INTO PRODUCT " 
 						. " (name, mark, model, description, price, category, subcategory, stock, rent, observations, active, product_date, create_date, last_modify_date) "
@@ -114,6 +105,7 @@
 			
 			return $product;
 		}
+		
 	}
 
 ?>

@@ -6,48 +6,37 @@
 	mb_internal_encoding('UTF-8');
 	
 	$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "\MotosMaroto";
-	require "$root\php\config\Config.php";
-	//require "$root\php\model\CategoryDto.php";
-	require "$root\php\persistence\dao\ICategoryDao.php";
+	require $root.'\php\persistence\dao\ICategoryDao.php';
 	require $root.'\php\persistence\entities\Category.php';
 	
 	use php\persistence\dao\ICategoryDao;
+	use php\persistence\dao\impl\BaseDao;
 	use php\persistence\entities\Category;
 	use php\model\CategoryDto;
-	use php\config\Config;
 	
 	/**
 	 * @author JPD
 	 */
-	class CategoryDao implements ICategoryDao {
-		
-		/**
-		 * Configuración de la Base de Datos
-		 * 
-		 * @var unknown
-		 */
-		private $connection;
-	
+	class CategoryDao extends BaseDao implements ICategoryDao {
+
 		/**
 		 * {@inheritdoc}
 		 * @see \php\persistence\dao\ICategoryDao::categoryList()
 		 */
 		public function listCategories() : \ArrayObject {
 			// Conexión de la base de datos
-			$configObj = new Config();
-			$this->connection = $configObj->getConnection();
+			$this->getConnection();
 			
 			// SELECT
 			$query = "SELECT * "
 					. "FROM "
-					. "PRODUCT_SUBCATEGORY PSCTG "
+						. "PRODUCT_SUBCATEGORY PSCTG "
 					. "ORDER BY PSCTG.ID"; 
 						
 			$result = mysqli_query($this->connection, $query) or die ("No funciona");
 			
 			$categoryList = new \ArrayObject();
 			
-			$i = 0;
 			while ($row = mysqli_fetch_array($result)) {
 				$categoryAux = new Category();
 				$categoryAux = $this->marshallCategory($row);
@@ -56,14 +45,11 @@
 				$categoryDtoAux = $this->categoryToCategoryDto($categoryAux);
 				
 				$categoryList->append($categoryDtoAux);
-				
-				$i++;
 			}
 			
 			return $categoryList;
 		}
 		
-
 		/**
 		 * @param array $row
 		 * @return Category
@@ -76,7 +62,6 @@
 			
 			return $categoryAux;
 		}
-		
 
 		/**
 		 * @param Category $category

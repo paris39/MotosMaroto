@@ -6,6 +6,7 @@
 	 * @author JPD
 	 */
 	class ProductDto {
+		
 		private $id;
 		private $name;
 		private $mark;
