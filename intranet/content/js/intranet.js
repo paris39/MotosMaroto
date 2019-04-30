@@ -4,7 +4,24 @@ function showProductCategory(selectedIndex) {
 	var divSelected, divs;
 	
 	if (null != selectedIndex && "0" != selectedIndex && "none" != selectedIndex.value) {
-		divSelected = document.getElementById(selectedIndex.value);
+		switch (selectedIndex.value) {
+			case "1":
+				divSelected = document.getElementById("bikeType");
+				break;
+			case "2":
+				divSelected = document.getElementById("motoType");
+				break;
+			case "3":
+				divSelected = document.getElementById("equipmentType");
+				break;
+			case "4":
+				divSelected = document.getElementById("accesoryType");
+				break;
+			case "5":
+				divSelected = document.getElementById("otherType");
+				break;				
+		}
+		//divSelected = document.getElementById(selectedIndex.value);
 		divSelected.style.display = "flex";
 		
 		// Cerrar los tipos que no correspondan

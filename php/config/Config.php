@@ -1,9 +1,12 @@
 <?php
 
 	namespace php\config;
-	
+
 	use \mysqli;
 	
+	/**
+	 * @author JPD
+	 */
 	class Config {
 		
 		private $connection;

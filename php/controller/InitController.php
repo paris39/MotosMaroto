@@ -2,10 +2,14 @@
 
 	namespace php\controller;
 	
-	require '../model/dao/impl/CategoryDto.php';
-	require '../persistence/dao/impl/CategoryDao.php';
+	$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "\MotosMaroto";
+	require "$root\php\persistence\dao\impl\CategoryDao.php";
+	
+	//require '../persistence/dao/impl/CategoryDao.php';
+	require "$root\php\model\CategoryDto.php";
 	
 	use php\persistence\dao\impl\CategoryDao;
+	use php\model\CategoryDto;
 	
 	/**
 	 * @author JPD
@@ -23,7 +27,7 @@
 		 *
 		 * @return \ArrayObject
 		 */
-		public function listCategories() {
+		public function listCategories() : \ArrayObject {
 			$categoryDao = new CategoryDao();
 			
 			return $categoryDao->listCategories();

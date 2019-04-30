@@ -2,17 +2,21 @@
 	
 	namespace intranet\content\products;
 	
+	/* Establecer la codificación de caracteres interna a UTF-8 */
+	mb_internal_encoding('UTF-8');
+ 	mb_http_output('UTF-8');
+	
 	// Carga de combos
 	require '../../../php/controller/InitController.php';
-	require '../../../php/model/CategoryDto.php';
+	//require '../../../php/model/CategoryDto.php';
 	use php\controller\InitController;
 	use php\model\CategoryDto;
 	
-	$initController = new InitController();
+	error_log("Inicializado");
 	
 	$categoryList = new \ArrayObject();
-	$categoryList = $initController->categoryList();
-
+	$initController = new InitController();
+	$categoryList = $initController->listCategories();
 	
 ?>
 <!DOCTYPE html>
@@ -132,11 +136,14 @@
 																id="productCategory" title="Categor&iacute;a"
 																onChange="showProductCategory(this);" required="required">
 																<option value="none">Seleccionar categor&iacute;a...</option>
-																<option value="1">Bicicletas</option>
-																<option value="2">Motos</option>
-																<option value="3">Equipaciones</option>
-																<option value="4">Accesorios</option>
-																<option value="5">Otros</option>
+<?php 
+																$categoryAux = new CategoryDto();
+																for ($i = 0; $i < $categoryList->count(); $i++) {
+																	$categoryAux = new CategoryDto();
+																	$categoryAux = $categoryList->offsetGet($i);
+																	echo '<option value="' . $categoryAux->getId() . '">' . $categoryAux->getName() . '</option> ';
+																}
+?>
 															</select>
 														</div>
 														<div class="form-group">

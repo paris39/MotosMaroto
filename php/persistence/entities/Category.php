@@ -1,20 +1,15 @@
 <?php
 
-	namespace php\model;
-	
+	namespace php\persistence\entities;
+
 	/**
 	 * @author JPD
 	 */
-	class CategoryDto {
+	class Category {
+		
 		private $id;
 		private $name;
 		
-		/**
-		 * Constructor de la clase 
-		 */
-		public function __construct() {
-		}
-	
 		/**
 		 * @return mixed
 		 */
