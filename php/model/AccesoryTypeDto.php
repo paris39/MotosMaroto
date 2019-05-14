@@ -5,10 +5,11 @@
 	/**
 	 * @author JPD
 	 */
-	class BikeSizeDto {
+	class AccesoryTypeDto {
 		
 		private $id;
 		private $name;
+		private $category;
 		
 		/**
 		 * Constructor de la clase
@@ -47,6 +48,21 @@
 		public function setName($name) {
 			$this->name = $name;
 		}
+		
+		/**
+		 * @return mixed
+		 */
+		public function getCategory() {
+			return $this->category;
+		}
+		
+		/**
+		 * @param mixed $category
+		 */
+		public function setCategory($category) {
+			$this->category = $category;
+		}
+		
 	}
 
 ?>

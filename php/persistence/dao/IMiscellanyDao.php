@@ -3,7 +3,7 @@
 	namespace php\persistence\dao;
 	
 	/**
-	 * @author PIC1813
+	 * @author JPD
 	 */
 	interface IMiscellanyDao {
 		
@@ -13,6 +13,13 @@
 		 * @return \ArrayObject
 		 */
 		public function listColors() : \ArrayObject;
+		
+		/**
+		 * Función que devuelve el listado de géneros
+		 *
+		 * @return \ArrayObject
+		 */
+		public function listGenders() : \ArrayObject;
 		
 	}
 	

@@ -5,9 +5,9 @@
 	use php\config\Config;
 
 	/**
-	 * @author PIC1813
+	 * @author JPD
 	 */
-	class BaseDao {
+	abstract class BaseDao {
 		
 		/**
 		 * Configuración de la Base de Datos
@@ -17,6 +17,7 @@
 		protected $connection;
 	
 		/**
+		 * Constructor por defecto
 		 */
 		public function __construct() {
 		}

@@ -5,11 +5,26 @@
 	/**
 	 * @author JPD
 	 */
-	class BikeSizeDto {
+	class MotoLicenseDto {
 		
 		private $id;
 		private $name;
+		private $observations;
 		
+		/**
+		 * @return mixed
+		 */
+		public function getObservations() {
+			return $this->observations;
+		}
+	
+		/**
+		 * @param mixed $observations
+		 */
+		public function setObservations($observations) {
+			$this->observations = $observations;
+		}
+	
 		/**
 		 * Constructor de la clase
 		 */
@@ -47,6 +62,7 @@
 		public function setName($name) {
 			$this->name = $name;
 		}
+		
 	}
 
 ?>

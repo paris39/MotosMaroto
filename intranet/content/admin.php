@@ -78,7 +78,7 @@
 										</div>
 										<div class="adminCategory">
 											<div class="categoryImg">
-												<img src="./img/category.jpg" /> <span>Categor&iacute;as</span>
+												<img src="./img/category.png" /> <span>Categor&iacute;as</span>
 											</div>
 											<ul>
 												<li>

@@ -5,10 +5,11 @@
 	/**
 	 * @author JPD
 	 */
-	class BikeSizeDto {
+	class GenderDto {
 		
 		private $id;
 		private $name;
+		private $active;
 		
 		/**
 		 * Constructor de la clase
@@ -47,6 +48,21 @@
 		public function setName($name) {
 			$this->name = $name;
 		}
+		
+		/**
+		 * @return mixed
+		 */
+		public function getActive() {
+			return $this->active;
+		}
+		
+		/**
+		 * @param mixed $active
+		 */
+		public function setActive($active) {
+			$this->active = $active;
+		}
+		
 	}
 
 ?>

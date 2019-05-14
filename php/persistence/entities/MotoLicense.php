@@ -1,23 +1,31 @@
 <?php
 
-	namespace php\model;
-	
+	namespace php\persistence\entities;
+
 	/**
 	 * @author JPD
 	 */
-	class BikeSizeDto {
+	class MotoLicense {
 		
 		private $id;
 		private $name;
+		private $observations;
 		
 		/**
-		 * Constructor de la clase
+		 * @return mixed
 		 */
-		public function __construct() {
+		public function getObservations() {
+			return $this->observations;
 		}
-		
+	
 		/**
-		 *
+		 * @param mixed $observations
+		 */
+		public function setObservations($observations) {
+			$this->observations = $observations;
+		}
+	
+		/**
 		 * @return mixed
 		 */
 		public function getId() {
@@ -25,7 +33,6 @@
 		}
 	
 		/**
-		 *
 		 * @return mixed
 		 */
 		public function getName() {
@@ -33,7 +40,6 @@
 		}
 	
 		/**
-		 *
 		 * @param mixed $id
 		 */
 		public function setId($id) {
@@ -41,12 +47,12 @@
 		}
 	
 		/**
-		 *
 		 * @param mixed $name
 		 */
 		public function setName($name) {
 			$this->name = $name;
 		}
+		
 	}
 
 ?>

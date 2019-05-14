@@ -44,13 +44,32 @@ function showSubtypeCategory(selectedIndex) {
 	var divSelected, divs;
 	
 	if (null != selectedIndex && "0" != selectedIndex && "none" != selectedIndex.value) {
-		divSelected = document.getElementById(selectedIndex.value + "SubType");
-		divSelected.style.display = "inline";
+		switch (selectedIndex.value) {
+		case "1":
+			divSelected = document.getElementById("bikeSubType");
+			break;
+		case "2":
+			divSelected = document.getElementById("motoSubType");
+			break;
+		case "3":
+			divSelected = document.getElementById("equipmentSubType");
+			break;
+		case "4":
+			divSelected = document.getElementById("accesorySubType");
+			break;
+		case "5":
+			divSelected = document.getElementById("otherSubType");
+			break;
+		}
+		
+		//divSelected = document.getElementById(selectedIndex.value + "SubType");
+		divSelected.style.display = "inline"; // inline
 		
 		// Cerrar los subtipos que no correspondan
 		divs = document.getElementsByClassName("subtypeCategory");
 	    for (i = 0; i < divs.length; i++) {
 	    	if (divs[i] != divSelected) {
+	    		divs[i].selectedIndex = 0;
 	    		divs[i].style.display = "none";
 	    	}
 	    }
@@ -60,15 +79,16 @@ function showSubtypeCategory(selectedIndex) {
 	    	if ("exampleSubType" === divs[i].id) {
 	    		divs[i].style.display = "inline"
 	    	} else {
+	    		divs[i].selectedIndex = 0;
 	    		divs[i].style.display = "none";
 	    	}
 	    }
 	}
 }
 
-
-
-/*** Comprueba cada campo del formulario de Añadir un nuevo producto ***/
+/**
+ *  Comprueba cada campo del formulario de Añadir un nuevo producto *
+ */
 function addProduct() {
 	// Valido la descripción
 	if (document.addForm.descripcion.value == '') {
@@ -105,6 +125,40 @@ function addProduct() {
 	}
 	return true;
 } // Fin addProduct()
+
+/**
+ * 
+ */
+function findProductByFilters() {
+	// Recorrer campos de búsqueda
+	var params = {
+			"id": document.getElementById("txId").value,
+            "name": document.getElementById("txName").value,
+            "mark": document.getElementById("txMark").value,
+            "productCategory": document.getElementById("cbProductCategory").value,
+            "bikeSubType": document.getElementById("cbBikeSubType").value,
+            "motoSubType": document.getElementById("cbMotoSubType").value,
+            "otherSubType": document.getElementById("cbOtherSubType").value,
+            "accesorySubType": document.getElementById("cbAccesorySubType").value,
+            "equipmentSubType": document.getElementById("cbEquipmentSubType").value,
+            "listProduct": true
+    };
+	
+	$.ajax({
+		data:  params, // datos que se envian a traves de ajax
+		url:   '/MotosMaroto/php/controller/ProductController.php', // archivo que recibe la peticion
+		type:  'post', // método de envio
+		beforeSend: function () {
+			//$("#resultado").html("Procesando, espere por favor...");
+		},
+		success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+			$("#jQueryResults").html(response);
+		}
+	});
+}
+
+
+
 
 
 /*** Comprueba cada campo del formulario de registro de un nuevo usuario ***/

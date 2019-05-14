@@ -10,6 +10,13 @@
 		 * @return ArrayObject
 		 */
 		public function listCategories(): \ArrayObject;
+		
+		/**
+		 * Función que lista las subcategorías
+		 *
+		 * @return ArrayObject
+		 */
+		public function listSubcategories(): \ArrayObject;
 	}
 
 ?>

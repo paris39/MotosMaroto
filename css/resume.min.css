@@ -286,50 +286,49 @@ section#admin .resume-item .resume-content .tabcontainer .tabcontent {
 	/* Para igualar el margin de la parte de abajo de los botones */
 }
 
-section#admin .resume-item .resume-content .tabcontainer .tabcontent .adminCategory
-	{
+section#admin .resume-item .resume-content .tabcontainer .tabcontent .adminCategory {
 	float: left;
 	width: 50%;
 }
 
-section#admin .resume-item .resume-content .tabcontainer .tabcontent .adminCategory .categoryImg
-	{
+section#admin .resume-item .resume-content .tabcontainer .tabcontent .adminCategory .categoryImg {
 	
 }
 
-section#admin .resume-item .resume-content .tabcontainer .tabcontent .adminCategory .categoryImg img
-	{
+section#admin .resume-item .resume-content .tabcontainer .tabcontent .adminCategory .categoryImg img {
 	height: 50px;
 	width: 55px;
 	text-align: center;
 	margin-bottom: 5px;
 }
 
-section#admin .resume-item .resume-content .tabcontainer .tabcontent .table .impar
-	{
+section#admin .resume-item .resume-content .tabcontainer .tabcontent .table .impar {
 	background-color: #f1f1f1;
 }
 
-section#admin .resume-item .resume-content .tabcontainer .tabcontent .table .adminImg
-	{
+section#admin .resume-item .resume-content .tabcontainer .tabcontent .table .center {
+	text-align: center;
+}
+section#admin .resume-item .resume-content .tabcontainer .tabcontent .table .right {
+	text-align: right;
+}
+
+section#admin .resume-item .resume-content .tabcontainer .tabcontent .table .adminImg {
 	text-align: center;
 }
 
-section#admin .resume-item .resume-content .tabcontainer .tabcontent .table .adminImg img
-	{
+section#admin .resume-item .resume-content .tabcontainer .tabcontent .table .adminImg img {
 	height: 20px;
 	width: 20px;
 	text-align: center;
 	margin-bottom: 5px;
 }
 
-section#admin .resume-item .resume-content .tabcontainer .tabcontent .table .adminImg img:hover
-	{
+section#admin .resume-item .resume-content .tabcontainer .tabcontent .table .adminImg img:hover {
 	cursor: pointer;
 }
 
-section#admin .resume-item .resume-content .tabcontainer .tabcontent .adminResults
-	{
+section#admin .resume-item .resume-content .tabcontainer .tabcontent .jQueryResults .adminResults {
 	clear: both;
 	height: auto;
 	margin-bottom: 1px;
@@ -346,9 +345,9 @@ section#admin .resume-item .resume-content .tabcontainer .tabcontent .adminResul
 	margin-top: 9px;
 }
 
-.resume-item .resume-content .tabcontainer .tabcontent .blackResultsNumber
-	{
+.resume-item .resume-content .tabcontainer .tabcontent .blackResultsNumber {
 	color: black;
+	font-weight: bold;
 }
 
 .resume-item .resume-content .tabcontainer .tabcontent .order {

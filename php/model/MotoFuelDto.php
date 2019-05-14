@@ -5,7 +5,7 @@
 	/**
 	 * @author JPD
 	 */
-	class BikeSizeDto {
+	class MotoFuelDto {
 		
 		private $id;
 		private $name;
@@ -47,6 +47,7 @@
 		public function setName($name) {
 			$this->name = $name;
 		}
+		
 	}
 
 ?>

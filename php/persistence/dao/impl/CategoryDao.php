@@ -9,10 +9,10 @@
 	require $root.'\php\persistence\dao\ICategoryDao.php';
 	require $root.'\php\persistence\entities\Category.php';
 	
+	use php\model\CategoryDto;
 	use php\persistence\dao\ICategoryDao;
 	use php\persistence\dao\impl\BaseDao;
 	use php\persistence\entities\Category;
-	use php\model\CategoryDto;
 	
 	/**
 	 * @author JPD
@@ -30,8 +30,8 @@
 			// SELECT
 			$query = "SELECT * "
 					. "FROM "
-						. "PRODUCT_SUBCATEGORY PSCTG "
-					. "ORDER BY PSCTG.ID"; 
+						. "PRODUCT_CATEGORY "
+					. "ORDER BY ID"; 
 						
 			$result = mysqli_query($this->connection, $query) or die ("No funciona");
 			
@@ -74,6 +74,37 @@
 			$categoryDtoAux->setName($category->getName());
 			
 			return $categoryDtoAux;			
+		}
+		
+		/**
+		 * {@inheritdoc}
+		 * @see \php\persistence\dao\ICategoryDao::subcategoryList()
+		 */
+		public function listSubcategories() : \ArrayObject {
+			// Conexión de la base de datos
+			$this->getConnection();
+			
+			// SELECT
+			$query = "SELECT * "
+					. "FROM "
+						. "PRODUCT_SUBCATEGORY "
+					. "ORDER BY NAME";
+					
+				$result = mysqli_query($this->connection, $query) or die ("No funciona");
+				
+				$subcategoryList = new \ArrayObject();
+				
+				while ($row = mysqli_fetch_array($result)) {
+					$subcategoryAux = new Category();
+					$subcategoryAux = $this->marshallCategory($row);
+					
+					$subcategoryDtoAux = new CategoryDto();
+					$subcategoryDtoAux = $this->categoryToCategoryDto($subcategoryAux);
+					
+					$subcategoryList->append($subcategoryDtoAux);
+				}
+				
+				return $subcategoryList;
 		}
 		
 	}

@@ -5,11 +5,12 @@
 	/**
 	 * @author JPD
 	 */
-	class BikeSizeDto {
+	class MotoContaminationDto {
 		
 		private $id;
 		private $name;
-		
+		private $color;
+	
 		/**
 		 * Constructor de la clase
 		 */
@@ -47,6 +48,21 @@
 		public function setName($name) {
 			$this->name = $name;
 		}
+		
+		/**
+		 * @return mixed
+		 */
+		public function getColor() {
+			return $this->color;
+		}
+		
+		/**
+		 * @param mixed $color
+		 */
+		public function setColor($color) {
+			$this->color = $color;
+		}
+		
 	}
 
 ?>

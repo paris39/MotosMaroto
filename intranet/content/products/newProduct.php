@@ -8,21 +8,61 @@
 	
 	// Carga de combos
 	require '../../../php/controller/InitController.php';
-	//require '../../../php/model/CategoryDto.php';
+
 	use php\controller\InitController;
-	use php\model\CategoryDto;
 	use php\model\BikeTypeDto;
+	use php\model\BikeSizeDto;
+	use php\model\CategoryDto;
 	use php\model\ColorDto;
+	use php\model\EquipmentTypeDto;
+	use php\model\GenderDto;
+	use php\model\MotoContaminationDto;
+	use php\model\MotoFuelDto;
+	use php\model\MotoLicenseDto;
+	use php\model\MotoTransmissionDto;
+	use php\model\MotoTypeDto;
 	
-	error_log("Inicializado");
+	error_log("Inicializado newProduct");
 	
+	/**
+	 * Constantes del código de subcategorías en Base de datos
+	 */
+	const BIKE = 1;
+	const MOTO = 2;
+	const OTHER = 3;
+	
+	/**
+	 * Carga de datos de combos
+	 */
 	$initController = new InitController();
-	$categoryList = new \ArrayObject();
-	$categoryList = $initController->listCategories(); // Listar categorías de producto
+	$bikeEquipmentTypeList = new \ArrayObject();
+	$bikeEquipmentTypeList = $initController->listEquipmentTypeByCategory(BIKE);
 	$bikeTypeList = new \ArrayObject();
 	$bikeTypeList = $initController->listBikeType(); // Listar tipos de bicicleta
+	$bikeSizeList = new \ArrayObject();
+	$bikeSizeList = $initController->listBikeSize(); // Listar tallas de bicicleta
+	$categoryList = new \ArrayObject();
+	$categoryList = $initController->listCategories(); // Listar categorías de producto
 	$colorList = new \ArrayObject();
 	$colorList = $initController->listColors(); // Listar colores
+	$genderList = new \ArrayObject();
+	$genderList = $initController->listGenders(); // Listar géneros
+	$motoContaminationList = new \ArrayObject();
+	$motoContaminationList = $initController->listMotoContamination(); // Listar distintivos anticontaminación de motos
+	$motoEquipmentTypeList = new \ArrayObject();
+	$motoEquipmentTypeList = $initController->listEquipmentTypeByCategory(MOTO);
+	$motoFuelList = new \ArrayObject();
+	$motoFuelList = $initController->listMotoFuel(); // Listar combustibles de motos
+	$motoLicenseList = new \ArrayObject();
+	$motoLicenseList = $initController->listMotoLicense(); // Listar permisos de conducir motos
+	$motoTransmissionList = new \ArrayObject();
+	$motoTransmissionList = $initController->listMotoTransmission(); // Listar tipos de transmisión de motocicleta
+	$motoTypeList = new \ArrayObject();
+	$motoTypeList = $initController->listMotoType(); // Listar tipos de motocicleta
+	$otherEquipmentTypeList = new \ArrayObject();
+	$otherEquipmentTypeList = $initController->listEquipmentTypeByCategory(OTHER);
+	$subcategoryList = new \ArrayObject();
+	$subcategoryList = $initController->listSubcategories(); // Listar categorías de producto
 	
 ?>
 <!DOCTYPE html>
@@ -144,7 +184,6 @@
 																<option value="none">Seleccionar categor&iacute;a...</option>
 <?php 
 	// Listado de Categorías
-																$categoryDtoAux = new CategoryDto();
 																for ($i = 0; $i < $categoryList->count(); $i++) {
 																	$categoryDtoAux = new CategoryDto();
 																	$categoryDtoAux = $categoryList->offsetGet($i);
@@ -166,7 +205,6 @@
 																class="form-control" id="colors" size="10" multiple>
 <?php 
 	// Listado de Colores	
-																$colorDtoAux = new ColorDto();
 																for ($i = 0; $i < $colorList->count(); $i++) {
 																	$colorDtoAux = new ColorDto();
 																	$colorDtoAux = $colorList->offsetGet($i);
@@ -204,7 +242,6 @@
 																<option value="none">Seleccionar tipo...</option>
 <?php 
 	// Listado de Tipos de bicicleta
-																$bikeTypeDtoAux = new BikeTypeDto();
 																for ($i = 0; $i < $bikeTypeList->count(); $i++) {
 																	$bikeTypeDtoAux = new BikeTypeDto();
 																	$bikeTypeDtoAux = $bikeTypeList->offsetGet($i);
@@ -253,9 +290,14 @@
 															<span>Talla:</span> <select name="bikeSize"
 																class="form-control" id="bikeSize" title="Talla">
 																<option value="none">Seleccionar talla...</option>
-																<option value="S">S</option>
-																<option value="M">M</option>
-																<option value="L">L</option>
+<?php 
+	// Listado de Tallas de bicicleta
+																for ($i = 0; $i < $bikeSizeList->count(); $i++) {
+																	$bikeSizeDtoAux = new BikeSizeDto();
+																	$bikeSizeDtoAux = $bikeSizeList->offsetGet($i);
+																	echo '<option value="' . $bikeSizeDtoAux->getId() . '">' . $bikeSizeDtoAux->getName() . '</option> ' . "\n";
+																}
+?>
 															</select>
 														</div>
 														<div class="form-group">
@@ -302,17 +344,14 @@
 															<span>Tipo de moto:</span> <select name="motoKind"
 																class="form-control" id="motoKind" title="Tipo de moto">
 																<option value="none">Seleccionar tipo...</option>
-																<option value="chopper">Chopper</option>
-																<option value="custom">Custom</option>
-																<option value="enduro">Enduro</option>
-																<option value="touring">Gran turismo</option>
-																<option value="motocross">Motocross</option>
-																<option value="naked">Naked</option>
-																<option value="racing">Racing</option>
-																<option value="trail">Trail</option>
-																<option value="maxitrail">Maxi Trail</option>
-																<option value="scooter">Scooter</option>
-																<option value="maxiscooter">Maxi Scooter</option>
+<?php 
+	// Listado de Tipos de motocicleta
+																for ($i = 0; $i < $motoTypeList->count(); $i++) {
+																	$motoTypeDtoAux = new MotoTypeDto();
+																	$motoTypeDtoAux = $motoTypeList->offsetGet($i);
+																	echo '<option value="' . $motoTypeDtoAux->getId() . '">' . $motoTypeDtoAux->getName() . '</option> ' . "\n";
+																}
+?>
 															</select>
 														</div>
 														<div class="form-group">
@@ -361,11 +400,18 @@
 																class="form-control" id="motoLicense"
 																title="Carnet de moto">
 																<option value="none">Seleccionar carnet...</option>
-																<option value="AM">AM</option>
-																<option value="A1">A1</option>
-																<option value="A2">A2</option>
-																<option value="A2">A</option>
-																<option value="B">B* (>3 a&ntilde;os)</option>
+<?php 
+	// Listado de Permisos de conducir motocicleta
+																for ($i = 0; $i < $motoLicenseList->count(); $i++) {
+																	$motoLicenseDtoAux = new MotoLicenseDto();
+																	$motoLicenseDtoAux = $motoLicenseList->offsetGet($i);
+																	if (null == $motoLicenseDtoAux->getObservations() || strcasecmp("", trim($motoLicenseDtoAux->getObservations())) == 0) {
+																		echo '<option value="' . $motoLicenseDtoAux->getId() . '">' . $motoLicenseDtoAux->getName() . '</option> ' . "\n";
+																	} else {
+																		echo '<option value="' . $motoLicenseDtoAux->getId() . '">' . $motoLicenseDtoAux->getName() . " (" . $motoLicenseDtoAux->getObservations() . ") " . '</option> ' . "\n";
+																	}
+																}
+?>
 															</select>
 														</div>
 														<div class="form-group">
@@ -377,21 +423,33 @@
 															<span>Combustible:</span> <select class="form-control"
 																name="motoFuel" id="motoFuel" title="Combustible">
 																<option value="none">Seleccionar combustible...</option>
-																<option value="electric">El&eacute;ctrico</option>
-																<option value="gas95">Gasolina 95</option>
-																<option value="gas98">Gasolina 98</option>
+<?php 
+	// Listado de Combustibles de motocicleta
+																for ($i = 0; $i < $motoFuelList->count(); $i++) {
+																	$motoFuelDtoAux = new MotoFuelDto();
+																	$motoFuelDtoAux = $motoFuelList->offsetGet($i);
+																	echo '<option value="' . $motoFuelDtoAux->getId() . '">' . $motoFuelDtoAux->getName() . '</option> ' . "\n";
+																}
+?>
 															</select>
 														</div>
 														<div class="form-group">
 															<span>Distintivo anticontaminaci&oacute;n:</span> <select
 																class="form-control" name="motoContamination"
-																id="motoContamination" title="Combustible">
+																id="motoContamination" title="Distintivo anticontaminaci&oacute;n">
 																<option value="none">Seleccionar categor&iacute;a...</option>
-																<option value="A">No corresponde</option>
-																<option value="B">B (amarillo)</option>
-																<option value="C">C (verde)</option>
-																<option value="ECO">ECO (verde y azul)</option>
-																<option value="0">0 (azul)</option>
+<?php 
+	// Listado de Distintivos anticontaminación de motocicleta
+																for ($i = 0; $i < $motoContaminationList->count(); $i++) {
+																	$motoContaminationDtoAux = new MotoContaminationDto();
+																	$motoContaminationDtoAux = $motoContaminationList->offsetGet($i);
+																	if (null == $motoContaminationDtoAux->getColor() || strcasecmp("", trim($motoContaminationDtoAux->getColor())) == 0) {
+																		echo '<option value="' . $motoContaminationDtoAux->getId() . '">' . $motoContaminationDtoAux->getName() . '</option> ' . "\n";
+																	} else {
+																		echo '<option value="' . $motoContaminationDtoAux->getId() . '">' . $motoContaminationDtoAux->getName() . " (" . strtolower($motoContaminationDtoAux->getColor()) . ") " . '</option> ' . "\n";
+																	}
+																}
+?>
 															</select>
 														</div>
 														<div class="form-group">
@@ -399,9 +457,14 @@
 																class="form-control" name="motoTransmission"
 																id="motoTransmission" title="Transmisi&oacute;n">
 																<option value="none">Seleccionar transmisi&oacute;n...</option>
-																<option value="chain">Cadena</option>
-																<option value="cardan">Card&aacute;n</option>
-																<option value="belt">Correa</option>
+<?php 
+	// Listado de tipos de Transmisión de motocicleta
+																for ($i = 0; $i < $motoTransmissionList->count(); $i++) {
+																	$motoTransmissionDtoAux = new MotoTransmissionDto();
+																	$motoTransmissionDtoAux = $motoTransmissionList->offsetGet($i);
+																	echo '<option value="' . $motoTransmissionDtoAux->getId() . '">' . $motoTransmissionDtoAux->getName() . '</option> ' . "\n";
+																}
+?>
 															</select>
 														</div>
 														<div class="form-group">
@@ -423,9 +486,14 @@
 																id="equipmentKind" title="Tipo de equipaci&oacute;n"
 																onChange="showSubtypeCategory(this);">
 																<option value="none">Seleccionar tipo...</option>
-																<option value="1">Bicicletas</option>
-																<option value="2">Motos</option>
-																<option value="3">Otros</option>
+<?php 
+	// Listado de subcategorías
+																for ($i = 0; $i < $subcategoryList->count(); $i++) {
+																	$subcategoryDtoAux = new CategoryDto();
+																	$subcategoryDtoAux = $subcategoryList->offsetGet($i);
+																	echo '<option value="' . $subcategoryDtoAux->getId() . '">' . $subcategoryDtoAux->getName() . '</option> ' . "\n";
+																}
+?>
 															</select>
 														</div>
 														<div class="form-group subtypeCategory" id="exampleSubType">
@@ -440,21 +508,14 @@
 																name="bikeSubType" id="cbBikeSubType"
 																title="Subtipo de equipaci&oacute;n de bicicleta">
 																<option value="none">Seleccionar subtipo...</option>
-																<option value="bikeBottles">Bidones</option>
-																<option value="bikeSocks">Calcetines</option>
-																<option value="bikeShirts">Camisetas</option>
-																<option value="bikeHelmets">Cascos</option>
-																<option value="bikeWaistcoats">Chalecos</option>
-																<option value="bikeJackets">Chaquetas</option>
-																<option value="bikeCullotes">Cullotes</option>
-																<option value="bikeGlasses">Gafas</option>
-																<option value="bikeCaps">Gorras</option>
-																<option value="bikeGants">Guantes</option>
-																<option value="bikeMaillots">Maillots</option>
-																<option value="bikePants">Pantalones</option>
-																<option value="bikeProtections">Protecciones</option>
-																<option value="bikeThermalClothes">Ropa t&eacute;rmica</option>
-																<option value="bikeShoes">Zapatillas</option>
+<?php 
+	// Listado de subtipo de equipación de bicicletas
+																for ($i = 0; $i < $bikeEquipmentTypeList->count(); $i++) {
+																	$bikeEquipmentTypeDtoAux = new EquipmentTypeDto();
+																	$bikeEquipmentTypeDtoAux = $bikeEquipmentTypeList->offsetGet($i);
+																	echo '<option value="' . $bikeEquipmentTypeDtoAux->getId() . '">' . $bikeEquipmentTypeDtoAux->getName() . '</option> ' . "\n";
+																}
+?>
 															</select>
 														</div>
 														<div class="form-group subtypeCategory" id="motoSubType">
@@ -462,16 +523,14 @@
 																name="motoSubType" id="cbMotoSubType"
 																title="Subtipo de equipaci&oacute;n de moto">
 																<option value="none">Seleccionar subtipo...</option>
-																<option value="motoSocks">Calcetines</option>
-																<option value="motoShirts">Camisetas</option>
-																<option value="motoHelmets">Cascos</option>
-																<option value="motoJackets">Chaquetas</option>
-																<option value="motoGants">Guantes</option>
-																<option value="motoOveralls">Monos</option>
-																<option value="motoPants">Pantalones</option>
-																<option value="motoProtections">Protecciones</option>
-																<option value="motoThermalClothes">Ropa t&eacute;rmica</option>
-																<option value="motoShoes">Zapatillas</option>
+<?php 
+	// Listado de subtipo de equipación de motos
+																for ($i = 0; $i < $motoEquipmentTypeList->count(); $i++) {
+																	$motoEquipmentTypeDtoAux = new EquipmentTypeDto();
+																	$motoEquipmentTypeDtoAux = $motoEquipmentTypeList->offsetGet($i);
+																	echo '<option value="' . $motoEquipmentTypeDtoAux->getId() . '">' . $motoEquipmentTypeDtoAux->getName() . '</option> ' . "\n";
+																}
+?>
 															</select>
 														</div>
 														<div class="form-group subtypeCategory" id="otherSubType">
@@ -479,8 +538,14 @@
 																name="otherSubType" id="cbOtherSubType"
 																title="Subtipo de equipaci&oacute;n de otros">
 																<option value="none">Seleccionar subtipo...</option>
-																<option value="otherChainsaws">Motosierras</option>
-																<option value="otherPrunings">Podadoras</option>
+<?php 
+	// Listado de subtipo de equipación de otros
+																for ($i = 0; $i < $otherEquipmentTypeList->count(); $i++) {
+																	$otherEquipmentTypeDtoAux = new EquipmentTypeDto();
+																	$otherEquipmentTypeDtoAux = $otherEquipmentTypeList->offsetGet($i);
+																	echo '<option value="' . $otherEquipmentTypeDtoAux->getId() . '">' . $otherEquipmentTypeDtoAux->getName() . '</option> ' . "\n";
+																}
+?>
 															</select>
 														</div>
 													</div>
@@ -489,10 +554,14 @@
 															<span>G&eacute;nero:</span> <select class="form-control"
 																name="genderSubType" id="cbGender" title="G&eacute;nero">
 																<option value="none">Seleccionar g&eacute;nero...</option>
-																<option value="genderFemale">Femenino</option>
-																<option value="genderMale">Masculino</option>
-																<option value="genderUnisex">Unisex</option>
-																<option value="genderChild">Infantil</option>
+<?php 
+	// Listado de subtipo de géneros de personas
+																for ($i = 0; $i < $genderList->count(); $i++) {
+																	$genderDtoAux = new GenderDto();
+																	$genderDtoAux = $genderList->offsetGet($i);
+																	echo '<option value="' . $genderDtoAux->getId() . '">' . $genderDtoAux->getName() . '</option> ' . "\n";
+																}
+?>
 															</select>
 														</div>
 													</div>
