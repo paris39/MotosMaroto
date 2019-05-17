@@ -10,7 +10,6 @@
 	require $root.'\php\persistence\dao\IAccesoryDao.php';
 	require $root.'\php\persistence\entities\AccesoryType.php';
 	
-	use php\model\AccesoryTypeDto;
 	use php\persistence\dao\IAccesoryDao;
 	use php\persistence\dao\impl\BaseDao;
 	use php\persistence\entities\Category;
@@ -58,9 +57,6 @@
 				$accesoryTypeAux = new AccesoryType();
 				$accesoryTypeAux = $this->marshallAccesoryType($row);
 				
-				$accesoryTypeDtoAux = new AccesoryTypeDto();
-				$accesoryTypeDtoAux = $this->accesoryTypeToAccesoryTypeDto($accesoryTypeAux);
-				
 				$accesoryTypeList->append($accesoryTypeAux);
 			}
 			
@@ -97,9 +93,6 @@
 				$accesoryTypeAux = new AccesoryType();
 				$accesoryTypeAux = $this->marshallAccesoryType($row);
 				
-				$accesoryTypeDtoAux = new AccesoryTypeDto();
-				$accesoryTypeDtoAux = $this->accesoryTypeToAccesoryTypeDto($accesoryTypeAux);
-				
 				$accesoryTypeList->append($accesoryTypeAux);
 			}
 			
@@ -121,20 +114,6 @@
 			$accesoryTypeAux->setCategory($categoryAux);
 			
 			return $accesoryTypeAux;
-		}
-		
-		/**
-		 * @param AccesoryType $accesoryType
-		 * @return AccesoryTypeDto
-		 */
-		private function accesoryTypeToAccesoryTypeDto (AccesoryType $accesoryType) : AccesoryTypeDto {
-			$accesoryTypeDtoAux = new AccesoryTypeDto();
-			
-			$accesoryTypeDtoAux->setId($accesoryType->getId());
-			$accesoryTypeDtoAux->setName($accesoryType->getName());
-			$accesoryTypeDtoAux->setCategory($accesoryType->getCategory());
-			
-			return $accesoryTypeDtoAux;
 		}
 		
 	}

@@ -8,6 +8,13 @@
 	interface IEquipmentDao {
 		
 		/**
+		 * Función que lista las tallas de equipamiento
+		 *
+		 * @return \ArrayObject
+		 */
+		public function listEquipmentSize() : \ArrayObject;
+		
+		/**
 		 * Función que lista los tipos de equipamiento
 		 *
 		 * @return \ArrayObject

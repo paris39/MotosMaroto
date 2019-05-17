@@ -10,7 +10,6 @@
 	require $root.'\php\persistence\dao\IOtherDao.php';
 	require $root.'\php\persistence\entities\OtherType.php';
 	
-	use php\model\OtherTypeDto;
 	use php\persistence\dao\IOtherDao;
 	use php\persistence\dao\impl\BaseDao;
 	use php\persistence\entities\OtherType;
@@ -42,10 +41,7 @@
 				$otherTypeAux = new OtherType();
 				$otherTypeAux = $this->marshallOtherType($row);
 				
-				$otherTypeDtoAux = new OtherTypeDto();
-				$otherTypeDtoAux = $this->otherTypeToOtherTypeDto($otherTypeAux);
-				
-				$otherTypeList->append($otherTypeDtoAux);
+				$otherTypeList->append($otherTypeAux);
 			}
 			
 			return $otherTypeList;
@@ -62,19 +58,6 @@
 			$otherTypeAux->setName(utf8_encode($row['name']));
 			
 			return $otherTypeAux;
-		}
-		
-		/**
-		 * @param OtherType $otherType
-		 * @return OtherTypeDto
-		 */
-		private function otherTypeToOtherTypeDto (OtherType $otherType) : OtherTypeDto {
-			$otherTypeDtoAux = new OtherTypeDto();
-			
-			$otherTypeDtoAux->setId($otherType->getId());
-			$otherTypeDtoAux->setName($otherType->getName());
-			
-			return $otherTypeDtoAux;
 		}
 		
 	}

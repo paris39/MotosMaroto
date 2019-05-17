@@ -44,22 +44,98 @@ function showSubtypeCategory(selectedIndex) {
 	var divSelected, divs;
 	
 	if (null != selectedIndex && "0" != selectedIndex && "none" != selectedIndex.value) {
+		switch (selectedIndex.id) {
+			case "accesoryKind": 
+				switch (selectedIndex.value) {
+					case "1":
+						divSelected = document.getElementById("bikeAccesorySubType");
+						break;
+					case "2":
+						divSelected = document.getElementById("motoAccesorySubType");
+						break;
+					case "3":
+						divSelected = document.getElementById("otherAccesorySubType");
+						break;
+				}
+				break;
+			case "equipmentKind":
+				switch (selectedIndex.value) {
+					case "1":
+						divSelected = document.getElementById("bikeEquipmentSubType");
+						break;
+					case "2":
+						divSelected = document.getElementById("motoEquipmentSubType");
+						break;
+					case "3":
+						divSelected = document.getElementById("otherEquipmentSubType");
+						break;
+				}
+				break;
+		} // End switch ext
+			
+		//divSelected = document.getElementById(selectedIndex.value + "SubType");
+		divSelected.style.display = "block"; // inline
+		
+		// Cerrar los subtipos que no correspondan
+		divs = document.getElementsByClassName("subtypeCategory");
+	    for (i = 0; i < divs.length; i++) {
+	    	/*if ("equipmentKind" === selectedIndex.id) {
+		    	if ("exampleEquipmentSubType" === divs[i].id) {
+		    		divs[i].style.display = "inline";
+		    	}
+	    	} else if ("accesoryKind" === selectedIndex.id) {
+	    		if ("exampleAccesorySubType" === divs[i].id) {
+		    		divs[i].style.display = "inline";
+	    		}
+	    	}*/
+	    	if (divs[i] != divSelected) {
+	    		divs[i].style.display = "none";
+	    	}
+	    }
+	} else {
+		divs = document.getElementsByClassName("subtypeCategory");
+	    for (i = 0; i < divs.length; i++) {
+	    	if ("equipmentKind" === selectedIndex.id) {
+	    		if ("exampleEquipmentSubType" === divs[i].id) {
+		    		divs[i].style.display = "block";
+		    	} else {
+		    		//if (divs[i].includes("EquipmentSubtype") && !divs[i].includes("example")) {
+			    		divs[i].style.display = "none";
+		    		//}
+		    	}
+	    	} else if ("accesoryKind" === selectedIndex.id) {
+	    		if ("exampleAccesorySubType" === divs[i].id) {
+		    		divs[i].style.display = "block"
+		    	} else {
+		    		//if (divs[i].includes("AccesorySubtype") && !divs[i].includes("example")) {
+			    		divs[i].style.display = "none";
+		    	//	}
+		    	}
+	    	}
+	    } // End for
+	}
+}
+
+function showSubtypeSubCategory(selectedIndex) {
+	var divSelected, divs;
+	
+	if (null != selectedIndex && "0" != selectedIndex && "none" != selectedIndex.value) {
 		switch (selectedIndex.value) {
-		case "1":
-			divSelected = document.getElementById("bikeSubType");
-			break;
-		case "2":
-			divSelected = document.getElementById("motoSubType");
-			break;
-		case "3":
-			divSelected = document.getElementById("equipmentSubType");
-			break;
-		case "4":
-			divSelected = document.getElementById("accesorySubType");
-			break;
-		case "5":
-			divSelected = document.getElementById("otherSubType");
-			break;
+			case "1":
+				divSelected = document.getElementById("bikeSubType");
+				break;
+			case "2":
+				divSelected = document.getElementById("motoSubType");
+				break;
+			case "3":
+				divSelected = document.getElementById("equipmentSubType");
+				break;
+			case "4":
+				divSelected = document.getElementById("accesorySubType");
+				break;
+			case "5":
+				divSelected = document.getElementById("otherSubType");
+				break;				
 		}
 		
 		//divSelected = document.getElementById(selectedIndex.value + "SubType");
@@ -84,10 +160,11 @@ function showSubtypeCategory(selectedIndex) {
 	    	}
 	    }
 	}
+	
 }
 
 /**
- *  Comprueba cada campo del formulario de Añadir un nuevo producto *
+ *  Comprueba cada campo del formulario de Añadir un nuevo producto
  */
 function addProduct() {
 	// Valido la descripción
@@ -141,9 +218,10 @@ function findProductByFilters() {
             "otherSubType": document.getElementById("cbOtherSubType").value,
             "accesorySubType": document.getElementById("cbAccesorySubType").value,
             "equipmentSubType": document.getElementById("cbEquipmentSubType").value,
+            "active": document.getElementById("chbActive").checked,
             "listProduct": true
     };
-	
+		
 	$.ajax({
 		data:  params, // datos que se envian a traves de ajax
 		url:   '/MotosMaroto/php/controller/ProductController.php', // archivo que recibe la peticion

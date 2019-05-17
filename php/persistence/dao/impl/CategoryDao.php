@@ -9,7 +9,6 @@
 	require $root.'\php\persistence\dao\ICategoryDao.php';
 	require $root.'\php\persistence\entities\Category.php';
 	
-	use php\model\CategoryDto;
 	use php\persistence\dao\ICategoryDao;
 	use php\persistence\dao\impl\BaseDao;
 	use php\persistence\entities\Category;
@@ -41,39 +40,10 @@
 				$categoryAux = new Category();
 				$categoryAux = $this->marshallCategory($row);
 				
-				$categoryDtoAux = new CategoryDto();
-				$categoryDtoAux = $this->categoryToCategoryDto($categoryAux);
-				
-				$categoryList->append($categoryDtoAux);
+				$categoryList->append($categoryAux);
 			}
 			
 			return $categoryList;
-		}
-		
-		/**
-		 * @param array $row
-		 * @return Category
-		 */
-		private function marshallCategory(array $row) : Category {
-			$categoryAux = new Category();
-			
-			$categoryAux->setId($row['id']);
-			$categoryAux->setName(utf8_encode($row['name']));
-			
-			return $categoryAux;
-		}
-
-		/**
-		 * @param Category $category
-		 * @return CategoryDto
-		 */
-		private function categoryToCategoryDto(Category $category) : CategoryDto {
-			$categoryDtoAux = new CategoryDto();
-			
-			$categoryDtoAux->setId($category->getId());
-			$categoryDtoAux->setName($category->getName());
-			
-			return $categoryDtoAux;			
 		}
 		
 		/**
@@ -90,21 +60,31 @@
 						. "PRODUCT_SUBCATEGORY "
 					. "ORDER BY NAME";
 					
-				$result = mysqli_query($this->connection, $query) or die ("No funciona");
+			$result = mysqli_query($this->connection, $query) or die ("No funciona");
+			
+			$subcategoryList = new \ArrayObject();
+			
+			while ($row = mysqli_fetch_array($result)) {
+				$subcategoryAux = new Category();
+				$subcategoryAux = $this->marshallCategory($row);
 				
-				$subcategoryList = new \ArrayObject();
-				
-				while ($row = mysqli_fetch_array($result)) {
-					$subcategoryAux = new Category();
-					$subcategoryAux = $this->marshallCategory($row);
-					
-					$subcategoryDtoAux = new CategoryDto();
-					$subcategoryDtoAux = $this->categoryToCategoryDto($subcategoryAux);
-					
-					$subcategoryList->append($subcategoryDtoAux);
-				}
-				
-				return $subcategoryList;
+				$subcategoryList->append($subcategoryAux);
+			}
+			
+			return $subcategoryList;
+		}
+		
+		/**
+		 * @param array $row
+		 * @return Category
+		 */
+		private function marshallCategory(array $row) : Category {
+			$categoryAux = new Category();
+			
+			$categoryAux->setId($row['id']);
+			$categoryAux->setName(utf8_encode($row['name']));
+			
+			return $categoryAux;
 		}
 		
 	}

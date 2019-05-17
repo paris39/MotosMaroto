@@ -9,11 +9,13 @@
 	require $root.'\php\persistence\dao\impl\BaseDao.php';
 	require $root.'\php\persistence\dao\impl\CategoryDao.php';
 	require $root.'\php\persistence\dao\impl\ProductDao.php';
+	require $root.'\php\utility\Utility.php';
 	
 	use php\form\ProductForm;
 	use php\model\ProductDto;
 	use php\persistence\dao\impl\CategoryDao;
 	use php\persistence\dao\impl\ProductDao;
+	use php\utility\Utility;
 	
 	/**
 	 * @author JPD
@@ -96,8 +98,9 @@
 		 */
 		private function addNewProduct(ProductDto $productDto) : int {
 			$productDao = new ProductDao();
+			$product = $utility->productDtoToProduct($productDto);
 			
-			return $productDao->newProduct($productDto);
+			return $productDao->newProduct($product);
 		}
 		
 		/**
@@ -136,6 +139,7 @@
 			echo '		<th title="Tipo de productos">Tipo</th>' . "\n";
 			echo '		<th title="Existencias del producto">Stock</th>' . "\n";
 			echo '		<th title="Precio del producto">Precio</th>' . "\n";
+			echo '		<th title="Activo">Activo</th>' . "\n";
 			echo '		<th colspan="2" title="Acciones sobre el producto">Acciones</th>' . "\n";
 			echo '	</tr>' . "\n";
 			
@@ -158,6 +162,11 @@
 					echo '		<td>' . $productAux->getSubcategory()->getName() . '</td>' . "\n";
 					echo '		<td class="right">' . $productAux->getStock() . '</td>' . "\n";
 					echo '		<td class="right">' . $productAux->getPrice() . ' &euro;</td>' . "\n";
+					if (null != $productAux->getActive() && 0 == strcasecmp("1", $productAux->getActive())) {
+						echo '	<td class="center"><span title="S&Iacute;">&#10004;</span></td>' . "\n"; // ✔
+					} else {
+						echo '	<td class="center"<span title="NO">&#10006;</span></td>' . "\n"; // ✘
+					}
 					echo '		<td class="action">' . "\n";
 					echo '			<div class="adminImg">' . "\n";
 					echo '				<img src="../img/modify.png" title="Modificar producto" />' . "\n";
@@ -190,12 +199,13 @@
 	} else if (isset($_POST['id']) && isset($_POST['name']) && isset($_POST['mark'])
 			&& isset($_POST['productCategory']) && isset($_POST['bikeSubType'])
 			&& isset($_POST['motoSubType']) && isset($_POST['otherSubType'])
-			&& isset($_POST['accesorySubType']) && isset($_POST['equipmentSubType'])) { // listProduct.php
+			&& isset($_POST['accesorySubType']) && isset($_POST['equipmentSubType']) && isset($_POST['active'])) { // listProduct.php
 		
 		$filters = new ProductForm();
 		$filters->setId(trim($_POST['id']));
 		$filters->setName(trim($_POST['name']));
 		$filters->setMark(trim($_POST['mark']));
+		$filters->setActive(trim($_POST['active']));
 		$filters->setProductCategory($_POST['productCategory']);
 		$filters->setBikeSubType($_POST['bikeSubType']);
 		$filters->setOtherSubType($_POST['otherSubType']);

@@ -5,12 +5,13 @@
 	$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "\MotosMaroto";
 	error_log("RooT: " . $root);
 	require $root.'\php\persistence\dao\IEquipmentDao.php';
+	require $root.'\php\persistence\entities\EquipmentSize.php';
 	require $root.'\php\persistence\entities\EquipmentType.php';
 	
-	use php\model\EquipmentTypeDto;
 	use php\persistence\dao\IEquipmentDao;
 	use php\persistence\dao\impl\BaseDao;
 	use php\persistence\entities\Category;
+	use php\persistence\entities\EquipmentSize;
 	use php\persistence\entities\EquipmentType;
 
 	/**
@@ -29,6 +30,37 @@
 		 * Constructor de la clase
 		 */
 		public function __construct() {
+		}
+		
+		/**
+		 * {@inheritdoc}
+		 * @see \php\persistence\dao\EquipmentDao::listEquipmentSize()
+		 */
+		public function listEquipmentSize() : \ArrayObject {
+			// Conexión de la base de datos
+			$this->getConnection();
+			
+			// SELECT
+			$query = "SELECT "
+						. "ID AS 'ID', "
+						. "NAME AS 'NAME' "
+					. "FROM "
+						. "EQUIPMENT_SIZE "
+					. "ORDER BY "
+						. "ID";
+																											
+			$result = mysqli_query($this->connection, $query) or die ("No funciona");
+			
+			$equipmentSizeList = new \ArrayObject();
+			
+			while ($row = mysqli_fetch_array($result)) {
+				$equipmentSizeAux = new EquipmentSize();
+				$equipmentSizeAux = $this->marshallEquipmentSize($row);
+				
+				$equipmentSizeList->append($equipmentSizeAux);
+			}
+			
+			return $equipmentSizeList;
 		}
 		
 		/**
@@ -61,9 +93,6 @@
 			while ($row = mysqli_fetch_array($result)) {
 				$equipmentTypeAux = new EquipmentType();
 				$equipmentTypeAux = $this->marshallEquipmentType($row);
-				
-				$equipmentTypeDtoAux = new EquipmentTypeDto();
-				$equipmentTypeDtoAux = $this->equipmentTypeToEquipmentTypeDto($equipmentTypeAux);
 				
 				$equipmentTypeList->append($equipmentTypeAux);
 			}
@@ -101,13 +130,23 @@
 				$equipmentTypeAux = new EquipmentType();
 				$equipmentTypeAux = $this->marshallEquipmentType($row);
 				
-				$equipmentTypeDtoAux = new EquipmentTypeDto();
-				$equipmentTypeDtoAux = $this->equipmentTypeToEquipmentTypeDto($equipmentTypeAux);
-				
 				$equipmentTypeList->append($equipmentTypeAux);
 			}
 			
 			return $equipmentTypeList;
+		}
+		
+		/**
+		 * @param array $row
+		 * @return EquipmentSize
+		 */
+		private function marshallEquipmentSize (array $row) : EquipmentSize {
+			$equipmentSizeAux = new EquipmentSize();
+			
+			$equipmentSizeAux->setId($row['ID']);
+			$equipmentSizeAux->setName(utf8_encode($row['NAME']));
+			
+			return $equipmentSizeAux;
 		}
 		
 		/**
@@ -125,20 +164,6 @@
 			$equipmentTypeAux->setCategory($categoryAux);
 			
 			return $equipmentTypeAux;
-		}
-		
-		/**
-		 * @param EquipmentType $equipmentType
-		 * @return EquipmentTypeDto
-		 */
-		private function equipmentTypeToEquipmentTypeDto (EquipmentType $equipmentType) : EquipmentTypeDto {
-			$equipmentTypeDtoAux = new EquipmentTypeDto();
-			
-			$equipmentTypeDtoAux->setId($equipmentType->getId());
-			$equipmentTypeDtoAux->setName($equipmentType->getName());
-			$equipmentTypeDtoAux->setCategory($equipmentType->getCategory());
-			
-			return $equipmentTypeDtoAux;
 		}
 		
 	}

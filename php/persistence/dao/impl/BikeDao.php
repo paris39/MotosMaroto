@@ -12,8 +12,6 @@
 	require $root.'\php\persistence\entities\BikeSize.php';
 	//require $root.'\php\persistence\dao\impl\BaseDao.php';
 	
-	use php\model\BikeTypeDto;
-	use php\model\BikeSizeDto;
 	use php\persistence\dao\IBikeDao;
 	use php\persistence\dao\impl\BaseDao;
 	use php\persistence\entities\BikeType;
@@ -70,6 +68,34 @@
 		
 		/**
 		 * {@inheritdoc}
+		 * @see \php\persistence\dao\BikeDao::listBikeSize()
+		 */
+		public function listBikeSize() : \ArrayObject {
+			// Conexión de la base de datos
+			$this->getConnection();
+			
+			// SELECT
+			$query = "SELECT * "
+					. "FROM "
+						. "BIKE_SIZE "
+					. "ORDER BY ID";
+									
+			$result = mysqli_query($this->connection, $query) or die ("No funciona");
+			
+			$bikeSizeList = new \ArrayObject();
+			
+			while ($row = mysqli_fetch_array($result)) {
+				$bikeSizeAux = new BikeSize();
+				$bikeSizeAux = $this->marshallBikeSize($row);
+				
+				$bikeSizeList->append($bikeSizeAux);
+			}
+			
+			return $bikeSizeList;
+		}
+		
+		/**
+		 * {@inheritdoc}
 		 * @see \php\persistence\dao\BikeDao::listBikeType()
 		 */
 		public function listBikeType() : \ArrayObject {
@@ -90,69 +116,10 @@
 				$bikeTypeAux = new BikeType();
 				$bikeTypeAux = $this->marshallBikeType($row);
 				
-				$bikeTypeDtoAux = new BikeTypeDto();
-				$bikeTypeDtoAux = $this->bikeTypeToBikeTypeDto($bikeTypeAux);
-				
-				$bikeTypeList->append($bikeTypeDtoAux);
+				$bikeTypeList->append($bikeTypeAux);
 			}
 			
 			return $bikeTypeList;
-		}
-		
-		/**
-		 * @param array $row
-		 * @return BikeType
-		 */
-		private function marshallBikeType (array $row) : BikeType {
-			$bikeTypeAux = new BikeType();
-			
-			$bikeTypeAux->setId($row['id']);
-			$bikeTypeAux->setName(utf8_encode($row['name']));
-			
-			return $bikeTypeAux;
-		}
-		
-		/**
-		 * @param BikeType $bikeType
-		 * @return BikeTypeDto
-		 */
-		private function bikeTypeToBikeTypeDto (BikeType $bikeType) : BikeTypeDto {
-			$bikeTypeDtoAux = new BikeTypeDto();
-			
-			$bikeTypeDtoAux->setId($bikeType->getId());
-			$bikeTypeDtoAux->setName($bikeType->getName());
-			
-			return $bikeTypeDtoAux;
-		}
-		
-		/**
-		 * {@inheritdoc}
-		 * @see \php\persistence\dao\BikeDao::listBikeSize()
-		 */
-		public function listBikeSize() : \ArrayObject {
-			// Conexión de la base de datos
-			$this->getConnection();
-			
-			// SELECT
-			$query = "SELECT * "
-					. "FROM "
-						. "BIKE_SIZE "
-					. "ORDER BY ID";
-					
-			$result = mysqli_query($this->connection, $query) or die ("No funciona");
-			
-			$bikeSizeList = new \ArrayObject();
-			
-			while ($row = mysqli_fetch_array($result)) {
-				$bikeSizeAux = new BikeSize();
-				$bikeSizeAux = $this->marshallBikeSize($row);
-				
-				$bikeSizeDtoAux = new BikeSizeDto();
-				$bikeSizeDtoAux = $this->bikeSizeToBikeSizeDto($bikeSizeAux);	
-				$bikeSizeList->append($bikeSizeDtoAux);
-			}
-			
-			return $bikeSizeList;
 		}
 		
 		/**
@@ -169,18 +136,18 @@
 		}
 		
 		/**
-		 * @param BikeSize $bikeSize
-		 * @return BikeSizeDto
+		 * @param array $row
+		 * @return BikeType
 		 */
-		private function bikeSizeToBikeSizeDto (BikeSize $bikeSize) : BikeSizeDto {
-			$bikeSizeDtoAux = new BikeSizeDto();
+		private function marshallBikeType (array $row) : BikeType {
+			$bikeTypeAux = new BikeType();
 			
-			$bikeSizeDtoAux->setId($bikeSize->getId());
-			$bikeSizeDtoAux->setName($bikeSize->getName());
+			$bikeTypeAux->setId($row['id']);
+			$bikeTypeAux->setName(utf8_encode($row['name']));
 			
-			return $bikeSizeDtoAux;
+			return $bikeTypeAux;
 		}
-		
+
 	}
 
 ?>

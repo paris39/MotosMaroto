@@ -11,7 +11,6 @@
 	require $root.'\php\persistence\entities\Product.php';
 	
 	use php\form\ProductForm;
-	use php\model\ProductDto;
 	use php\persistence\dao\IProductDao;
 	use php\persistence\dao\impl\BaseDao;
 	use php\persistence\entities\Category;
@@ -38,15 +37,14 @@
 		}
 		
 		/**
-		 * @param ProductDto $productDto
+		 * @param Product $product
 		 * @return int
 		 */
-		public function newProduct(ProductDto $productDto) : int {
-			$id = $this->save($this->marshall($productDto)); // Conversión de tipo
+		public function newProduct(Product $product) : int {
+			$id = $this->save($product);
 			
 			return $id;
-		}
-		
+		}		
 		
 		/**
 		 * @param String $order
@@ -73,7 +71,8 @@
 						. "PS.ID AS 'PS.ID', "
 						. "PS.NAME AS 'PS.NAME', "
 						. "PT.STOCK AS 'PT.STOCK', "
-						. "PT.PRICE AS 'PT.PRICE' "
+						. "PT.PRICE AS 'PT.PRICE', "
+						. "PT.ACTIVE AS 'PT.ACTIVE' "
 					. "FROM "
 						. "PRODUCT PT, "
 						. "PRODUCT_CATEGORY PC, "
@@ -92,9 +91,6 @@
 			while ($row = mysqli_fetch_array($result)) {
 				$productAux = new Product();
 				$productAux = $this->marshallProduct($row);
-				
-				$productDtoAux = new ProductDto();
-				$productDtoAux = $this->productToProductDto($productAux);
 				
 				$productList->append($productAux);
 			}
@@ -117,6 +113,7 @@
 			$productAux->setModel(utf8_encode($row['PT.MODEL']));
 			$productAux->setStock($row['PT.STOCK']);
 			$productAux->setPrice(number_format($row['PT.PRICE'], 2, '.', ''));
+			$productAux->setActive($row['PT.ACTIVE']);
 			$categoryAux->setId($row['PC.ID']);
 			$categoryAux->setName(utf8_encode($row['PC.NAME']));
 			$subcategoryAux->setId($row['PS.ID']);
@@ -125,21 +122,6 @@
 			$productAux->setSubcategory($subcategoryAux);
 			
 			return $productAux;
-		}
-		
-		/**
-		 * @param Product $product
-		 * @return ProductDto
-		 */
-		private function productToProductDto (Product $product) : ProductDto {
-			$productDtoAux = new ProductDto();
-			
-			$productDtoAux->setId($product->getId());
-			$productDtoAux->setName($product->getName());
-			$productDtoAux->setCategory($product->getCategory());
-			$productDtoAux->setSubcategory($product->getSubcategory());
-			
-			return $productDtoAux;
 		}
 		
 		/**
@@ -177,36 +159,6 @@
 			error_log("ID Asignado: " . $id, 0);
 			
 			return $id;
-		}
-		
-		/**
-		 * Marshall ProductDto > Product
-		 * 
-		 * @param ProductDto $productDto
-		 * @return Product
-		 */
-		private function marshall (ProductDto $productDto) : Product {
-			$product = new Product();
-			
-			$product->setName($productDto->getName()); // Nombre
-			$product->setMark($productDto->getMark()); // Marca
-			$product->setModel($productDto->getModel()); // Modelo
-			$product->setDescription($productDto->getDescription()); // Descripción
-			$product->setPrice($productDto->getPrice()); // Precio
-			$product->setCategory($productDto->getCategory()); // Categoría
-			$product->setSubcategory($productDto->getSubcategory()); // Subcategoría
-			$product->setStock($productDto->getStock()); // Existencias
-			$product->setRent($productDto->getRent()); // Alquiler
-			$product->setObservations($productDto->getObservations()); // Observaciones
-			$product->setActive($productDto->getActive()); // Activo en la web
-			// Año de fabricación
-			if (is_int($productDto->getProductDate()) || is_numeric($productDto->getProductDate())) {
-				$product->setProductDate($productDto->getProductDate()."/01/01"); // Fecha en inglés
-			} else {
-				$product->setProductDate($productDto->getProductDate());
-			}
-			
-			return $product;
 		}
 		
 		/**
@@ -255,6 +207,11 @@
 							$conditions .= "AND PT.SUBCATEGORY = " . $filters->getOtherSubType() . " ";
 						}
 						break;
+				}
+			}
+			if (!empty($filters->getActive())) {
+				if (0 == strcasecmp("TRUE", $filters->getActive())) { // Lo toma como cadena de texto
+					$conditions .= "AND PT.ACTIVE IS TRUE ";
 				}
 			}
 			

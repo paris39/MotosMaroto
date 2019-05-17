@@ -3,7 +3,6 @@
 	namespace php\form;
 	
 	/**
-	 *
 	 * @author JPD
 	 */
 	class ProductForm {
@@ -11,6 +10,7 @@
 		private $id;
 		private $name;
 		private $mark;
+		private $active;
 		private $productCategory;
 		private $bikeSubType;
 		private $motoSubType;
@@ -37,6 +37,13 @@
 		 */
 		public function getMark() {
 			return $this->mark;
+		}
+		
+		/**
+		 * @return mixed
+		 */
+		public function getActive() {
+			return $this->active;
 		}
 	
 		/**
@@ -101,6 +108,13 @@
 		public function setMark($mark) {
 			$this->mark = $mark;
 		}
+		
+		/**
+		 * @param mixed $active
+		 */
+		public function setActive($active) {
+			$this->active = $active;
+		}
 	
 		/**
 		 * @param mixed $productCategory
@@ -149,6 +163,8 @@
 		 */
 		public function __construct() {
 		}
+		
+		
 		
 	}
 

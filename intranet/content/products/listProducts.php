@@ -118,7 +118,7 @@
 																<select name="productCategory"
 																	class="form-control short noBlock" id="cbProductCategory"
 																	title="Categor&iacute;a"
-																	onChange="showSubtypeCategory(this); findProductByFilters();">
+																	onChange="showSubtypeSubCategory(this); findProductByFilters();">
 																	<option value="none">Seleccionar categor&iacute;a...</option>
 <?php 
 	// Listado de Categorías
@@ -131,8 +131,7 @@
 																</select>
 															</div>
 															<!-- SUBCATEGORÍAS -->
-															<div class="form-group subtypeCategory noBlock"
-																id="exampleSubType">
+															<div class="form-group subtypeCategory exampleSubTypeInline" id="exampleSubType">
 																<select class="form-control short noBlock"
 																	name="exampleSubType" id="cbExampleSubType"
 																	title="Subtipo de equipaci&oacute;n">
@@ -253,8 +252,13 @@
 														</div>
 	
 														<div class="form-group">
-															<input type="search" class="form-control" id="txMark"
-																name="mark" placeholder="Marca" onkeyup="findProductByFilters();" />
+															<div class="form-group noBlock">
+																<input type="search" class="form-control short noBlock" id="txMark"
+																	name="mark" placeholder="Marca" onkeyup="findProductByFilters();" />
+															</div>
+															<div class="form-group noBlock">
+																<span>S&oacute;lo productos activos: </span> <input type="checkbox" name="active" id="chbActive" checked="checked" onchange="findProductByFilters();" /> 
+															</div>
 														</div>
 													</div>
 												</div>
@@ -289,6 +293,7 @@
 												<th title="Tipo de productos">Tipo</th>
 												<th title="Existencias del producto">Stock</th>
 												<th title="Precio del producto">Precio</th>
+												<th title="Activo">Activo</th>
 												<th colspan="2" title="Acciones sobre el producto">Acciones</th>
 											</tr>
 <?php 
@@ -311,6 +316,11 @@
 			echo '								<td>' . $productAux->getSubcategory()->getName() . '</td>' . "\n";
 			echo '								<td class="right">' . $productAux->getStock() . '</td>' . "\n";
 			echo '								<td class="right">' . $productAux->getPrice() . ' &euro;</td>' . "\n";
+			if (null != $productAux->getActive() && 0 == strcasecmp("1", $productAux->getActive())) {
+				echo '							<td class="center"><span title="S&Iacute;">&#10004;</span></td>' . "\n"; // ✔
+			} else {
+				echo '							<td class="center"<span title="NO">&#10006;</span></td>' . "\n"; // ✘
+			}
 			echo '								<td class="action">' . "\n";
 			echo '									<div class="adminImg">' . "\n";
 			echo '										<img src="../img/modify.png" title="Modificar producto" />' . "\n";

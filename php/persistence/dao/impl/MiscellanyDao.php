@@ -50,42 +50,10 @@
 				$colorAux = new Color();
 				$colorAux = $this->marshallColor($row);
 				
-				$colorDtoAux = new ColorDto();
-				$colorDtoAux = $this->colorToColorDto($colorAux);
-				
-				$colorList->append($colorDtoAux);
+				$colorList->append($colorAux);
 			}
 			
 			return $colorList;
-		}
-		
-		/**
-		 * @param array $row
-		 * @return Color
-		 */
-		private function marshallColor (array $row) : Color {
-			$colorAux = new Color();
-			
-			$colorAux->setId($row['id']);
-			$colorAux->setName(utf8_encode($row['name']));
-			$colorAux->setOriginalName(utf8_encode($row['original_name']));
-			
-			
-			return $colorAux;
-		}
-		
-		/**
-		 * @param Color $color
-		 * @return ColorDto
-		 */
-		private function colorToColorDto (Color $color) : ColorDto {
-			$colorDtoAux = new ColorDto();
-			
-			$colorDtoAux->setId($color->getId());
-			$colorDtoAux->setName($color->getName());
-			$colorDtoAux->setOriginalName($color->getOriginalName());
-			
-			return $colorDtoAux;
 		}
 		
 		/**
@@ -113,13 +81,25 @@
 				$genderAux = new Gender();
 				$genderAux = $this->marshallGender($row);
 				
-				$genderDtoAux = new GenderDto();
-				$genderDtoAux = $this->genderToGenderDto($genderAux);
-				
-				$genderList->append($genderDtoAux);
+				$genderList->append($genderAux);
 			}
 			
 			return $genderList;
+		}
+		
+		/**
+		 * @param array $row
+		 * @return Color
+		 */
+		private function marshallColor (array $row) : Color {
+			$colorAux = new Color();
+			
+			$colorAux->setId($row['id']);
+			$colorAux->setName(utf8_encode($row['name']));
+			$colorAux->setOriginalName(utf8_encode($row['original_name']));
+			
+			
+			return $colorAux;
 		}
 		
 		/**
@@ -135,20 +115,6 @@
 			
 			
 			return $genderAux;
-		}
-		
-		/**
-		 * @param Color $gender
-		 * @return GenderDto
-		 */
-		private function genderToGenderDto (Gender $gender) : GenderDto {
-			$genderDtoAux = new GenderDto();
-			
-			$genderDtoAux->setId($gender->getId());
-			$genderDtoAux->setName($gender->getName());
-			$genderDtoAux->setActive($gender->getActive());
-			
-			return $genderDtoAux;
 		}
 		
 	}

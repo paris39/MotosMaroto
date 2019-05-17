@@ -3,7 +3,7 @@
 	namespace php\persistence\dao;
 	
 	use php\form\ProductForm;
-	use php\model\ProductDto;
+	use php\persistence\entities\Product;
 
 	/**
 	 * @author JPD
@@ -22,10 +22,10 @@
 		/**
 		 * Función que inserta un producto en Base de Datos
 		 * 
-		 * @param ProductDto $productDto
+		 * @param Product $product
 		 * @return int
 		 */
-		public function newProduct(ProductDto $productDto) : int;
+		public function newProduct(Product $product) : int;
 
 	}
 

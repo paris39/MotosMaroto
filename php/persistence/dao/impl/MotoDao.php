@@ -14,11 +14,6 @@
 	require $root.'\php\persistence\entities\MotoTransmission.php';
 	require $root.'\php\persistence\entities\MotoType.php';
 	
-	use php\model\MotoContaminationDto;
-	use php\model\MotoFuelDto;
-	use php\model\MotoLicenseDto;
-	use php\model\MotoTransmissionDto;
-	use php\model\MotoTypeDto;
 	use php\persistence\dao\IMotoDao;
 	use php\persistence\dao\impl\BaseDao;
 	use php\persistence\entities\MotoContamination;
@@ -98,41 +93,11 @@
 				$motoContaminationAux = new MotoContamination();
 				$motoContaminationAux = $this->marshallMotoContamination($row);
 				
-				$motoContaminationDtoAux = new MotoContaminationDto();
-				$motoContaminationDtoAux = $this->motoContaminationToMotoContaminationDto($motoContaminationAux);
-				$motoContaminationList->append($motoContaminationDtoAux);
+				$motoContaminationList->append($motoContaminationAux);
 			}
 			
 			return $motoContaminationList;
 		}
-		
-		/**
-		 * @param array $row
-		 * @return MotoContamination
-		 */
-		private function marshallMotoContamination (array $row) : MotoContamination {
-			$motoContaminationAux = new MotoContamination();
-			
-			$motoContaminationAux->setId($row['id']);
-			$motoContaminationAux->setName(utf8_encode($row['name']));
-			$motoContaminationAux->setColor(utf8_encode($row['color']));
-			
-			return $motoContaminationAux;
-		}
-		
-		/**
-		 * @param MotoContamination $motoContamination
-		 * @return MotoContaminationDto
-		 */
-		private function motoContaminationToMotoContaminationDto (MotoContamination $motoContamination) : MotoContaminationDto {
-			$motoContaminationDtoAux = new MotoContaminationDto();
-			
-			$motoContaminationDtoAux->setId($motoContamination->getId());
-			$motoContaminationDtoAux->setName($motoContamination->getName());
-			$motoContaminationDtoAux->setColor($motoContamination->getColor());
-			
-			return $motoContaminationDtoAux;
-		}		
 		
 		/**
 		 * {@inheritdoc}
@@ -156,38 +121,10 @@
 				$motoFuelAux = new MotoFuel();
 				$motoFuelAux = $this->marshallMotoFuel($row);
 				
-				$motoFuelDtoAux = new MotoFuelDto();
-				$motoFuelDtoAux = $this->motoFuelToMotoFuelDto($motoFuelAux);
-				$motoFuelList->append($motoFuelDtoAux);
+				$motoFuelList->append($motoFuelAux);
 			}
 			
 			return $motoFuelList;
-		}
-		
-		/**
-		 * @param array $row
-		 * @return MotoFuel
-		 */
-		private function marshallMotoFuel (array $row) : MotoFuel {
-			$motoFuelAux = new MotoFuel();
-			
-			$motoFuelAux->setId($row['id']);
-			$motoFuelAux->setName(utf8_encode($row['name']));
-			
-			return $motoFuelAux;
-		}
-		
-		/**
-		 * @param MotoFuel $motoFuel
-		 * @return MotoFuelDto
-		 */
-		private function motoFuelToMotoFuelDto (MotoFuel $motoFuel) : MotoFuelDto {
-			$motoFuelDtoAux = new MotoFuelDto();
-			
-			$motoFuelDtoAux->setId($motoFuel->getId());
-			$motoFuelDtoAux->setName($motoFuel->getName());
-			
-			return $motoFuelDtoAux;
 		}
 		
 		/**
@@ -203,21 +140,46 @@
 					. "FROM "
 						. "MOTO_LICENSE "
 					. "ORDER BY ID";
-					
-			$result = mysqli_query($this->connection, $query) or die ("No funciona");
-			
-			$motoLicenseList = new \ArrayObject();
-			
-			while ($row = mysqli_fetch_array($result)) {
-				$motoLicenseAux = new MotoLicense();
-				$motoLicenseAux = $this->marshallMotoLicense($row);
+									
+				$result = mysqli_query($this->connection, $query) or die ("No funciona");
 				
-				$motoLicenseDtoAux = new MotoLicenseDto();
-				$motoLicenseDtoAux = $this->motoLicenseToMotoLicenseDto($motoLicenseAux);
-				$motoLicenseList->append($motoLicenseDtoAux);
-			}
+				$motoLicenseList = new \ArrayObject();
+				
+				while ($row = mysqli_fetch_array($result)) {
+					$motoLicenseAux = new MotoLicense();
+					$motoLicenseAux = $this->marshallMotoLicense($row);
+
+					$motoLicenseList->append($motoLicenseAux);
+				}
+				
+				return $motoLicenseList;
+		}
+		
+		/**
+		 * @param array $row
+		 * @return MotoContamination
+		 */
+		private function marshallMotoContamination (array $row) : MotoContamination {
+			$motoContaminationAux = new MotoContamination();
 			
-			return $motoLicenseList;
+			$motoContaminationAux->setId($row['id']);
+			$motoContaminationAux->setName(utf8_encode($row['name']));
+			$motoContaminationAux->setColor(utf8_encode($row['color']));
+			
+			return $motoContaminationAux;
+		}	
+		
+		/**
+		 * @param array $row
+		 * @return MotoFuel
+		 */
+		private function marshallMotoFuel (array $row) : MotoFuel {
+			$motoFuelAux = new MotoFuel();
+			
+			$motoFuelAux->setId($row['id']);
+			$motoFuelAux->setName(utf8_encode($row['name']));
+			
+			return $motoFuelAux;
 		}
 		
 		/**
@@ -232,20 +194,6 @@
 			$motoLicenseAux->setObservations(utf8_encode($row['observations']));
 			
 			return $motoLicenseAux;
-		}
-		
-		/**
-		 * @param MotoLicense $motoLicense
-		 * @return MotoLicenseDto
-		 */
-		private function motoLicenseToMotoLicenseDto (MotoLicense $motoLicense) : MotoLicenseDto {
-			$motoLicenseDtoAux = new MotoLicenseDto();
-			
-			$motoLicenseDtoAux->setId($motoLicense->getId());
-			$motoLicenseDtoAux->setName($motoLicense->getName());
-			$motoLicenseDtoAux->setObservations($motoLicense->getObservations());
-			
-			return $motoLicenseDtoAux;
 		}
 		
 		/**
@@ -270,39 +218,10 @@
 				$motoTransmissionAux = new MotoTransmission();
 				$motoTransmissionAux = $this->marshallMotoTransmission($row);
 				
-				$motoTransmissionDtoAux = new MotoTransmissionDto();
-				$motoTransmissionDtoAux = $this->motoTransmissionToMotoTransmissionDto($motoTransmissionAux);
-				
-				$motoTransmissionList->append($motoTransmissionDtoAux);
+				$motoTransmissionList->append($motoTransmissionAux);
 			}
 			
 			return $motoTransmissionList;
-		}
-		
-		/**
-		 * @param array $row
-		 * @return MotoTransmission
-		 */
-		private function marshallMotoTransmission (array $row) : MotoTransmission {
-			$motoTransmissionAux = new MotoTransmission();
-			
-			$motoTransmissionAux->setId($row['id']);
-			$motoTransmissionAux->setName(utf8_encode($row['name']));
-			
-			return $motoTransmissionAux;
-		}
-		
-		/**
-		 * @param MotoTransmission $motoTransmission
-		 * @return MotoTransmissionDto
-		 */
-		private function motoTransmissionToMotoTransmissionDto (MotoTransmission $motoTransmission) : MotoTransmissionDto {
-			$motoTypeDtoAux = new MotoTransmissionDto();
-			
-			$motoTypeDtoAux->setId($motoTransmission->getId());
-			$motoTypeDtoAux->setName($motoTransmission->getName());
-			
-			return $motoTypeDtoAux;
 		}
 		
 		/**
@@ -327,13 +246,23 @@
 				$motoTypeAux = new MotoType();
 				$motoTypeAux = $this->marshallMotoType($row);
 				
-				$motoTypeDtoAux = new MotoTypeDto();
-				$motoTypeDtoAux = $this->motoTypeToMotoTypeDto($motoTypeAux);
-				
-				$motoTypeList->append($motoTypeDtoAux);
+				$motoTypeList->append($motoTypeAux);
 			}
 			
 			return $motoTypeList;
+		}
+		
+		/**
+		 * @param array $row
+		 * @return MotoTransmission
+		 */
+		private function marshallMotoTransmission (array $row) : MotoTransmission {
+			$motoTransmissionAux = new MotoTransmission();
+			
+			$motoTransmissionAux->setId($row['id']);
+			$motoTransmissionAux->setName(utf8_encode($row['name']));
+			
+			return $motoTransmissionAux;
 		}
 		
 		/**
@@ -347,19 +276,6 @@
 			$motoTypeAux->setName(utf8_encode($row['name']));
 			
 			return $motoTypeAux;
-		}
-		
-		/**
-		 * @param MotoType $motoType
-		 * @return MotoTypeDto
-		 */
-		private function motoTypeToMotoTypeDto (MotoType $motoType) : MotoTypeDto {
-			$motoTypeDtoAux = new MotoTypeDto();
-			
-			$motoTypeDtoAux->setId($motoType->getId());
-			$motoTypeDtoAux->setName($motoType->getName());
-			
-			return $motoTypeDtoAux;
 		}
 		
 	}

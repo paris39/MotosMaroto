@@ -846,6 +846,10 @@ section :-ms-input-placeholder {
 	display: none;
 }
 
-.subtypeCategory#exampleSubType {
+.exampleSubType {
+	display: block;
+}
+
+.exampleSubTypeInline {
 	display: inline;
 }

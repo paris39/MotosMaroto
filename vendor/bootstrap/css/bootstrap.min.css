@@ -612,9 +612,12 @@ hr {
 	background-color:transparent;
 }
 .table td, .table th {
+	border-top:1px solid black;
 	padding:.75rem;
 	vertical-align:top;
-	border-top:1px solid black;
+}
+.table td {
+	color: black;	
 }
 .table thead th {
 	vertical-align:bottom;
