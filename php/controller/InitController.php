@@ -6,11 +6,13 @@
 	//require $root.'\php\controller\ProductController';
 	require $root.'\php\config\Config.php';
 	require $root.'\php\form\ProductForm.php';
+	require $root.'\php\model\AccesoryDto.php';
 	require $root.'\php\model\AccesoryTypeDto.php';
 	require $root.'\php\model\BikeTypeDto.php';
 	require $root.'\php\model\BikeSizeDto.php';
 	require $root.'\php\model\CategoryDto.php';
 	require $root.'\php\model\ColorDto.php';
+	require $root.'\php\model\EquipmentDto.php';
 	require $root.'\php\model\EquipmentSizeDto.php';
 	require $root.'\php\model\EquipmentTypeDto.php';
 	require $root.'\php\model\GenderDto.php';
@@ -34,11 +36,13 @@
 	
 	//use ProductController;
 	use php\form\ProductForm;
+	use php\model\AccesoryDto;
 	use php\model\AccesoryTypeDto;
 	use php\model\BikeTypeDto;
 	use php\model\BikeSizeDto;
 	use php\model\CategoryDto;
 	use php\model\ColorDto;
+	use php\model\EquipmentDto;
 	use php\model\EquipmentSizeDto;
 	use php\model\EquipmentTypeDto;
 	use php\model\GenderDto;

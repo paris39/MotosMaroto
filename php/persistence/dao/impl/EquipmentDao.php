@@ -5,14 +5,17 @@
 	$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "\MotosMaroto";
 	error_log("RooT: " . $root);
 	require $root.'\php\persistence\dao\IEquipmentDao.php';
+	require $root.'\php\persistence\entities\Equipment.php';
 	require $root.'\php\persistence\entities\EquipmentSize.php';
 	require $root.'\php\persistence\entities\EquipmentType.php';
 	
 	use php\persistence\dao\IEquipmentDao;
 	use php\persistence\dao\impl\BaseDao;
 	use php\persistence\entities\Category;
+	use php\persistence\entities\Equipment;
 	use php\persistence\entities\EquipmentSize;
 	use php\persistence\entities\EquipmentType;
+	use php\persistence\entities\Gender;
 
 	/**
 	 * @author JPD
@@ -30,6 +33,48 @@
 		 * Constructor de la clase
 		 */
 		public function __construct() {
+		}
+		
+		/**
+		 * {@inheritdoc}
+		 * @see \php\persistence\dao\EquipmentDao::getEquipmentyById()
+		 */
+		public function getEquipmentyById (int $id) : Equipment {
+			// Conexión de la base de datos
+			$this->getConnection();
+			
+			// SELECT
+			$query = "SELECT "
+						. "EQ.ID AS 'EQ.ID', "
+						. "ET.ID AS 'ET.ID', "
+						. "ET.NAME AS 'ET.NAME', "
+						. "ES.ID AS 'ES.ID', "
+						. "ES.NAME AS 'ES.NAME', "
+						. "GE.ID AS 'GE.ID', "
+						. "GE.NAME AS 'GE.NAME' "
+					. "FROM "
+						. "EQUIPMENT EQ, "
+						. "EQUIPMENT_TYPE ET, "
+						. "EQUIPMENT_SIZE ES, "
+						. "GENDER GE "
+					. "WHERE "
+						. "EQ.ID = " . $id . " "
+						. "AND ET.ID = EQ.TYPE "
+						. "AND ES.ID = EQ.SIZE "
+						. "AND GE.ID = EQ.GENDER ";
+																															
+			$result = mysqli_query($this->connection, $query) or die ("No funciona");
+			
+			$equipmentList = new \ArrayObject();
+			
+			while ($row = mysqli_fetch_array($result)) {
+				$equipmentAux = new Equipment();
+				$equipmentAux = $this->marshallEquipment($row);
+				
+				$equipmentList->append($equipmentAux);
+			}
+			
+			return $equipmentList;
 		}
 		
 		/**
@@ -134,6 +179,27 @@
 			}
 			
 			return $equipmentTypeList;
+		}
+		
+		/**
+		 * @param array $row
+		 * @return Equipment
+		 */
+		private function marshallEquipment (array $row) : Equipment {
+			$equipmentAux = new Equipment();
+			$equipmentSizeAux = new EquipmentSize();
+			$equipmentTypeAux = new EquipmentType();
+			$genderAux = new Gender();
+			
+			$equipmentAux->setId($row['EQ.ID']);
+			$equipmentTypeAux->setId($row['ET.ID']);
+			$equipmentTypeAux->setName($row['ET.NAME']);
+			$equipmentSizeAux->setId($row['ES.ID']);
+			$equipmentSizeAux->setName($row['ES.NAME']);
+			$genderAux->setId($row['GE.ID']);
+			$genderAux->setName($row['GE.NAME']);
+			
+			return $equipmentAux;
 		}
 		
 		/**

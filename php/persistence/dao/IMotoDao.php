@@ -2,6 +2,8 @@
 
 	namespace php\persistence\dao;
 	
+	use php\persistence\entities\Moto;
+	
 	/**
 	 * @author JPD
 	 */
@@ -17,6 +19,14 @@
 		 * @return Array
 		 */
 		public function motoList($order, $filters): Array;
+		
+		/**
+		 * Función que devuelve una Motocicleta filtrando por su ID
+		 *
+		 * @param int $id
+		 * @return Moto
+		 */
+		public function getMotoById(int $id): Moto;
 		
 		/**
 		 * Función que lista todos los distintivos anticontaminación de motocicletas

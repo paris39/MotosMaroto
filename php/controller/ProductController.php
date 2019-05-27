@@ -5,15 +5,52 @@
 	$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "\MotosMaroto";
 	require $root.'\php\config\Config.php';
 	require $root.'\php\form\ProductForm.php';
+	require $root.'\php\model\AccesoryDto.php';
+	require $root.'\php\model\AccesoryTypeDto.php';
+	require $root.'\php\model\BikeDto.php';
+	require $root.'\php\model\BikeTypeDto.php';
+	require $root.'\php\model\BikeSizeDto.php';
+	require $root.'\php\model\CategoryDto.php';
+	require $root.'\php\model\EquipmentDto.php';
+	require $root.'\php\model\EquipmentSizeDto.php';
+	require $root.'\php\model\EquipmentTypeDto.php';
+	require $root.'\php\model\MotoDto.php';
+	require $root.'\php\model\MotoContaminationDto.php';
+	require $root.'\php\model\MotoFuelDto.php';
+	require $root.'\php\model\MotoLicenseDto.php';
+	require $root.'\php\model\MotoTransmissionDto.php';
+	require $root.'\php\model\MotoTypeDto.php';
 	require $root.'\php\model\ProductDto.php';
 	require $root.'\php\persistence\dao\impl\BaseDao.php';
+	require $root.'\php\persistence\dao\impl\AccesoryDao.php';
+	require $root.'\php\persistence\dao\impl\BikeDao.php';
 	require $root.'\php\persistence\dao\impl\CategoryDao.php';
+	require $root.'\php\persistence\dao\impl\MotoDao.php';
 	require $root.'\php\persistence\dao\impl\ProductDao.php';
 	require $root.'\php\utility\Utility.php';
 	
 	use php\form\ProductForm;
+	use php\model\AccesoryDto;
+	use php\model\AccesoryTypeDto;
+	use php\model\BikeDto;
+	use php\model\BikeTypeDto;
+	use php\model\BikeSizeDto;
+	use php\model\CategoryDto;
+	use php\model\EquipmentDto;
+	use php\model\EquipmentSizeDto;
+	use php\model\EquipmentTypeDto;
+	use php\model\MotoDto;
+	use php\model\MotoContaminationDto;
+	use php\model\MotoFuelDto;
+	use php\model\MotoLicenseDto;
+	use php\model\MotoTransmissionDto;
+	use php\model\MotoTypeDto;
 	use php\model\ProductDto;
+	use php\persistence\dao\impl\AccesoryDao;
+	use php\persistence\dao\impl\BikeDao;
 	use php\persistence\dao\impl\CategoryDao;
+	use php\persistence\dao\impl\EquipmentDao;
+	use php\persistence\dao\impl\MotoDao;
 	use php\persistence\dao\impl\ProductDao;
 	use php\utility\Utility;
 	
@@ -22,10 +59,12 @@
 	 */
 	class ProductController {
 		
-		/* CONSTANTES DE SUBCATEGORÍA DE PRODUCTO */
-		private const SUBCATEGORY_BIKE = 1;
-		private const SUBCATEGORY_MOTO = 2;
-		private const SUBCATEGORY_OTHER = 3;
+		/* CONSTANTES DE CATEGORÍA DE PRODUCTO */
+		private const CATEGORY_BIKE = 1;
+		private const CATEGORY_MOTO = 2;
+		private const CATEGORY_EQUIPMENT = 3;
+		private const CATEGORY_ACCESORY = 4;
+		private const CATEGORY_OTHER = 5;
 		
 		/**
 		 * Constructor de la clase
@@ -37,22 +76,22 @@
 		 * 
 		 */
 		public function newProduct() {
-			if (null != $_POST['productCategory']) {
+			if (null != $_POST['productCategory'] && 0 != strcasecmp("", trim($_POST['productCategory']))) {
 				switch ($_POST['productCategory']) {
 					case 1:
-						$id = $this->addNewProduct($this->marshallProduct(self::SUBCATEGORY_BIKE));
+						$id = $this->addNewProduct($this->marshallProduct(self::CATEGORY_BIKE));
 						break;
 					case 2: 
-						$id = $this->addNewProduct($this->marshallProduct(self::SUBCATEGORY_MOTO));
+						$id = $this->addNewProduct($this->marshallProduct(self::CATEGORY_MOTO));
 						break;
 					case 3:
-						$id = $this->addNewProduct($this->marshallProduct($_POST['equipmentKind']));
+						$id = $this->addNewProduct($this->marshallProduct(self::CATEGORY_EQUIPMENT));
 						break;
 					case 4:
-						$id = $this->addNewProduct($this->marshallProduct($_POST['equipmentKind']));
+						$id = $this->addNewProduct($this->marshallProduct(self::CATEGORY_ACCESORY));
 						break;
 					case 5:
-						$id = $this->addNewProduct($this->marshallProduct(self::SUBCATEGORY_OTHER));
+						$id = $this->addNewProduct($this->marshallProduct(self::CATEGORY_OTHER));
 						
 						break;
 					default;
@@ -112,8 +151,104 @@
 		 */
 		public function listProduct(String $order, ProductForm $filters) : \ArrayObject {
 			$productDao = new ProductDao();
+			$utility = new Utility();
 			
-			return $productDao->listProduct($order, $filters);
+			$productList = new \ArrayObject();
+			$productListAux = new \ArrayObject();
+			$productList = $productDao->listProduct($order, $filters);
+			
+			for ($i = 0; $i < $productList->count(); $i++) {
+				$productAux = new ProductDto();
+				error_log("i: " . $i);
+				$productAux = $utility->productToProductDto($productList->offsetGet($i));
+				 
+				switch ($productAux->getCategory()->getId()) {
+					case self::CATEGORY_BIKE:
+						$bikeDtoAux = new BikeDto();
+						$bikeDtoAux = $this->getBikeDetail($productAux->getId());
+						
+						$productAux->setSubtype($bikeDtoAux->getType());
+						break;
+					case self::CATEGORY_MOTO:
+						$motoDtoAux = new MotoDto();
+						$motoDtoAux = $this->getMotoDetail($productAux->getId());
+						
+						$productAux->setSubtype($motoDtoAux->getType());
+						break;
+					case self::CATEGORY_EQUIPMENT:
+						$equipmentDtoAux = new EquipmentDto();
+						$equipmentDtoAux = $this->getEquipmentDetail($productAux->getId());
+						
+						$productAux->setSubtype($equipmentDtoAux->getType());
+						break;
+					case self::CATEGORY_ACCESORY:
+						$accesoryDtoAux = new AccesoryDto();
+						$accesoryDtoAux = $this->getAccesoryDetail($productAux->getId());
+						
+						$productAux->setSubtype($accesoryDtoAux->getType());
+						break;
+				}
+				
+				$productListAux->append($productAux);
+			}
+			
+			return $productListAux;
+		}
+		
+		/**
+		 * @param int $productId
+		 * @return \php\model\BikeDto
+		 */
+		private function getBikeDetail(int $productId) {
+			$bikeDtoAux = new BikeDto();
+			$bikeDao = new BikeDao();
+			$utility = new Utility();
+			
+			$bikeDtoAux = $utility->bikeToBikeDto($bikeDao->getBikeById($productId));
+			
+			return $bikeDtoAux;
+		}
+		
+		/**
+		 * @param int $productId
+		 * @return \php\model\MotoDto
+		 */
+		private function getMotoDetail(int $productId) {
+			$motoDtoAux = new MotoDto();
+			$motoDao = new MotoDao();
+			$utility = new Utility();
+			
+			$motoDtoAux = $utility->motoToMotoDto($motoDao->getMotoById($productId));
+			
+			return $motoDtoAux;
+		}
+		
+		/**
+		 * @param int $productId
+		 * @return \php\model\AccesoryDto
+		 */
+		private function getAccesoryDetail(int $productId) {
+			$accesoryDtoAux = new AccesoryDto();
+			$accesoryDao = new AccesoryDao();
+			$utility = new Utility();
+			
+			$accesoryDtoAux = $utility->accesoryToAccesoryDto($accesoryDao->getAccesoryById($productId));
+			
+			return $accesoryDtoAux;
+		}
+		
+		/**
+		 * @param int $productId
+		 * @return \php\model\EquipmentDto
+		 */
+		private function getEquipmentDetail(int $productId) {
+			$equipmentDtoAux = new EquipmentDto();
+			$equipmentDao = new EquipmentDao();
+			$utility = new Utility();
+			
+			$equipmentDtoAux = $utility->equipmentToEquipmentDto($equipmentDao->getEquipmentById($productId));
+			
+			return $equipmentDtoAux;
 		}
 		
 		/**
@@ -136,7 +271,8 @@
 			echo '		<th title="Marca del producto">Marca</th>' . "\n";
 			echo '		<th title="Modelo del producto">Modelo</th>' . "\n";
 			echo '		<th title="Categor&iacute;a del producto">Categor&iacute;a</th>' . "\n";
-			echo '		<th title="Tipo de productos">Tipo</th>' . "\n";
+			echo '		<th title="Tipo de producto">Tipo</th>' . "\n";
+			echo '		<th title="Subtipo de producto">Subtipo</th>' . "\n";
 			echo '		<th title="Existencias del producto">Stock</th>' . "\n";
 			echo '		<th title="Precio del producto">Precio</th>' . "\n";
 			echo '		<th title="Activo">Activo</th>' . "\n";
@@ -160,6 +296,11 @@
 					echo '		<td>' . $productAux->getModel() . '</td>' . "\n";
 					echo '		<td>' . $productAux->getCategory()->getName() . '</td>' . "\n";
 					echo '		<td>' . $productAux->getSubcategory()->getName() . '</td>' . "\n";
+					if (null != $productAux->getSubtype()) {
+						echo '	<td>' . $productAux->getSubtype()->getName() . '</td>' . "\n";
+					} else {
+						echo '	<td>' . '-' . '</td>' . "\n";
+					}
 					echo '		<td class="right">' . $productAux->getStock() . '</td>' . "\n";
 					echo '		<td class="right">' . $productAux->getPrice() . ' &euro;</td>' . "\n";
 					if (null != $productAux->getActive() && 0 == strcasecmp("1", $productAux->getActive())) {

@@ -15,6 +15,7 @@
 		private $price;
 		private $category;
 		private $subcategory;
+		private $subtype;
 		private $stock;
 		private $rent;
 		private $observations;
@@ -233,6 +234,21 @@
 		public function setProductDate($productDate) {
 			$this->productDate = $productDate;
 		}
+		
+		/**
+		 * @return mixed
+		 */
+		public function getSubtype() {
+			return $this->subtype;
+		}
+		
+		/**
+		 * @param mixed $subtype
+		 */
+		public function setSubtype($subtype) {
+			$this->subtype = $subtype;
+		}
+		
 	}
 
 ?>

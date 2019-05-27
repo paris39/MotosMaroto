@@ -3,10 +3,9 @@
 	namespace php\model;
 	
 	/**
-	 *
 	 * @author JPD
 	 */
-	class BikeDto extends ProductDto {
+	class BikeDto {
 		private $id;
 		private $type;
 		private $size;
@@ -26,7 +25,6 @@
 		private $pedals;
 		private $cranks;
 		private $cassette;
-		
 		
 		/**
 		 * Constructor de la clase

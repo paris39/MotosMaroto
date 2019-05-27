@@ -14,6 +14,7 @@
 	
 	use php\persistence\dao\IBikeDao;
 	use php\persistence\dao\impl\BaseDao;
+	use php\persistence\entities\Bike;
 	use php\persistence\entities\BikeType;
 	use php\persistence\entities\BikeSize;
 	
@@ -64,6 +65,61 @@
 			
 			
 			return null;
+		}
+		
+		/**
+		 * {@inheritdoc}
+		 * @see \php\persistence\dao\BikeDao::getBikeById()
+		 */
+		public function getBikeById (int $id) : Bike {
+			// Conexión de la base de datos
+			$this->getConnection();
+			
+			// SELECT
+			$query = "SELECT "
+						. "BK.ID AS 'BK.ID', "
+						. "BT.ID AS 'BT.ID', "
+						. "BT.NAME AS 'BT.NAME', "
+						. "BS.ID AS 'BS.ID', "
+						. "BS.NAME AS 'BS.NAME', "
+						. "BK.GEARS AS 'BK.GEARS', "
+						. "BK.FRAME AS 'BK.FRAME', "
+						. "BK.FORK AS 'BK.FORK', "
+						. "BK.BRAKES AS 'BK.BRAKES', "
+						. "BK.WHEELS AS 'BK.WHEELS', "
+						. "BK.TYRES AS 'BK.TYRES', "
+						. "BK.SEAT AS 'BK.SEAT', "
+						. "BK.HANDLEBARS AS 'BK.HANDLEBARS', "
+						. "BK.SHIFT AS 'BK.SHIFT', "
+						. "BK.DERAILLEUR AS 'BK.DERAILLEUR', "
+						. "BK.TWIST_SHIFTERS AS 'BK.TWIST_SHIFTERS', "
+						. "BK.SPEED_GROUPSET AS 'BK.SPEED_GROUPSET', "
+						. "BK.WEIGHT AS 'BK.WEIGHT', "
+						. "BK.PEDALS AS 'BK.PEDALS',  "
+						. "BK.CRANKS AS 'BK.CRANKS', "
+						. "BK.CASSETTE AS 'BK.CASSETTE' "
+					. "FROM "
+						. "BIKE BK, "
+						. "BIKE_TYPE BT, "
+						. "BIKE_SIZE BS "
+						. " "
+					. "WHERE "
+						. "BK.ID = " . $id . " "
+						. "AND BT.ID = BK.TYPE "
+						. "AND BS.ID = BK.SIZE ";
+			
+			$result = mysqli_query($this->connection, $query) or die ("No funciona");
+			
+			$bikeList = new \ArrayObject();
+			
+			while ($row = mysqli_fetch_array($result)) {
+				$bikeAux = new Bike();
+				$bikeAux = $this->marshallBike($row);
+				
+				$bikeList->append($bikeAux);
+			}
+			
+			return $bikeList;
 		}
 		
 		/**
@@ -120,6 +176,43 @@
 			}
 			
 			return $bikeTypeList;
+		}
+		
+		/**
+		 * @param array $row
+		 * @return Bike
+		 */
+		private function marshallBike (array $row) : Bike {
+			$bikeAux = new Bike();
+			$bikeSize = new BikeSize();
+			$bikeType = new BikeType();
+			
+			$bikeAux->setId($row['BK.ID']);
+			$bikeSize->setId($row['BS.ID']);
+			$bikeSize->setName(utf8_encode($row['BS.NAME']));
+			$bikeAux->setSize($bikeSize);
+			$bikeType->setId($row['BT.ID']);
+			$bikeType->setName(utf8_encode($row['BT.NAME']));
+			$bikeAux->setType($bikeType);
+			$bikeAux->setGears(utf8_encode($row['BK.GEARS']));
+			$bikeAux->setFrame(utf8_encode($row['BK.FRAME']));
+			$bikeAux->setFork(utf8_encode($row['BK.FORK']));
+			$bikeAux->setBrakes(utf8_encode($row['BK.BRAKES']));
+			$bikeAux->setWheels(utf8_encode($row['BK.WHEELS']));
+			$bikeAux->setTyres(utf8_encode($row['BK.TYRES']));
+			$bikeAux->setSeat(utf8_encode($row['BK.SEAT']));
+			$bikeAux->setHandlebars(utf8_encode($row['BK.HANDLEBARS']));
+			$bikeAux->setShift(utf8_encode($row['BK.SHIFT']));
+			$bikeAux->setDerailleur(utf8_encode($row['BK.DERAILLEUR']));
+			$bikeAux->setTwistShifters(utf8_encode($row['BK.TWIST_SHIFTERS']));
+			$bikeAux->setSpeedGroupset(utf8_encode($row['BK.SPEED_GROUPSET']));
+			$bikeAux->setWeight($row['BK.WEIGHT']);
+			$bikeAux->setPedals(utf8_encode($row['BK.PEDALS']));
+			$bikeAux->setShift(utf8_encode($row['BK.SHIFT']));
+			$bikeAux->setCranks(utf8_encode($row['BK.CRANKS']));
+			$bikeAux->setCassette(utf8_encode($row['BK.CASSETTE']));
+			
+			return $bikeAux;
 		}
 		
 		/**

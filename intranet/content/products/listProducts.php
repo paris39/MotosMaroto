@@ -12,9 +12,11 @@
 	
 	use php\controller\InitController;
 	use php\form\ProductForm;
+	use php\model\AccesoryDto;
 	use php\model\AccesoryTypeDto;
 	use php\model\BikeTypeDto;
 	use php\model\CategoryDto;
+	use php\model\EquipmentDto;
 	use php\model\EquipmentTypeDto;
 	use php\model\MotoTypeDto;
 	use php\model\OtherTypeDto;
@@ -38,8 +40,8 @@
 	$motoTypeList = $initController->listMotoType(); // Listar tipos de motocicleta
 	$otherTypeList = new \ArrayObject();
 	$otherTypeList = $initController->listOtherType(); // Listar tipos de otros
-	$productList = new \ArrayObject();
-	$productList = $initController->listProduct("", new ProductForm()); // Listar productos
+//	$productList = new \ArrayObject();
+//	$productList = $initController->listProduct("", new ProductForm()); // Listar productos
 	$subcategoryList = new \ArrayObject();
 	$subcategoryList = $initController->listSubcategories(); // Listar subcategorías de producto
 ?>
@@ -75,7 +77,7 @@
 		<script src='../../content/js/intranet.js' type='text/javascript'></script>
 	</head>
 	<body class="noMargin" style="padding-top: 0px;" id="page-top"
-		onload="openTab(event, 'listProductsTab');">
+		onload="findProductByFilters(); openTab(event, 'listProductsTab');" >
 		<div class="container-fluid p-0">
 			<section class="resume-section p-3 p-lg-5 d-flex flex-column"
 				id="admin">
@@ -267,77 +269,6 @@
 									</div>
 									
 									<div id="jQueryResults">
-										<div class="adminResults">
-<?php 
-											echo '<span class="resultsNumber">Total resultados: ' 
-													. '<span class="blackResultsNumber">'
-													. $productList->count()
-													. '</span></span>' . "\n";
-?>
-											<!-- div id="bikesOrder" class="order">
-												<select id="bikesSelect" class="form-control"
-													title="Seleccionar orden de resultados">
-													<option value="ASC">Orden: Ascendente</option>
-													<option value="DESC">Orden: Descendente</option>
-												</select>
-											</div-->
-										</div>
-		
-										<table class="table">
-											<tr>
-												<th title="ID del producto">ID</th>
-												<th title="Nombre del producto">Nombre</th>
-												<th title="Marca del producto">Marca</th>
-												<th title="Modelo del producto">Modelo</th>
-												<th title="Categor&iacute;a del producto">Categor&iacute;a</th>
-												<th title="Tipo de productos">Tipo</th>
-												<th title="Existencias del producto">Stock</th>
-												<th title="Precio del producto">Precio</th>
-												<th title="Activo">Activo</th>
-												<th colspan="2" title="Acciones sobre el producto">Acciones</th>
-											</tr>
-<?php 
-	// Listado de productos
-	if (0 < $productList->count()) {
-		for ($i = 0; $i < $productList->count(); $i++) {
-			if (0 == $i || 2 % $i) {
-				echo '						<tr class="impar">' . "\n";
-			} else {
-				echo '						<tr>' . "\n";
-			}
-			
-			$productAux = new ProductDto();
-			$productAux = $productList->offsetGet($i);
-			echo '								<td class="center">' . $productAux->getId() . '</td>' . "\n";
-			echo '								<td>' . $productAux->getName() . '</td>' . "\n";
-			echo '								<td>' . $productAux->getMark() . '</td>' . "\n";
-			echo '								<td>' . $productAux->getModel() . '</td>' . "\n";
-			echo '								<td>' . $productAux->getCategory()->getName() . '</td>' . "\n";
-			echo '								<td>' . $productAux->getSubcategory()->getName() . '</td>' . "\n";
-			echo '								<td class="right">' . $productAux->getStock() . '</td>' . "\n";
-			echo '								<td class="right">' . $productAux->getPrice() . ' &euro;</td>' . "\n";
-			if (null != $productAux->getActive() && 0 == strcasecmp("1", $productAux->getActive())) {
-				echo '							<td class="center"><span title="S&Iacute;">&#10004;</span></td>' . "\n"; // ✔
-			} else {
-				echo '							<td class="center"<span title="NO">&#10006;</span></td>' . "\n"; // ✘
-			}
-			echo '								<td class="action">' . "\n";
-			echo '									<div class="adminImg">' . "\n";
-			echo '										<img src="../img/modify.png" title="Modificar producto" />' . "\n";
-			echo '									</div>' . "\n";
-			echo '								</td>' . "\n";
-			echo '								<td class="action">' . "\n";
-			echo '									<div class="adminImg">' . "\n";
-			echo '										<img src="../img/delete.png" title="Eliminar producto" />' . "\n";
-			echo '									</div>' . "\n";
-			echo '								</td>' . "\n";
-		}
-	} else {
-		echo '									<td colspan=10 class="center"> NO HAY PRODUCTOS </td>' . "\n";
-	}
-
-?>
-										</table>
 									</div>
 	
 									<div class="col-lg-12 text-center">

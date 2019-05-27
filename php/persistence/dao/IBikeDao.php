@@ -1,13 +1,14 @@
 <?php
 
 	namespace php\persistence\dao;
+	
+	use php\persistence\entities\Bike;
 
 	/**
 	 * @author JPD
 	 */
 	interface IBikeDao {
 	
-
 		/**
 		 * Función que lista las bicicletas
 		 *
@@ -17,6 +18,13 @@
 		 */
 		public function bikeList(String $order, Array $filters): \ArrayObject;
 		
+		/**
+		 * Función que devuelve una Bicicleta filtrando por su ID
+		 * 
+		 * @param int $id
+		 * @return Bike
+		 */
+		public function getBikeById(int $id): Bike;
 		
 		/**
 		 * Función que lista todos los tipos de bicicletas
