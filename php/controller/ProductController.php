@@ -159,7 +159,6 @@
 			
 			for ($i = 0; $i < $productList->count(); $i++) {
 				$productAux = new ProductDto();
-				error_log("i: " . $i);
 				$productAux = $utility->productToProductDto($productList->offsetGet($i));
 				 
 				switch ($productAux->getCategory()->getId()) {
@@ -310,7 +309,9 @@
 					}
 					echo '		<td class="action">' . "\n";
 					echo '			<div class="adminImg">' . "\n";
-					echo '				<img src="../img/modify.png" title="Modificar producto" />' . "\n";
+					echo '				<a href="./modifyProduct.php?productId=' . $productAux->getId() . '">' . "\n";
+					echo '					<img src="../img/modify.png" title="Modificar producto" />' . "\n";
+					echo '				</a>' . "\n";
 					echo '			</div>' . "\n";
 					echo '		</td>' . "\n";
 					echo '		<td class="action">' . "\n";

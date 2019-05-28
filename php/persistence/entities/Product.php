@@ -19,37 +19,10 @@ namespace php\persistence\entities;
 		private $observations;
 		private $active;
 		private $productDate;
+		private $images;
 		private $createDate;
 		private $lastModifyDate;
 		
-		/**
-		 * @return mixed
-		 */
-		public function getCreateDate() {
-			return $this->createDate;
-		}
-	
-		/**
-		 * @return mixed
-		 */
-		public function getLastModifyDate() {
-			return $this->lastModifyDate;
-		}
-	
-		/**
-		 * @param mixed $createDate
-		 */
-		public function setCreateDate($createDate) {
-			$this->createDate = $createDate;
-		}
-	
-		/**
-		 * @param mixed $lastModifyDate
-		 */
-		public function setLastModifyDate($lastModifyDate) {
-			$this->lastModifyDate = $lastModifyDate;
-		}
-	
 		/**
 		 */
 		public function __construct() {
@@ -260,6 +233,48 @@ namespace php\persistence\entities;
 		 */
 		public function setProductDate($productDate) {
 			$this->productDate = $productDate;
+		}
+		
+		/**
+		 * @return mixed
+		 */
+		public function getImages() {
+			return $this->images;
+		}
+		
+		/**
+		 * @param mixed $images
+		 */
+		public function setImages($images) {
+			$this->images = $images;
+		}
+		
+		/**
+		 * @return mixed
+		 */
+		public function getCreateDate() {
+			return $this->createDate;
+		}
+		
+		/**
+		 * @return mixed
+		 */
+		public function getLastModifyDate() {
+			return $this->lastModifyDate;
+		}
+		
+		/**
+		 * @param mixed $createDate
+		 */
+		public function setCreateDate($createDate) {
+			$this->createDate = $createDate;
+		}
+		
+		/**
+		 * @param mixed $lastModifyDate
+		 */
+		public function setLastModifyDate($lastModifyDate) {
+			$this->lastModifyDate = $lastModifyDate;
 		}
 		
 	}

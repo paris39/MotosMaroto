@@ -21,6 +21,7 @@
 		private $observations;
 		private $active;
 		private $productDate;
+		private $images;
 		
 		/**
 		 * Constructor de la clase 
@@ -247,6 +248,20 @@
 		 */
 		public function setSubtype($subtype) {
 			$this->subtype = $subtype;
+		}
+		
+		/**
+		 * @return mixed
+		 */
+		public function getImages() {
+			return $this->images;
+		}
+		
+		/**
+		 * @param mixed $images
+		 */
+		public function setImages($images) {
+			$this->images = $images;
 		}
 		
 	}

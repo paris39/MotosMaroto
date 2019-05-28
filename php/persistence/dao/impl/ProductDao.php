@@ -8,13 +8,17 @@
 	$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "\MotosMaroto";
 	error_log("RooT: " . $root);
 	require $root.'\php\persistence\dao\IProductDao.php';
+	require $root.'\php\persistence\entities\Image.php';
 	require $root.'\php\persistence\entities\Product.php';
+	require $root.'\php\persistence\entities\ProductImage.php';
 	
 	use php\form\ProductForm;
 	use php\persistence\dao\IProductDao;
 	use php\persistence\dao\impl\BaseDao;
 	use php\persistence\entities\Category;
+	use php\persistence\entities\Image;
 	use php\persistence\entities\Product;
+	use php\persistence\entities\ProductImage;
 
 	/**
 	 * @author JPD
@@ -35,16 +39,42 @@
 		 */
 		public function __construct() {
 		}
-		
-		/**
-		 * @param Product $product
-		 * @return int
-		 */
-		public function newProduct(Product $product) : int {
-			$id = $this->save($product);
 			
-			return $id;
-		}		
+		/**
+		 * @param int $productId
+		 * @return \ArrayObject
+		 */
+		private function getImagesByProductId (int $productId) : \ArrayObject {
+			// Conexión de la base de datos
+			$this->getConnection();
+			
+			// SELECT
+			$query = "SELECT "
+						. "PI.PRODUCT AS 'PI.PRODUCT', "
+						. "PI.IMAGE AS 'PI.IMAGE', "
+						. "PI.MAIN AS 'PI.MAIN', "
+						. "IM.NAME AS 'IM.NAME', "
+						. "IM.URL AS 'IM.URL' "
+					. "FROM "
+						. "PRODUCTS_IMAGES PI, "
+						. "IMAGE IM "
+					. "WHERE "
+						. "IM.ID = PI.IMAGE "
+						. "AND PI.PRODUCT = " . $productId . " ";
+				
+			$result = mysqli_query($this->connection, $query) or die ("No funciona");
+			
+			$productImageList = new \ArrayObject();
+			
+			while ($row = mysqli_fetch_array($result)) {
+				$imageAux = new Product();
+				$imageAux = $this->marshallProductImage($row);
+				
+				$productImageList->append($imageAux);
+			}
+			
+			return $productImageList;
+		}
 		
 		/**
 		 * @param String $order
@@ -100,6 +130,24 @@
 		
 		/**
 		 * @param array $row
+		 * @return ProductImage
+		 */
+		private function marshallProductImage(array $row) : ProductImage {
+			$imageAux = new Image();
+			$productImageAux = new ProductImage();
+			
+			$productImageAux->setProduct($row['PI.PRODUCT']);
+			$imageAux->setId($row['IM.ID']);
+			$imageAux->setName(utf8_encode($row['IM.NAME']));
+			$imageAux->setUrl(utf8_encode($row['IM.URL']));
+			$productImageAux->setImage($imageAux);
+			$productImageAux->setMain($row['PI.MAIN']);			
+			
+			return $productImageAux;
+		}
+		
+		/**
+		 * @param array $row
 		 * @return Product
 		 */
 		private function marshallProduct (array $row) : Product {
@@ -120,8 +168,19 @@
 			$subcategoryAux->setName(utf8_encode($row['PS.NAME']));
 			$productAux->setCategory($categoryAux);
 			$productAux->setSubcategory($subcategoryAux);
+			$productAux->setImages($this->getImagesByProductId($productAux->getId()));
 			
 			return $productAux;
+		}
+		
+		/**
+		 * @param Product $product
+		 * @return int
+		 */
+		public function newProduct(Product $product) : int {
+			$id = $this->save($product);
+			
+			return $id;
 		}
 		
 		/**
@@ -217,6 +276,8 @@
 			
 			return $conditions;
 		}
+		
+
 		
 	}
 
