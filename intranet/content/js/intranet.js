@@ -285,7 +285,7 @@ function showPreviousImage(index, total) {
 	var showElement = document.getElementById("productOtherDiv".concat(index));
 	showElement.style.display = "inline";
 	
-	writeOtherImagesArrowButton(index, total);
+	writeOtherImagesArrowButton(index, total, "previous");
 }
 
 /**
@@ -303,7 +303,7 @@ function showNextImage(index, total) {
 	var showElement = document.getElementById("productOtherDiv".concat(index));
 	showElement.style.display = "inline";
 	
-	writeOtherImagesArrowButton(index, total);
+	writeOtherImagesArrowButton(index, total, "next");
 }
 
 /**
@@ -312,11 +312,12 @@ function showNextImage(index, total) {
  * @param total
  * @returns
  */
-function writeOtherImagesArrowButton(index, total) {
+function writeOtherImagesArrowButton(index, total, origin) {
 	var direction = "previous";
 	var params = {
 		"index": index,
 		"total": total,
+		"origin": origin,
 		"direction": direction
 	};
 	
@@ -336,6 +337,7 @@ function writeOtherImagesArrowButton(index, total) {
 	params = {
 		"index": index,
 		"total": total,
+		"origin": origin,
 		"direction": direction
 	};
 	

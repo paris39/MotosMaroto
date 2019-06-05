@@ -172,7 +172,6 @@
 																<div id="mainImg">
 <?php 
 																	$main = false;
-																	error_log("COUNT: " . $productDto->getImages()->count());
 																	if (null != $productDto->getImages()) {
 																		for ($i = 0; $i < $productDto->getImages()->count() && !$main; $i++) {
 																			$productImageDtoAux = new ProductImageDto();
