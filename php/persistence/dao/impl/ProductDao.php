@@ -77,6 +77,45 @@
 		}
 		
 		/**
+		 * {@inheritdoc}
+		 * @see \php\persistence\dao\ProductDao::getProductById()
+		 */
+		public function getProductById (int $id) : Product {
+			// Conexión de la base de datos
+			$this->getConnection();
+			
+			// SELECT
+			$query = "SELECT "
+						. "PT.ID AS 'PT.ID', "
+						. "PT.NAME AS 'PT.NAME', "
+						. "PT.MARK AS 'PT.MARK', "
+						. "PT.MODEL AS 'PT.MODEL', "
+						. "PC.ID AS 'PC.ID', "
+						. "PC.NAME AS 'PC.NAME', "
+						. "PS.ID AS 'PS.ID', "
+						. "PS.NAME AS 'PS.NAME', "
+						. "PT.STOCK AS 'PT.STOCK', "
+						. "PT.PRICE AS 'PT.PRICE', "
+						. "PT.ACTIVE AS 'PT.ACTIVE' "
+					. "FROM "
+						. "PRODUCT PT, "
+						. "PRODUCT_CATEGORY PC, "
+						. "PRODUCT_SUBCATEGORY PS "
+					. "WHERE "
+						. "PT.ID = " . $id . " "
+						. "AND PC.ID = PT.CATEGORY "
+						. "AND PS.ID = PT.SUBCATEGORY ";
+																										
+			$result = mysqli_query($this->connection, $query) or die ("No funciona");
+			
+			$row = mysqli_fetch_array($result);
+			$productAux = new Product();
+			$productAux = $this->marshallProduct($row);
+			
+			return $productAux;
+		}
+		
+		/**
 		 * @param String $order
 		 * @param ProductForm $filters
 		 * @return \ArrayObject
@@ -136,12 +175,12 @@
 			$imageAux = new Image();
 			$productImageAux = new ProductImage();
 			
-			$productImageAux->setProduct($row['PI.PRODUCT']);
-			$imageAux->setId($row['IM.ID']);
+			$productImageAux->setProductId($row['PI.PRODUCT']);
+			$imageAux->setId($row['PI.IMAGE']);
 			$imageAux->setName(utf8_encode($row['IM.NAME']));
 			$imageAux->setUrl(utf8_encode($row['IM.URL']));
 			$productImageAux->setImage($imageAux);
-			$productImageAux->setMain($row['PI.MAIN']);			
+			$productImageAux->setMain($row['PI.MAIN']);
 			
 			return $productImageAux;
 		}

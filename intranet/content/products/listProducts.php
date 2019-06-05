@@ -8,7 +8,7 @@
 	
 	// Carga de combos
 	$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "\MotosMaroto";
-	require $root.'\php\controller\InitController.php';
+	require $root . '\php\controller\InitController.php';
 	
 	use php\controller\InitController;
 	use php\form\ProductForm;

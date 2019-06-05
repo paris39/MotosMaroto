@@ -1,4 +1,5 @@
 // JavaScript Document
+var arrayColor = ["", "red", "brown", "hotpink", "orange", "yellow", "green", "cyan", "blue", "purple", "magenta", "white", "gray", "black"];
 
 function showProductCategory(selectedIndex) {
 	var divSelected, divs;
@@ -38,7 +39,6 @@ function showProductCategory(selectedIndex) {
 	    }
 	}	
 }
-
 
 function showSubtypeCategory(selectedIndex) {
 	var divSelected, divs;
@@ -229,13 +229,128 @@ function findProductByFilters() {
 		beforeSend: function () {
 			//$("#resultado").html("Procesando, espere por favor...");
 		},
-		success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+		success: function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
 			$("#jQueryResults").html(response);
 		}
 	});
 }
 
+/**
+ * 
+ */
+function selectedColor(selectedValue) {
+	var select = document.getElementById("colors");
+	var value = "";
+	for (var i = 0; i < select.length; i++) {
+		if (select[i].selected) {
+			value += '<span style="background-color: ' + arrayColor[select[i].value] + ';" class="dot"></span> ';
+		}
+	}
+	
+	document.getElementById("selectedColor").innerHTML = value;
+}
 
+/**
+ * 
+ */
+function filePreview(input) {
+	if ("fileToUpload" === input.id) {
+		if (input.files && input.files[0]) { 
+			var reader = new FileReader(); 
+			reader.readAsDataURL(input.files[0]); 
+			reader.onload = function (e) { 
+				//$('#uploadForm + img').remove();
+				//$('#uploadForm').after('<img src="'+e.target.result+'" width="450" height="300"/>');
+				var image = document.getElementById("productMainImg");
+				image.src = e.target.result;
+				//$('#productMainImg').attr('src', e.target.result);
+			} 
+		} 
+	} else if ("filesToUpload" === input.id) {
+		
+	}
+}
+
+/**
+ * 
+ * @param index
+ * @param total
+ * @returns
+ */
+function showPreviousImage(index, total) {
+	var hiddenId = index + 3;
+	var hiddenElement = document.getElementById("productOtherDiv".concat(hiddenId));
+	hiddenElement.style.display = "none";
+	// Mostrar imagen siguiente
+	var showElement = document.getElementById("productOtherDiv".concat(index));
+	showElement.style.display = "inline";
+	
+	writeOtherImagesArrowButton(index, total);
+}
+
+/**
+ * 
+ * @param index
+ * @param total
+ * @returns
+ */
+function showNextImage(index, total) {
+	// Ocultar imagen previa
+	var hiddenId = index - 3;
+	var hiddenElement = document.getElementById("productOtherDiv".concat(hiddenId));
+	hiddenElement.style.display = "none";
+	// Mostrar imagen siguiente
+	var showElement = document.getElementById("productOtherDiv".concat(index));
+	showElement.style.display = "inline";
+	
+	writeOtherImagesArrowButton(index, total);
+}
+
+/**
+ * 
+ * @param index
+ * @param total
+ * @returns
+ */
+function writeOtherImagesArrowButton(index, total) {
+	var direction = "previous";
+	var params = {
+		"index": index,
+		"total": total,
+		"direction": direction
+	};
+	
+	$.ajax({
+		data:  params, // datos que se envian a traves de ajax
+		url:   '/MotosMaroto/php/controller/ProductController.php', // archivo que recibe la peticion
+		type:  'post', // método de envio
+		beforeSend: function () {
+			//$("#resultado").html("Procesando, espere por favor...");
+		},
+		success: function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+			$("#productOtherPreviousSubDiv").html(response);
+		}
+	});
+	
+	direction = "next";
+	params = {
+		"index": index,
+		"total": total,
+		"direction": direction
+	};
+	
+	$.ajax({
+		data:  params, // datos que se envian a traves de ajax
+		url:   '/MotosMaroto/php/controller/ProductController.php', // archivo que recibe la peticion
+		type:  'post', // método de envio
+		beforeSend: function () {
+			//$("#resultado").html("Procesando, espere por favor...");
+		},
+		success: function (response2) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+			$("#productOtherNextSubDiv").html(response2);
+		}
+	});
+}
 
 
 

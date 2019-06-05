@@ -16,6 +16,7 @@
 	require $root.'\php\model\EquipmentSizeDto.php';
 	require $root.'\php\model\EquipmentTypeDto.php';
 	require $root.'\php\model\GenderDto.php';
+	require $root.'\php\model\ImageDto.php';
 	require $root.'\php\model\MotoContaminationDto.php';
 	require $root.'\php\model\MotoFuelDto.php';
 	require $root.'\php\model\MotoLicenseDto.php';
@@ -23,6 +24,7 @@
 	require $root.'\php\model\MotoTypeDto.php';
 	require $root.'\php\model\OtherTypeDto.php';
 	require $root.'\php\model\ProductDto.php';
+	require $root.'\php\model\ProductImageDto.php';
 	require $root.'\php\persistence\dao\impl\BaseDao.php';
 	require $root.'\php\persistence\dao\impl\AccesoryDao.php';
 	require $root.'\php\persistence\dao\impl\BikeDao.php';
@@ -46,12 +48,15 @@
 	use php\model\EquipmentSizeDto;
 	use php\model\EquipmentTypeDto;
 	use php\model\GenderDto;
+	use php\model\ImageDto;
 	use php\model\MotoContaminationDto;
 	use php\model\MotoFuelDto;
 	use php\model\MotoLicenseDto;
 	use php\model\MotoTransmissionDto;
 	use php\model\MotoTypeDto;
 	use php\model\OtherTypeDto;
+	use php\model\ProductDto;
+	use php\model\ProductImageDto;
 	use php\model\ProductTypeDto;
 	use php\persistence\dao\impl\AccesoryDao;
 	use php\persistence\dao\impl\BikeDao;
@@ -73,6 +78,22 @@
 		 * Constructor de la clase
 		 */
 		public function __construct() {
+		}
+		
+		/**
+		 * Función que devuelve un producto en función de su ID
+		 * 
+		 * @param int $productId
+		 * @return ProductDto
+		 */
+		public function getProductById (int $productId) : ProductDto {
+			$productDao = new ProductDao();
+			$utility = new Utility();
+			
+			$productDtoAux = new ProductDto();
+			$productDtoAux = $utility->productToProductDto($productDao->getProductById($productId));
+			
+			return $productDtoAux;
 		}
 		
 		/**
@@ -397,7 +418,7 @@
 			return $productDao->listProduct($order, $filters);
 		}
 		
-	}
+	} // End InitController
 	
 	// Control de entrada
 	if (isset($_POST[''])) {

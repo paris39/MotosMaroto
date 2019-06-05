@@ -9,7 +9,15 @@
 	 * @author JPD
 	 */
 	interface IProductDao {
-	
+		
+		/**
+		 * Función que devuelve un Producto por su ID
+		 * 
+		 * @param int $id
+		 * @return Product
+		 */
+		public function getProductById (int $id) : Product;
+		
 		/**
 		 * Función que lista productos en función del filtro utilizado y un orden
 		 * 

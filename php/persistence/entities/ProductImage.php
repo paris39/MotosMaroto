@@ -1,13 +1,13 @@
 <?php
 
-	namespace php\model;
+	namespace php\persistence\entities;
 	
 	/**
 	 * @author JPD
 	 */
 	class ProductImage {
 		
-		private $idProduct;
+		private $productId;
 		private $image;
 		private $main;
 		private $createDate;
@@ -22,8 +22,8 @@
 		/**
 		 * @return mixed
 		 */
-		public function getIdProduct() {
-			return $this->idProduct;
+		public function getProductId() {
+			return $this->productId;
 		}
 	
 		/**
@@ -55,10 +55,10 @@
 		}
 	
 		/**
-		 * @param mixed $idProduct
+		 * @param mixed $productId
 		 */
-		public function setIdProduct($idProduct) {
-			$this->idProduct = $idProduct;
+		public function setProductId($productId) {
+			$this->idProduct = $productId;
 		}
 	
 		/**

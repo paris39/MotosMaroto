@@ -122,8 +122,6 @@
 																																																															
 			$result = mysqli_query($this->connection, $query) or die ("No funciona");
 			
-			$motoList = new \ArrayObject();
-			
 			$row = mysqli_fetch_array($result);
 			$motoAux = new Moto();
 			$motoAux = $this->marshallMoto($row);

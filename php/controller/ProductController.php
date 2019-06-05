@@ -3,31 +3,33 @@
 	namespace php\controller;
 	
 	$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "\MotosMaroto";
-	require $root.'\php\config\Config.php';
-	require $root.'\php\form\ProductForm.php';
-	require $root.'\php\model\AccesoryDto.php';
-	require $root.'\php\model\AccesoryTypeDto.php';
-	require $root.'\php\model\BikeDto.php';
-	require $root.'\php\model\BikeTypeDto.php';
-	require $root.'\php\model\BikeSizeDto.php';
-	require $root.'\php\model\CategoryDto.php';
-	require $root.'\php\model\EquipmentDto.php';
-	require $root.'\php\model\EquipmentSizeDto.php';
-	require $root.'\php\model\EquipmentTypeDto.php';
-	require $root.'\php\model\MotoDto.php';
-	require $root.'\php\model\MotoContaminationDto.php';
-	require $root.'\php\model\MotoFuelDto.php';
-	require $root.'\php\model\MotoLicenseDto.php';
-	require $root.'\php\model\MotoTransmissionDto.php';
-	require $root.'\php\model\MotoTypeDto.php';
-	require $root.'\php\model\ProductDto.php';
-	require $root.'\php\persistence\dao\impl\BaseDao.php';
-	require $root.'\php\persistence\dao\impl\AccesoryDao.php';
-	require $root.'\php\persistence\dao\impl\BikeDao.php';
-	require $root.'\php\persistence\dao\impl\CategoryDao.php';
-	require $root.'\php\persistence\dao\impl\MotoDao.php';
-	require $root.'\php\persistence\dao\impl\ProductDao.php';
-	require $root.'\php\utility\Utility.php';
+	require_once $root . '\php\config\Config.php';
+	require_once $root . '\php\form\ProductForm.php';
+	require_once $root . '\php\model\AccesoryDto.php';
+	require_once $root . '\php\model\AccesoryTypeDto.php';
+	require_once $root . '\php\model\BikeDto.php';
+	require_once $root . '\php\model\BikeTypeDto.php';
+	require_once $root . '\php\model\BikeSizeDto.php';
+	require_once $root . '\php\model\CategoryDto.php';
+	require_once $root . '\php\model\EquipmentDto.php';
+	require_once $root . '\php\model\EquipmentSizeDto.php';
+	require_once $root . '\php\model\EquipmentTypeDto.php';
+	require_once $root . '\php\model\ImageDto.php';
+	require_once $root . '\php\model\MotoDto.php';
+	require_once $root . '\php\model\MotoContaminationDto.php';
+	require_once $root . '\php\model\MotoFuelDto.php';
+	require_once $root . '\php\model\MotoLicenseDto.php';
+	require_once $root . '\php\model\MotoTransmissionDto.php';
+	require_once $root . '\php\model\MotoTypeDto.php';
+	require_once $root . '\php\model\ProductDto.php';
+	require_once $root . '\php\model\ProductImageDto.php';
+	require_once $root . '\php\persistence\dao\impl\BaseDao.php';
+	require_once $root . '\php\persistence\dao\impl\AccesoryDao.php';
+	require_once $root . '\php\persistence\dao\impl\BikeDao.php';
+	require_once $root . '\php\persistence\dao\impl\CategoryDao.php';
+	require_once $root . '\php\persistence\dao\impl\MotoDao.php';
+	require_once $root . '\php\persistence\dao\impl\ProductDao.php';
+	require_once $root . '\php\utility\Utility.php';
 	
 	use php\form\ProductForm;
 	use php\model\AccesoryDto;
@@ -39,6 +41,7 @@
 	use php\model\EquipmentDto;
 	use php\model\EquipmentSizeDto;
 	use php\model\EquipmentTypeDto;
+	use php\model\ImageDto;
 	use php\model\MotoDto;
 	use php\model\MotoContaminationDto;
 	use php\model\MotoFuelDto;
@@ -46,6 +49,7 @@
 	use php\model\MotoTransmissionDto;
 	use php\model\MotoTypeDto;
 	use php\model\ProductDto;
+	use php\model\ProductImageDto;
 	use php\persistence\dao\impl\AccesoryDao;
 	use php\persistence\dao\impl\BikeDao;
 	use php\persistence\dao\impl\CategoryDao;
@@ -65,6 +69,11 @@
 		private const CATEGORY_EQUIPMENT = 3;
 		private const CATEGORY_ACCESORY = 4;
 		private const CATEGORY_OTHER = 5;
+		
+		/* CONSTANTES DE BOTÓN DE OTRAS IMÁGENES */
+		private const BUTTON_PREVIOUS = "previous";
+		private const BUTTON_NEXT = "next";
+		private const OTHER_IMAGES_VISIBLES = 3; 
 		
 		/**
 		 * Constructor de la clase
@@ -92,7 +101,6 @@
 						break;
 					case 5:
 						$id = $this->addNewProduct($this->marshallProduct(self::CATEGORY_OTHER));
-						
 						break;
 					default;
 				}
@@ -100,6 +108,7 @@
 		}
 		
 		/**
+		 * @param int $category
 		 * @return ProductDto
 		 */
 		private function marshallProduct(int $category) : ProductDto {
@@ -160,33 +169,8 @@
 			for ($i = 0; $i < $productList->count(); $i++) {
 				$productAux = new ProductDto();
 				$productAux = $utility->productToProductDto($productList->offsetGet($i));
-				 
-				switch ($productAux->getCategory()->getId()) {
-					case self::CATEGORY_BIKE:
-						$bikeDtoAux = new BikeDto();
-						$bikeDtoAux = $this->getBikeDetail($productAux->getId());
-						
-						$productAux->setSubtype($bikeDtoAux->getType());
-						break;
-					case self::CATEGORY_MOTO:
-						$motoDtoAux = new MotoDto();
-						$motoDtoAux = $this->getMotoDetail($productAux->getId());
-						
-						$productAux->setSubtype($motoDtoAux->getType());
-						break;
-					case self::CATEGORY_EQUIPMENT:
-						$equipmentDtoAux = new EquipmentDto();
-						$equipmentDtoAux = $this->getEquipmentDetail($productAux->getId());
-						
-						$productAux->setSubtype($equipmentDtoAux->getType());
-						break;
-					case self::CATEGORY_ACCESORY:
-						$accesoryDtoAux = new AccesoryDto();
-						$accesoryDtoAux = $this->getAccesoryDetail($productAux->getId());
-						
-						$productAux->setSubtype($accesoryDtoAux->getType());
-						break;
-				}
+				
+				$productAux = $this->getProductDetail($productAux);
 				
 				$productListAux->append($productAux);
 			}
@@ -198,7 +182,7 @@
 		 * @param int $productId
 		 * @return \php\model\BikeDto
 		 */
-		private function getBikeDetail(int $productId) {
+		private function getBikeDetail(int $productId) : BikeDto {
 			$bikeDtoAux = new BikeDto();
 			$bikeDao = new BikeDao();
 			$utility = new Utility();
@@ -212,7 +196,7 @@
 		 * @param int $productId
 		 * @return \php\model\MotoDto
 		 */
-		private function getMotoDetail(int $productId) {
+		private function getMotoDetail(int $productId) : MotoDto {
 			$motoDtoAux = new MotoDto();
 			$motoDao = new MotoDao();
 			$utility = new Utility();
@@ -226,7 +210,7 @@
 		 * @param int $productId
 		 * @return \php\model\AccesoryDto
 		 */
-		private function getAccesoryDetail(int $productId) {
+		private function getAccesoryDetail(int $productId) : AccesoryDto {
 			$accesoryDtoAux = new AccesoryDto();
 			$accesoryDao = new AccesoryDao();
 			$utility = new Utility();
@@ -240,7 +224,7 @@
 		 * @param int $productId
 		 * @return \php\model\EquipmentDto
 		 */
-		private function getEquipmentDetail(int $productId) {
+		private function getEquipmentDetail(int $productId) : EquipmentDto {
 			$equipmentDtoAux = new EquipmentDto();
 			$equipmentDao = new EquipmentDao();
 			$utility = new Utility();
@@ -251,10 +235,153 @@
 		}
 		
 		/**
+		 * @param int $id
+		 * @return Product
+		 */
+		public function getProductById (int $productId) : ProductDto {
+			$productAux = new ProductDto();
+			$productDao = new ProductDao();
+			$utility = new Utility();
+			
+			$productAux = $this->productToProductDto($productDao->getProductById($productId));
+			
+			$productAux = $this->getProductDetail($productAux);
+			
+			return $productAux;
+		}
+		
+		/**
+		 * @param ProductDto $productAux
+		 * @return ProductDto
+		 */
+		private function getProductDetail(ProductDto $productAux) : ProductDto {
+			switch ($productAux->getCategory()->getId()) {
+				case self::CATEGORY_BIKE:
+					$bikeDtoAux = new BikeDto();
+					$bikeDtoAux = $this->getBikeDetail($productAux->getId());
+					
+					$productAux->setSubtype($bikeDtoAux->getType());
+					break;
+				case self::CATEGORY_MOTO:
+					$motoDtoAux = new MotoDto();
+					$motoDtoAux = $this->getMotoDetail($productAux->getId());
+					
+					$productAux->setSubtype($motoDtoAux->getType());
+					break;
+				case self::CATEGORY_EQUIPMENT:
+					$equipmentDtoAux = new EquipmentDto();
+					$equipmentDtoAux = $this->getEquipmentDetail($productAux->getId());
+					
+					$productAux->setSubtype($equipmentDtoAux->getType());
+					break;
+				case self::CATEGORY_ACCESORY:
+					$accesoryDtoAux = new AccesoryDto();
+					$accesoryDtoAux = $this->getAccesoryDetail($productAux->getId());
+					
+					$productAux->setSubtype($accesoryDtoAux->getType());
+					break;
+			}
+			
+			return $productAux;
+		}
+		
+		/**
+		 * @param \ArrayObject $images
+		 * @return String
+		 */
+		public function writeOtherImages(\ArrayObject $images, int $index) : String {
+			$output = "";
+			if (null != $images && 0 < $images->count()) {
+				if (4 < $images->count()) {
+					$output .= '<div class="productOtherSubDiv" id="productOtherPreviousSubDiv">' . "\n";
+					if (0 == $index) {
+						$output .= '	<span class="page-item">' . "\n";
+						$output .= '		<span class="disabled page-link first-child last-child"> &lt;&lt; </span>' . "\n";
+						$output .= '	</span>' . "\n";
+					} else {
+						$output .= '	<a class="page-item">' . "\n";
+						$output .= '		<span class="page-link first-child last-child" onclick="showPreviousImage(' . $index . ', ' . ($images->count() - 1) . ');"> &lt;&lt; </span>' . "\n";
+						$output .= '	</a>' . "\n";
+					}
+					$output .= '</div>' . "\n";
+				}
+				
+				$iAux = 0;
+				for ($i = 0; $i < $images->count(); $i++) {
+					if (1 != $images->offsetGet($i)->getMain() || !$images->offsetGet($i)->getMain()) {
+						if (3 > $iAux) {
+							$output .= '<div class="productOtherDiv" id="productOtherDiv'. $iAux .'">' . "\n";
+							$index ++;
+						} else {
+							$output .= '<div class="productOtherDivNoDisplay" id="productOtherDiv'. $iAux .'">' . "\n";
+						}
+						$output .= '	<img id="productOtherImg'. $iAux .'" src="../../../img/products/' . $images->offsetGet($i)->getImage()->getUrl() . '" title="' . $images->offsetGet($i)->getImage()->getName() . ' (' . $images->offsetGet($i)->getImage()->getUrl() . ')" />' . "\n";
+						$output .= '	<input type="button" class="btn btnImg" value="Eliminar foto" title="Eliminar foto: ' . $images->offsetGet($i)->getImage()->getUrl() . '" id="productOtherDeleteButton'. $iAux .'" />' . "\n";
+						$output .= '</div>' . "\n";
+						
+						$iAux++;
+					}
+				}
+				
+				if (4 < $images->count()) {
+					$output .= '<div class="productOtherSubDiv" id="productOtherNextSubDiv">' . "\n";
+					if ($images->count() == $index) {
+						$output .= '	<span class="page-item">' . "\n";
+						$output .= '		<span class="disabled page-link first-child last-child"> &gt;&gt; </span>' . "\n"; // &#9193; >>
+						$output .= '	</span>' . "\n";
+					} else {
+						$output .= '	<a class="page-item">' . "\n";
+						$output .= '		<span class="page-link first-child last-child" onclick="showNextImage(' . $index . ', ' . ($images->count() - 1) . ');"> &gt;&gt; </span>' . "\n";
+						$output .= '	</a>' . "\n";
+					}
+					$output .= '</div>' . "\n";
+				}
+			}
+			
+			return $output;
+		}
+		
+		/**
+		 * @param int $index
+		 * @param int $total
+		 * @return String
+		 */
+		public function writeOtherImagesArrowButton(int $index, int $total, String $direction) : String {
+			$output = "";
+			if (0 == strcasecmp(self::BUTTON_PREVIOUS, $direction)) { // <<
+				$indexAux = $index - self::OTHER_IMAGES_VISIBLES;
+				
+				if (0 > $indexAux) {
+					$output .= '	<span class="page-item">' . "\n";
+					$output .= '		<span class="disabled page-link first-child last-child"> &lt;&lt; </span>' . "\n";
+					$output .= '	</span>' . "\n";
+				} else {
+					$output .= '	<a class="page-item">' . "\n";
+					$output .= '		<span class="page-link first-child last-child" onclick="showPreviousImage(' . $indexAux . ', ' . $total . ');"> &lt;&lt; </span>' . "\n";
+					$output .= '	</a>' . "\n";
+				}
+			} else if (0 == strcasecmp (self::BUTTON_NEXT, $direction)) { // >>
+				$indexAux = $index + self::OTHER_IMAGES_VISIBLES;
+				
+				if (($total - 1) == $index) {
+					$output .= '	<span class="page-item">' . "\n";
+					$output .= '		<span class="disabled page-link first-child last-child"> &gt;&gt; </span>' . "\n"; // &#9193; >>
+					$output .= '	</span>' . "\n";
+				} else {
+					$output .= '	<a class="page-item">' . "\n";
+					$output .= '		<span class="page-link first-child last-child" onclick="showNextImage(' . $indexAux . ', ' . $total . ');"> &gt;&gt; </span>' . "\n";
+					$output .= '	</a>' . "\n";
+				}
+			}
+			
+			return $output;
+		}
+		
+		/**
 		 * @param \ArrayObject $results
 		 * @return string
 		 */
-		public function writeResults(\ArrayObject $results) : string {
+		public function writeResults(\ArrayObject $results) : String {
 			$output = "";
 			echo '<div class="adminResults">' . "\n";
 			echo '	<span class="resultsNumber">Total resultados: '
@@ -326,11 +453,8 @@
 
 			echo '</table>' . "\n";
 			
-			error_log("Salida: " . $output);
-
 			return $output;
 		}
-		
 
 	}
 	
@@ -338,6 +462,11 @@
 	if (isset($_POST['newProductButton'])) { // newProduct.php
 		$productControlerObj = new ProductController();
 		$productControlerObj->newProduct();
+	} else if (isset($_GET['productId'])) {
+		/*
+		$productControlerObj = new ProductController($_GET['productId']);
+		return $productControlerObj->getProductById();
+		*/
 	} else if (isset($_POST['id']) && isset($_POST['name']) && isset($_POST['mark'])
 			&& isset($_POST['productCategory']) && isset($_POST['bikeSubType'])
 			&& isset($_POST['motoSubType']) && isset($_POST['otherSubType'])
@@ -355,7 +484,16 @@
 		$filters->setEquipmentSubType($_POST['equipmentSubType']);
 		
 		$productControlerObj = new ProductController();
-		return $productControlerObj->writeResults($productControlerObj->listProduct("", $filters));
+		echo $productControlerObj->writeResults($productControlerObj->listProduct("", $filters));
+	} else if (isset($_POST['index']) && isset($_POST['total']) && isset($_POST['direction'])) { // Botón izquierda y derecha de Otras imágenes
+		$productControlerObj = new ProductController();
+		$index = $_POST['index'];
+		$total = $_POST['total'];
+		$direction = $_POST['direction'];
+		
+		$output2 = $productControlerObj->writeOtherImagesArrowButton($index, $total, $direction);
+		error_log("Salida: " . $output2);
+		echo $output2;
 	} else {
 		error_log("Llamada sin parámetros");
 	}

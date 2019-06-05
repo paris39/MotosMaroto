@@ -2,7 +2,7 @@
 	session_start();
 	
 	// Cerrando sesión
-	if (null == $_GET ['option'] || $_GET ['option'] == "") {
+	if (!isset($_GET ['option']) || $_GET ['option'] == "") {
 	} else {
 		if ($_GET ['option'] == 'exit') {
 			$_SESSION ['user'] = "";

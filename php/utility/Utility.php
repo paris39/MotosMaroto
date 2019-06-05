@@ -14,6 +14,7 @@
 	use php\model\EquipmentSizeDto;
 	use php\model\EquipmentTypeDto;
 	use php\model\GenderDto;
+	use php\model\ImageDto;
 	use php\model\MotoDto;
 	use php\model\MotoContaminationDto;
 	use php\model\MotoFuelDto;
@@ -22,6 +23,7 @@
 	use php\model\MotoTypeDto;
 	use php\model\OtherTypeDto;
 	use php\model\ProductDto;
+	use php\model\ProductImageDto;
 	use php\model\ProductTypeDto;
 	use php\persistence\entities\Accesory;
 	use php\persistence\entities\AccesoryType;
@@ -34,6 +36,7 @@
 	use php\persistence\entities\EquipmentSize;
 	use php\persistence\entities\EquipmentType;
 	use php\persistence\entities\Gender;
+	use php\persistence\entities\Image;
 	use php\persistence\entities\Moto;
 	use php\persistence\entities\MotoContamination;
 	use php\persistence\entities\MotoFuel;
@@ -41,6 +44,7 @@
 	use php\persistence\entities\MotoTransmission;
 	use php\persistence\entities\MotoType;
 	use php\persistence\entities\Product;
+	use php\persistence\entities\ProductImage;
 
 	/**
 	 * @author JPD
@@ -280,6 +284,20 @@
 		}
 		
 		/**
+		 * @param Image $image
+		 * @return ImageDto
+		 */
+		public function imageToImageDto (Image $image) : ImageDto {
+			$imageDtoAux = new ImageDto();
+			
+			$imageDtoAux->setId($image->getId());
+			$imageDtoAux->setName($image->getName());
+			$imageDtoAux->setUrl($image->getUrl());
+			
+			return $imageDtoAux;
+		}
+		
+		/**
 		 * @param Moto $moto
 		 * @return MotoDto
 		 */
@@ -451,11 +469,32 @@
 				$productDtoAux->setObservations($product->getObservations());
 				$productDtoAux->setActive($product->getActive());
 				$productDtoAux->setProductDate($product->getProductDate());	
+				if (null != $product->getImages()) { // Imágenes
+					$productImageList = new \ArrayObject();
+					for ($i = 0; $i < $product->getImages()->count(); $i++) {
+						$productImageList->append($this->productImageToProductImageDto($product->getImages()->offsetGet($i)));
+					}
+					$productDtoAux->setImages($productImageList);
+				}
 			} else {
 				return null;
 			}
 			
 			return $productDtoAux;
+		}
+		
+		/**
+		 * @param ProductImage $productImage
+		 * @return ProductImageDto
+		 */
+		public function productImageToProductImageDto (ProductImage $productImage) : ProductImageDto {
+			$productImageDtoAux = new ProductImageDto();
+			
+			$productImageDtoAux->setProductId($productImage->getProductId());
+			$productImageDtoAux->setImage($this->imageToImageDto($productImage->getImage()));
+			$productImageDtoAux->setMain($productImage->getMain());
+			
+			return $productImageDtoAux;
 		}
 		
 		/**

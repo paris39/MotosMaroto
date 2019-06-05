@@ -81,6 +81,7 @@
 		<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
 		<title>INTRANET - Nuevo Producto - Bicicletas y Motos Maroto</title>
 		<link rel='icon' type='image/x-icon' href='../../../img/mm_logo.ico' />
+		<script src='../../content/js/jquery-3.4.1.min.js' type='text/javascript'></script>
 		<script src='../../content/js/intranet.js' type='text/javascript'></script>
 		
 		<!-- Bootstrap core CSS -->
@@ -211,14 +212,14 @@
 																min="1900" max="2018" step="1" />
 														</div>
 														<div class="form-group">
-															<span>Colores:</span> <select name="colors"
-																class="form-control" id="colors" size="10" multiple>
+															<span>Colores:</span> <div id="selectedColor"></div>
+															<select name="colors" class="form-control" id="colors" size="10" multiple onchange="selectedColor(value)">
 <?php 
 	// Listado de Colores	
 																for ($i = 0; $i < $colorList->count(); $i++) {
 																	$colorDtoAux = new ColorDto();
 																	$colorDtoAux = $colorList->offsetGet($i);
-																	echo '<option value="' . $colorDtoAux->getOriginalName() . '">' . $colorDtoAux->getName() . '</option> ' . "\n";
+																	echo '<option value="' . $colorDtoAux->getId() . '">' . $colorDtoAux->getName() . '</option> ' . "\n"; // &#9608;
 																}
 ?>
 															</select>

@@ -7,58 +7,58 @@
 	 */
 	class ProductImageDto {
 		
-		private $idProduct;
+		private $productId;
 		private $image;
 		private $main;
 
 		/**
-		 * Constructor de la clase 
+		 * Constructor de la clase
 		 */
 		public function __construct() {
 		}
-	
-		/**
-		 * @return mixed
-		 */
-		public function getId() {
-			return $this->id;
-		}
-	
-		/**
-		 * @return mixed
-		 */
-		public function getName() {
-			return $this->name;
-		}
-	
-		/**
-		 * @param mixed $id
-		 */
-		public function setId($id) {
-			$this->id = $id;
-		}
-	
-		/**
-		 * @param mixed $name
-		 */
-		public function setName($name) {
-			$this->name = $name;
-		}
 		
 		/**
 		 * @return mixed
 		 */
-		public function getUrl() {
-			return $this->url;
+		public function getProductId() {
+			return $this->productId;
 		}
-		
+	
 		/**
-		 * @param mixed $url
+		 * @return mixed
 		 */
-		public function setUrl($url) {
-			$this->url = $url;
+		public function getImage() {
+			return $this->image;
 		}
-		
+	
+		/**
+		 * @return mixed
+		 */
+		public function getMain() {
+			return $this->main;
+		}
+	
+		/**
+		 * @param mixed $productId
+		 */
+		public function setProductId($productId) {
+			$this->productId = $productId;
+		}
+	
+		/**
+		 * @param mixed $image
+		 */
+		public function setImage($image) {
+			$this->image = $image;
+		}
+	
+		/**
+		 * @param mixed $main
+		 */
+		public function setMain($main) {
+			$this->main = $main;
+		}
+	
 	}
 
 ?>

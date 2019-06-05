@@ -7,9 +7,12 @@
  	mb_http_output('UTF-8');
 	
 	// Carga de combos
-	require '../../../php/controller/InitController.php';
+ 	$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "\MotosMaroto";
+ 	require $root . '\php\controller\InitController.php';
+ 	require_once $root . '\php\controller\ProductController.php';
 
 	use php\controller\InitController;
+	use php\controller\ProductController;
 	use php\model\AccesoryTypeDto;
 	use php\model\BikeTypeDto;
 	use php\model\BikeSizeDto;
@@ -18,18 +21,24 @@
 	use php\model\EquipmentSizeDto;
 	use php\model\EquipmentTypeDto;
 	use php\model\GenderDto;
+	use php\model\ImageDto;
 	use php\model\MotoContaminationDto;
 	use php\model\MotoFuelDto;
 	use php\model\MotoLicenseDto;
 	use php\model\MotoTransmissionDto;
 	use php\model\MotoTypeDto;
+	use php\model\ProductDto;
+	use php\model\ProductImageDto;
 	
 	error_log("Inicializado modifyProduct");
 	
+	$error = false;
+	// Comprobación de entrada
 	if (isset($_GET['productId'])) {
-		error_log("Product ID: " . $_GET['productId']);	
+		error_log("Product ID: " . $_GET['productId']);
 	} else {
 		error_log("No hay product ID");
+		$error = true;
 	}
 	
 	/**
@@ -39,47 +48,66 @@
 	const MOTO = 2;
 	const OTHER = 3;
 	
-	/**
-	 * Carga de datos de combos
-	 */
+	// Declaración e inicialización de objetos
 	$initController = new InitController();
 	$bikeAccesoryTypeList = new \ArrayObject();
-	$bikeAccesoryTypeList = $initController->listAccesoryTypeByCategory(BIKE);
 	$bikeEquipmentTypeList = new \ArrayObject();
-	$bikeEquipmentTypeList = $initController->listEquipmentTypeByCategory(BIKE);
 	$bikeTypeList = new \ArrayObject();
-	$bikeTypeList = $initController->listBikeType(); // Listar tipos de bicicleta
 	$bikeSizeList = new \ArrayObject();
-	$bikeSizeList = $initController->listBikeSize(); // Listar tallas de bicicleta
 	$categoryList = new \ArrayObject();
-	$categoryList = $initController->listCategories(); // Listar categorías de producto
 	$colorList = new \ArrayObject();
-	$colorList = $initController->listColors(); // Listar colores
 	$equipmentSizeList = new \ArrayObject();
-	$equipmentSizeList = $initController->listEquipmentSize(); // Listar tallas de equipamiento
 	$genderList = new \ArrayObject();
-	$genderList = $initController->listGenders(); // Listar géneros
 	$motoAccesoryTypeList = new \ArrayObject();
-	$motoAccesoryTypeList = $initController->listAccesoryTypeByCategory(MOTO);
 	$motoContaminationList = new \ArrayObject();
-	$motoContaminationList = $initController->listMotoContamination(); // Listar distintivos anticontaminación de motos
 	$motoEquipmentTypeList = new \ArrayObject();
-	$motoEquipmentTypeList = $initController->listEquipmentTypeByCategory(MOTO);
 	$motoFuelList = new \ArrayObject();
-	$motoFuelList = $initController->listMotoFuel(); // Listar combustibles de motos
 	$motoLicenseList = new \ArrayObject();
-	$motoLicenseList = $initController->listMotoLicense(); // Listar permisos de conducir motos
 	$motoTransmissionList = new \ArrayObject();
-	$motoTransmissionList = $initController->listMotoTransmission(); // Listar tipos de transmisión de motocicleta
 	$motoTypeList = new \ArrayObject();
-	$motoTypeList = $initController->listMotoType(); // Listar tipos de motocicleta
 	$otherAccesoryTypeList = new \ArrayObject();
-	$otherAccesoryTypeList = $initController->listAccesoryTypeByCategory(OTHER);
 	$otherEquipmentTypeList = new \ArrayObject();
-	$otherEquipmentTypeList = $initController->listEquipmentTypeByCategory(OTHER);
+	$productDto = new ProductDto();
 	$subcategoryList = new \ArrayObject();
-	$subcategoryList = $initController->listSubcategories(); // Listar categorías de producto
 	
+	if (!$error) {
+		/**
+		 * Carga de datos de combos
+		 */
+		$productController = new ProductController();
+		$bikeAccesoryTypeList = $initController->listAccesoryTypeByCategory(BIKE);
+		$bikeEquipmentTypeList = $initController->listEquipmentTypeByCategory(BIKE);
+		$bikeTypeList = $initController->listBikeType(); // Listar tipos de bicicleta
+		$bikeSizeList = $initController->listBikeSize(); // Listar tallas de bicicleta
+		$categoryList = $initController->listCategories(); // Listar categorías de producto
+		$colorList = $initController->listColors(); // Listar colores
+		$equipmentSizeList = $initController->listEquipmentSize(); // Listar tallas de equipamiento
+		$genderList = $initController->listGenders(); // Listar géneros
+		$motoAccesoryTypeList = $initController->listAccesoryTypeByCategory(MOTO);
+		$motoContaminationList = $initController->listMotoContamination(); // Listar distintivos anticontaminación de motos
+		$motoEquipmentTypeList = $initController->listEquipmentTypeByCategory(MOTO);
+		$motoFuelList = $initController->listMotoFuel(); // Listar combustibles de motos
+		$motoLicenseList = $initController->listMotoLicense(); // Listar permisos de conducir motos
+		$motoTransmissionList = $initController->listMotoTransmission(); // Listar tipos de transmisión de motocicleta
+		$motoTypeList = $initController->listMotoType(); // Listar tipos de motocicleta
+		$otherAccesoryTypeList = $initController->listAccesoryTypeByCategory(OTHER);
+		$otherEquipmentTypeList = $initController->listEquipmentTypeByCategory(OTHER);
+		$subcategoryList = $initController->listSubcategories(); // Listar categorías de producto
+		
+		$productDto = $initController->getProductById($_GET['productId']);
+		$mainImage = new ImageDto();
+		$images = $productDto->getImages();
+		$outputImages = $productController->writeOtherImages($images, 0);
+		
+		/*** PINTAR CÓDIGO ***/ /*
+		echo '<!DOCTYPE html>' . "\n";
+		echo '<html lang="es">' . "\n";
+		echo '	<head>' . "\n";
+		echo '		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />' . "\n";
+		echo '		<title>INTRANET - Modificar Producto - Bicicletas y Motos Maroto</title>' . "\n";
+		echo '		<link rel="icon" type="image/x-icon" href="../../../img/mm_logo.ico" />' . "\n";
+		echo '		<script src="../../content/js/intranet.js" type="text/javascript"></script>' . "\n"; */
+	}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -87,6 +115,7 @@
 		<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
 		<title>INTRANET - Modificar Producto - Bicicletas y Motos Maroto</title>
 		<link rel='icon' type='image/x-icon' href='../../../img/mm_logo.ico' />
+		<script src='../../content/js/jquery-3.4.1.min.js' type='text/javascript'></script>
 		<script src='../../content/js/intranet.js' type='text/javascript'></script>
 		
 		<!-- Bootstrap core CSS -->
@@ -139,19 +168,51 @@
 													<div class="col-md-6">
 														<div class="form-group">
 															<div class="productImg">
-																<span>Imagen principal:</span> <input class="form-control"
-																	type="file" name="fileToUpload" id="fileToUpload"
-																	accept="image/*" placeholder="Imagen principal *" required="required"
-																	data-validation-required-message="Por favor, cargue una imagen." />
+																<span>Imagen principal:</span>
+																<div id="mainImg">
+<?php 
+																	$main = false;
+																	error_log("COUNT: " . $productDto->getImages()->count());
+																	if (null != $productDto->getImages()) {
+																		for ($i = 0; $i < $productDto->getImages()->count() && !$main; $i++) {
+																			$productImageDtoAux = new ProductImageDto();
+																			$productImageDtoAux = $productDto->getImages()->offsetGet($i);
+																			if ($productImageDtoAux->getMain() || 1 == $productImageDtoAux->getMain()) {
+																				$mainImage = $productImageDtoAux->getImage();
+																				echo '<img id="productMainImg" src="../../../img/products/' . $mainImage->getUrl() . ' "title="' . $mainImage->getName() . '" />' . "\n";
+																				$main = true;
+																			}
+																		}
+																	}
+																	if (!$main) {
+																		echo '<img src="../../../img/no-image.png" id="productMainImg" alt="Imagen principal" onclick="changeImg(\'fileToUpload\')"; />' . "\n";
+																	}
+?>
+																</div>
+																<span>Cambiar imagen principal:</span>
+																<input class="form-control" type="file" name="fileToUpload" id="fileToUpload" accept="image/*" 
+																		placeholder="Imagen principal *" required="required" onchange="filePreview(this);"
+																		data-validation-required-message="Por favor, cargue una imagen." />
 															</div>
 														</div>
 														<div class="form-group">
 															<div class="productImg">
-																<span>Otras im&aacute;genes:</span> <input class="form-control"
+																<span>Otras im&aacute;genes:</span> 
+																<div id="otherImg">
+																																 
+																	<!-- img id="productMainImg" src="../../../img/no-image.png" />
+																	<img id="productMainImg" src="../../../img/no-image.png" />
+																	<img id="productMainImg" src="../../../img/no-image.png" /-->
+																	
+<?php 
+																	echo $outputImages;
+?>
+																</div>
+																<span>A&ntilde;adir m&aacute;s im&aacute;genes:</span>
+																<input class="form-control"
 																	type="file" name="filesToUpload" id="filesToUpload"
-																	multiple="multiple" accept="image/*"
-																	placeholder="Otras im&aacute;genes"
-																	data-validation-required-message="" />
+																	multiple="multiple" accept="image/*" placeholder="Otras im&aacute;genes"
+																	data-validation-required-message="" onchange="filePreview(this);" />
 															</div>
 														</div>
 														<div class="form-group">
@@ -217,14 +278,14 @@
 																min="1900" max="2018" step="1" />
 														</div>
 														<div class="form-group">
-															<span>Colores:</span> <select name="colors"
-																class="form-control" id="colors" size="10" multiple>
+															<span>Colores:</span> <div id="selectedColor"></div>
+															<select name="colors" class="form-control" id="colors" size="10" multiple onchange="selectedColor(value)">
 <?php 
 	// Listado de Colores	
 																for ($i = 0; $i < $colorList->count(); $i++) {
 																	$colorDtoAux = new ColorDto();
 																	$colorDtoAux = $colorList->offsetGet($i);
-																	echo '<option value="' . $colorDtoAux->getOriginalName() . '">' . $colorDtoAux->getName() . '</option> ' . "\n";
+																	echo '<option value="' . $colorDtoAux->getId() . '">' . $colorDtoAux->getName() . '</option> ' . "\n";
 																}
 ?>
 															</select>
@@ -682,14 +743,14 @@
 												<div class="col-lg-12 text-center">
 													<div class="form-group">
 														<div id="success"></div>
-														<br /> <a href='../admin.php' class="noDecoration">
+														<br /> <a href='./listProducts.php' class="noDecoration">
 															<button id="cancelProductButton"
 																class="btn btn-primary btn-xl text-uppercase"
 																title="Cancelar el alta de producto y volver al men&uacute; de Administrador">Cancelar</button>
 														</a>
-														<button id="addProductButton"
-															class="btn btn-primary btn-xl text-uppercase" name="newProductButton"
-															type="submit">Dar de alta</button>
+														<button id="modifyProductButton"
+															class="btn btn-primary btn-xl text-uppercase" name="modifyProductButton"
+															type="submit">Modificar producto</button>
 													</div>
 												</div>
 											</form>
