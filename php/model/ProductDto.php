@@ -15,14 +15,15 @@
 		private $price;
 		private $category;
 		private $subcategory;
-		private $subtype;
 		private $stock;
 		private $rent;
 		private $observations;
 		private $active;
 		private $productDate;
 		private $images;
-		
+		private $colors;
+		private $details;
+
 		/**
 		 * Constructor de la clase 
 		 */
@@ -239,20 +240,6 @@
 		/**
 		 * @return mixed
 		 */
-		public function getSubtype() {
-			return $this->subtype;
-		}
-		
-		/**
-		 * @param mixed $subtype
-		 */
-		public function setSubtype($subtype) {
-			$this->subtype = $subtype;
-		}
-		
-		/**
-		 * @return mixed
-		 */
 		public function getImages() {
 			return $this->images;
 		}
@@ -262,6 +249,34 @@
 		 */
 		public function setImages($images) {
 			$this->images = $images;
+		}
+		
+		/**
+		 * @return mixed
+		 */
+		public function getColors() {
+			return $this->colors;
+		}
+		
+		/**
+		 * @param mixed $colors
+		 */
+		public function setColors($colors) {
+			$this->colors = $colors;
+		}
+		
+		/**
+		 * @return mixed
+		 */
+		public function getDetails() {
+			return $this->details;
+		}
+		
+		/**
+		 * @param mixed $details
+		 */
+		public function setDetails($details) {
+			$this->details = $details;
 		}
 		
 	}

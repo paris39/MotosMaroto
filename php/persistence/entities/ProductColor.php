@@ -5,21 +5,13 @@
 	/**
 	 * @author JPD
 	 */
-	class ProductImage {
+	class ProductColor {
 		
 		private $productId;
-		private $image;
-		private $main;
-		private $active;
+		private $color;
 		private $createDate;
 		private $lastModifyDate;
 	
-		/**
-		 * Constructor de la clase
-		 */
-		public function __construct() {
-		}
-
 		/**
 		 * @return mixed
 		 */
@@ -30,15 +22,8 @@
 		/**
 		 * @return mixed
 		 */
-		public function getImage() {
-			return $this->image;
-		}
-	
-		/**
-		 * @return mixed
-		 */
-		public function getMain() {
-			return $this->main;
+		public function getColor() {
+			return $this->color;
 		}
 	
 		/**
@@ -59,35 +44,14 @@
 		 * @param mixed $productId
 		 */
 		public function setProductId($productId) {
-			$this->idProduct = $productId;
+			$this->productId = $productId;
 		}
 	
 		/**
-		 * @param mixed $image
+		 * @param mixed $color
 		 */
-		public function setImage($image) {
-			$this->image = $image;
-		}
-	
-		/**
-		 * @param mixed $main
-		 */
-		public function setMain($main) {
-			$this->main = $main;
-		}
-		
-		/**
-		 * @return mixed
-		 */
-		public function getActive() {
-			return $this->active;
-		}
-		
-		/**
-		 * @param mixed $active
-		 */
-		public function setActive($active) {
-			$this->active = $active;
+		public function setColor($color) {
+			$this->color = $color;
 		}
 	
 		/**
@@ -104,6 +68,12 @@
 			$this->lastModifyDate = $lastModifyDate;
 		}
 	
+		/**
+		 * Constructor de la clase
+		 */
+		public function __construct() {
+		}
+
 	}
 
 ?>

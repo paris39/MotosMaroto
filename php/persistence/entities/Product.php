@@ -20,6 +20,7 @@ namespace php\persistence\entities;
 		private $active;
 		private $productDate;
 		private $images;
+		private $colors;
 		private $createDate;
 		private $lastModifyDate;
 		
@@ -247,6 +248,20 @@ namespace php\persistence\entities;
 		 */
 		public function setImages($images) {
 			$this->images = $images;
+		}
+		
+		/**
+		 * @return mixed
+		 */
+		public function getColors() {
+			return $this->colors;
+		}
+		
+		/**
+		 * @param mixed $colors
+		 */
+		public function setColors($colors) {
+			$this->colors = $colors;
 		}
 		
 		/**

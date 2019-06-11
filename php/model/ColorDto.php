@@ -3,7 +3,7 @@
 	namespace php\model;
 
 	/**
-	 * @author PIC1813
+	 * @author JPD
 	 */
 	class ColorDto {
 		

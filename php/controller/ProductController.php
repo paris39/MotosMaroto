@@ -11,6 +11,7 @@
 	require_once $root . '\php\model\BikeTypeDto.php';
 	require_once $root . '\php\model\BikeSizeDto.php';
 	require_once $root . '\php\model\CategoryDto.php';
+	require_once $root . '\php\model\ColorDto.php';
 	require_once $root . '\php\model\EquipmentDto.php';
 	require_once $root . '\php\model\EquipmentSizeDto.php';
 	require_once $root . '\php\model\EquipmentTypeDto.php';
@@ -22,6 +23,7 @@
 	require_once $root . '\php\model\MotoTransmissionDto.php';
 	require_once $root . '\php\model\MotoTypeDto.php';
 	require_once $root . '\php\model\ProductDto.php';
+	require_once $root . '\php\model\ProductColorDto.php';
 	require_once $root . '\php\model\ProductImageDto.php';
 	require_once $root . '\php\persistence\dao\impl\BaseDao.php';
 	require_once $root . '\php\persistence\dao\impl\AccesoryDao.php';
@@ -49,6 +51,7 @@
 	use php\model\MotoTransmissionDto;
 	use php\model\MotoTypeDto;
 	use php\model\ProductDto;
+	use php\model\ProductColorDto;
 	use php\model\ProductImageDto;
 	use php\persistence\dao\impl\AccesoryDao;
 	use php\persistence\dao\impl\BikeDao;
@@ -205,6 +208,8 @@
 			
 			$motoDtoAux = $utility->motoToMotoDto($motoDao->getMotoById($productId));
 			
+			error_log("DETAIL: " . $motoDtoAux->getType()->getName());
+			
 			return $motoDtoAux;
 		}
 		
@@ -245,7 +250,7 @@
 			$productDao = new ProductDao();
 			$utility = new Utility();
 			
-			$productAux = $this->productToProductDto($productDao->getProductById($productId));
+			$productAux = $utility->productToProductDto($productDao->getProductById($productId));
 			
 			$productAux = $this->getProductDetail($productAux);
 			
@@ -262,25 +267,25 @@
 					$bikeDtoAux = new BikeDto();
 					$bikeDtoAux = $this->getBikeDetail($productAux->getId());
 					
-					$productAux->setSubtype($bikeDtoAux->getType());
+					$productAux->setDetails($bikeDtoAux);
 					break;
 				case self::CATEGORY_MOTO:
 					$motoDtoAux = new MotoDto();
 					$motoDtoAux = $this->getMotoDetail($productAux->getId());
 					
-					$productAux->setSubtype($motoDtoAux->getType());
+					$productAux->setDetails($motoDtoAux);
 					break;
 				case self::CATEGORY_EQUIPMENT:
 					$equipmentDtoAux = new EquipmentDto();
 					$equipmentDtoAux = $this->getEquipmentDetail($productAux->getId());
 					
-					$productAux->setSubtype($equipmentDtoAux->getType());
+					$productAux->setDetails($equipmentDtoAux);
 					break;
 				case self::CATEGORY_ACCESORY:
 					$accesoryDtoAux = new AccesoryDto();
 					$accesoryDtoAux = $this->getAccesoryDetail($productAux->getId());
 					
-					$productAux->setSubtype($accesoryDtoAux->getType());
+					$productAux->setDetails($accesoryDtoAux);
 					break;
 			}
 			
@@ -434,8 +439,8 @@
 					echo '		<td>' . $productAux->getModel() . '</td>' . "\n";
 					echo '		<td>' . $productAux->getCategory()->getName() . '</td>' . "\n";
 					echo '		<td>' . $productAux->getSubcategory()->getName() . '</td>' . "\n";
-					if (null != $productAux->getSubtype()) {
-						echo '	<td>' . $productAux->getSubtype()->getName() . '</td>' . "\n";
+					if (null != $productAux->getDetails()) {
+						echo '	<td>' . $productAux->getDetails()->getType()->getName() . '</td>' . "\n";
 					} else {
 						echo '	<td>' . '-' . '</td>' . "\n";
 					}

@@ -6,18 +6,21 @@
 	mb_internal_encoding('UTF-8');
 	
 	$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "\MotosMaroto";
-	error_log("RooT: " . $root);
-	require $root.'\php\persistence\dao\IProductDao.php';
-	require $root.'\php\persistence\entities\Image.php';
-	require $root.'\php\persistence\entities\Product.php';
-	require $root.'\php\persistence\entities\ProductImage.php';
+	require_once $root . '\php\persistence\dao\IProductDao.php';
+	require_once $root . '\php\persistence\entities\Color.php';
+	require_once $root . '\php\persistence\entities\Image.php';
+	require_once $root . '\php\persistence\entities\Product.php';
+	require_once $root . '\php\persistence\entities\ProductColor.php';
+	require_once $root . '\php\persistence\entities\ProductImage.php';
 	
 	use php\form\ProductForm;
 	use php\persistence\dao\IProductDao;
 	use php\persistence\dao\impl\BaseDao;
 	use php\persistence\entities\Category;
+	use php\persistence\entities\Color;
 	use php\persistence\entities\Image;
 	use php\persistence\entities\Product;
+	use php\persistence\entities\ProductColor;
 	use php\persistence\entities\ProductImage;
 
 	/**
@@ -39,7 +42,42 @@
 		 */
 		public function __construct() {
 		}
+		
+		/**
+		 * @param int $productId
+		 * @return \ArrayObject
+		 */
+		private function getColorsByProductId (int $productId) : \ArrayObject {
+			// Conexión de la base de datos
+			$this->getConnection();
 			
+			// SELECT
+			$query = "SELECT "
+						. "PC.PRODUCT AS 'PC.PRODUCT', "
+						. "PC.COLOR AS 'PC.COLOR', "
+						. "CO.NAME AS 'CO.NAME', "
+						. "CO.ORIGINAL_NAME AS 'CO.ORIGINAL_NAME' "
+					. "FROM "
+						. "PRODUCTS_COLORS PC, "
+						. "COLOR CO "
+					. "WHERE "
+						. "CO.ID = PC.COLOR "
+						. "AND PC.PRODUCT = " . $productId . " ";
+																							
+			$result = mysqli_query($this->connection, $query) or die ("No funciona - getColorsByProductId");
+			
+			$productColorList = new \ArrayObject();
+			
+			while ($row = mysqli_fetch_array($result)) {
+				$colorAux = new ProductColor();
+				$colorAux = $this->marshallProductColor($row);
+				
+				$productColorList->append($colorAux);
+			}
+			
+			return $productColorList;
+		}
+		
 		/**
 		 * @param int $productId
 		 * @return \ArrayObject
@@ -53,6 +91,7 @@
 						. "PI.PRODUCT AS 'PI.PRODUCT', "
 						. "PI.IMAGE AS 'PI.IMAGE', "
 						. "PI.MAIN AS 'PI.MAIN', "
+						. "PI.ACTIVE AS 'PI.ACTIVE', "
 						. "IM.NAME AS 'IM.NAME', "
 						. "IM.URL AS 'IM.URL' "
 					. "FROM "
@@ -62,12 +101,12 @@
 						. "IM.ID = PI.IMAGE "
 						. "AND PI.PRODUCT = " . $productId . " ";
 				
-			$result = mysqli_query($this->connection, $query) or die ("No funciona");
+			$result = mysqli_query($this->connection, $query) or die ("No funciona - getImagesByProductId");
 			
 			$productImageList = new \ArrayObject();
 			
 			while ($row = mysqli_fetch_array($result)) {
-				$imageAux = new Product();
+				$imageAux = new ProductImage();
 				$imageAux = $this->marshallProductImage($row);
 				
 				$productImageList->append($imageAux);
@@ -90,12 +129,15 @@
 						. "PT.NAME AS 'PT.NAME', "
 						. "PT.MARK AS 'PT.MARK', "
 						. "PT.MODEL AS 'PT.MODEL', "
+						. "PT.DESCRIPTION AS 'PT.DESCRIPTION', "
+						. "PT.OBSERVATIONS AS 'PT.OBSERVATIONS', "
 						. "PC.ID AS 'PC.ID', "
 						. "PC.NAME AS 'PC.NAME', "
 						. "PS.ID AS 'PS.ID', "
 						. "PS.NAME AS 'PS.NAME', "
 						. "PT.STOCK AS 'PT.STOCK', "
 						. "PT.PRICE AS 'PT.PRICE', "
+						. "PT.RENT AS 'PT.RENT', "
 						. "PT.ACTIVE AS 'PT.ACTIVE' "
 					. "FROM "
 						. "PRODUCT PT, "
@@ -106,7 +148,7 @@
 						. "AND PC.ID = PT.CATEGORY "
 						. "AND PS.ID = PT.SUBCATEGORY ";
 																										
-			$result = mysqli_query($this->connection, $query) or die ("No funciona");
+			$result = mysqli_query($this->connection, $query) or die ("No funciona - getProductById");
 			
 			$row = mysqli_fetch_array($result);
 			$productAux = new Product();
@@ -135,12 +177,15 @@
 						. "PT.NAME AS 'PT.NAME', "
 						. "PT.MARK AS 'PT.MARK', "
 						. "PT.MODEL AS 'PT.MODEL', "
+						. "PT.DESCRIPTION AS 'PT.DESCRIPTION', "
+						. "PT.OBSERVATIONS AS 'PT.OBSERVATIONS', "
 						. "PC.ID AS 'PC.ID', "
 						. "PC.NAME AS 'PC.NAME', "
 						. "PS.ID AS 'PS.ID', "
 						. "PS.NAME AS 'PS.NAME', "
 						. "PT.STOCK AS 'PT.STOCK', "
 						. "PT.PRICE AS 'PT.PRICE', "
+						. "PT.RENT AS 'PT.RENT', "
 						. "PT.ACTIVE AS 'PT.ACTIVE' "
 					. "FROM "
 						. "PRODUCT PT, "
@@ -153,7 +198,7 @@
 					. "ORDER BY "
 						. "PT.ID ASC ";
 																											
-			$result = mysqli_query($this->connection, $query) or die ("No funciona");
+			$result = mysqli_query($this->connection, $query) or die ("No funciona - listProduct");
 			
 			$productList = new \ArrayObject();
 			
@@ -165,6 +210,23 @@
 			}
 			
 			return $productList;
+		}
+		
+		/**
+		 * @param array $row
+		 * @return ProductColor
+		 */
+		private function marshallProductColor(array $row) : ProductColor {
+			$colorAux = new Color();
+			$productColorAux = new ProductColor();
+			
+			$productColorAux->setProductId($row['PC.PRODUCT']);
+			$colorAux->setId($row['PC.COLOR']);
+			$colorAux->setName(utf8_encode($row['CO.NAME']));
+			$colorAux->setOriginalName(utf8_encode($row['CO.ORIGINAL_NAME']));
+			$productColorAux->setColor($colorAux);
+			
+			return $productColorAux;
 		}
 		
 		/**
@@ -181,6 +243,7 @@
 			$imageAux->setUrl(utf8_encode($row['IM.URL']));
 			$productImageAux->setImage($imageAux);
 			$productImageAux->setMain($row['PI.MAIN']);
+			$productImageAux->setActive($row['PI.ACTIVE']);
 			
 			return $productImageAux;
 		}
@@ -198,15 +261,19 @@
 			$productAux->setName(utf8_encode($row['PT.NAME']));
 			$productAux->setMark(utf8_encode($row['PT.MARK']));
 			$productAux->setModel(utf8_encode($row['PT.MODEL']));
+			$productAux->setDescription(utf8_encode($row['PT.DESCRIPTION']));
+			$productAux->setObservations(utf8_encode($row['PT.OBSERVATIONS']));
 			$productAux->setStock($row['PT.STOCK']);
 			$productAux->setPrice(number_format($row['PT.PRICE'], 2, '.', ''));
 			$productAux->setActive($row['PT.ACTIVE']);
+			$productAux->setRent($row['PT.RENT']);
 			$categoryAux->setId($row['PC.ID']);
 			$categoryAux->setName(utf8_encode($row['PC.NAME']));
 			$subcategoryAux->setId($row['PS.ID']);
 			$subcategoryAux->setName(utf8_encode($row['PS.NAME']));
 			$productAux->setCategory($categoryAux);
 			$productAux->setSubcategory($subcategoryAux);
+			$productAux->setColors($this->getColorsByProductId($productAux->getId()));
 			$productAux->setImages($this->getImagesByProductId($productAux->getId()));
 			
 			return $productAux;

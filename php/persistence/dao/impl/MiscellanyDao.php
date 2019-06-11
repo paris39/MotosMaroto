@@ -6,9 +6,9 @@
 	mb_internal_encoding('UTF-8');
 	
 	$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "\MotosMaroto";
-	require "$root\php\persistence\dao\IMiscellanyDao.php";
-	require $root.'\php\persistence\entities\Color.php';
-	require $root.'\php\persistence\entities\Gender.php';
+	require_once "$root\php\persistence\dao\IMiscellanyDao.php";
+	require_once $root.'\php\persistence\entities\Color.php';
+	require_once $root.'\php\persistence\entities\Gender.php';
 	
 	use php\model\ColorDto;
 	use php\model\GenderDto;

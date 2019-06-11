@@ -10,6 +10,7 @@
 		private $productId;
 		private $image;
 		private $main;
+		private $active;
 
 		/**
 		 * Constructor de la clase
@@ -57,6 +58,20 @@
 		 */
 		public function setMain($main) {
 			$this->main = $main;
+		}
+		
+		/**
+		 * @return mixed
+		 */
+		public function getActive() {
+			return $this->active;
+		}
+		
+		/**
+		 * @param mixed $active
+		 */
+		public function setActive($active) {
+			$this->active = $active;
 		}
 	
 	}

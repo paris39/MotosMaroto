@@ -13,21 +13,26 @@
 
 	use php\controller\InitController;
 	use php\controller\ProductController;
+	use php\model\AccesoryDto;
 	use php\model\AccesoryTypeDto;
+	use php\model\BikeDto;
 	use php\model\BikeTypeDto;
 	use php\model\BikeSizeDto;
 	use php\model\CategoryDto;
 	use php\model\ColorDto;
+	use php\model\EquipmentDto;
 	use php\model\EquipmentSizeDto;
 	use php\model\EquipmentTypeDto;
 	use php\model\GenderDto;
 	use php\model\ImageDto;
+	use php\model\MotoDto;
 	use php\model\MotoContaminationDto;
 	use php\model\MotoFuelDto;
 	use php\model\MotoLicenseDto;
 	use php\model\MotoTransmissionDto;
 	use php\model\MotoTypeDto;
 	use php\model\ProductDto;
+	use php\model\ProductColorDto;
 	use php\model\ProductImageDto;
 	
 	error_log("Inicializado modifyProduct");
@@ -46,7 +51,13 @@
 	 */
 	const BIKE = 1;
 	const MOTO = 2;
-	const OTHER = 3;
+	const EQUIPMENT = 3;
+	const ACCESORY = 4;
+	const OTHER = 5;
+	const SUB_OTHER = 3;
+	const SUB_BIKE = 1;
+	const SUB_MOTO = 2;
+	const SUB_OTHER = 5;
 	
 	// Declaración e inicialización de objetos
 	$initController = new InitController();
@@ -94,7 +105,7 @@
 		$otherEquipmentTypeList = $initController->listEquipmentTypeByCategory(OTHER);
 		$subcategoryList = $initController->listSubcategories(); // Listar categorías de producto
 		
-		$productDto = $initController->getProductById($_GET['productId']);
+		$productDto = $productController->getProductById($_GET['productId']);
 		$mainImage = new ImageDto();
 		$images = $productDto->getImages();
 		$outputImages = $productController->writeOtherImages($images, 0);
@@ -141,7 +152,7 @@
 		<script src='../../content/js/intranet.js' type='text/javascript'></script>
 	</head>
 	<body class="noMargin" style="padding-top: 0px;" id="page-top"
-		onload="openTab(event, 'newProductTab');">
+		onload="showProductCategory(document.getElementById('productCategory')); openTab(event, 'newProductTab');">
 		<div class="container-fluid p-0">
 			<section class="resume-section p-3 p-lg-5 d-flex flex-column"
 				id="admin">
@@ -198,11 +209,6 @@
 															<div class="productImg">
 																<span>Otras im&aacute;genes:</span> 
 																<div id="otherImg">
-																																 
-																	<!-- img id="productMainImg" src="../../../img/no-image.png" />
-																	<img id="productMainImg" src="../../../img/no-image.png" />
-																	<img id="productMainImg" src="../../../img/no-image.png" /-->
-																	
 <?php 
 																	echo $outputImages;
 ?>
@@ -215,39 +221,53 @@
 															</div>
 														</div>
 														<div class="form-group">
-															<input class="form-control" type="text" name="name"
-																id="name" placeholder="Nombre *" required="required"
-																data-validation-required-message="Por favor, introduzca un nombre." />
+<?php 
+															echo '<input class="form-control" type="text" name="name" id="name" placeholder="Nombre *" 
+																	required="required" data-validation-required-message="Por favor, introduzca un nombre." 
+																	title="Nombre del producto" value="' . $productDto->getName() . '"/>' . "\n";
+?>
 														</div>
 														<div class="form-group">
-															<textarea class="form-control" name="description"
-																id="description" placeholder="Descripci&oacute;n *"
-																required="required"
-																data-validation-required-message="Por favor, introduzca una descripci&oacute;n."></textarea>
+<?php 
+															echo '<textarea class="form-control" name="description"
+																	id="description" placeholder="Descripci&oacute;n *"
+																	required="required" title="Descripci&oacute;n del producto"
+																	data-validation-required-message="Por favor, introduzca una descripci&oacute;n.">'
+																	. $productDto->getDescription() . 
+																'</textarea>' . "\n";
+?>
 														</div>
 														<div class="form-group">
-															<input class="form-control" type="text" name="mark"
-																id="mark" placeholder="Marca *" required="required"
-																data-validation-required-message="Por favor, introduzca la marca del producto." />
+<?php 
+															echo '<input class="form-control" type="text" name="mark"
+																	id="mark" placeholder="Marca *" required="required" title="Marca del producto"
+																	data-validation-required-message="Por favor, introduzca la marca del producto." 
+																	value="' . $productDto->getMark() . '" />' . "\n";
+?>
 														</div>
 														<div class="form-group">
-															<input class="form-control" type="text" name="model"
-																id="model" placeholder="Modelo *" required="required"
-																data-validation-required-message="Por favor, introduzca el modelo del producto." />
+<?php 
+															echo '<input class="form-control" type="text" name="model"
+																	id="model" placeholder="Modelo *" required="required" title="Modelo del producto"
+																	data-validation-required-message="Por favor, introduzca el modelo del producto." 
+																	value="' . $productDto->getModel() .'" />' . "\n";
+?>
 														</div>
 														<div class="form-group">
-															<input class="form-control" type="number" name="price"
-																id="price" placeholder="Precio (&euro;) *"
-																required="required"
-																data-validation-required-message="Por favor, introduzca el precio del producto."
-																min="0.00" step="0.01" />
+<?php 
+															echo '<input class="form-control" type="number" name="price" id="price" placeholder="Precio (&euro;) *"
+																 	required="required" title="Precio del producto en euros (&euro;)" 
+																	data-validation-required-message="Por favor, introduzca el precio del producto."
+																	min="0.00" step="0.01" value="' . $productDto->getPrice() . '" />' . "\n";
+?>
 														</div>
 														<div class="form-group">
-															<input class="form-control" type="number" name="stock"
-																id="stock" placeholder="Existencias *"
-																required="required"
+<?php 
+															echo '<input class="form-control" type="number" name="stock"
+																id="stock" placeholder="Existencias *" required="required" title="Existencias del producto"
 																data-validation-required-message="Por favor, introduzca las existencias del producto."
-																min="0" step="1" />
+																min="0" step="1" value="' . $productDto->getStock() . '" />' . "\n";
+?>
 														</div>
 													</div>
 													<div class="col-md-6">
@@ -263,44 +283,80 @@
 																for ($i = 0; $i < $categoryList->count(); $i++) {
 																	$categoryDtoAux = new CategoryDto();
 																	$categoryDtoAux = $categoryList->offsetGet($i);
-																	echo '<option value="' . $categoryDtoAux->getId() . '">' . $categoryDtoAux->getName() . '</option> ' . "\n";
+																	if ($productDto->getCategory()->getId() == $categoryDtoAux->getId()) {
+																		echo '<option value="' . $categoryDtoAux->getId() . '" selected="selected">' . $categoryDtoAux->getName() . '</option> ' . "\n";
+																		echo '<script type="text/javascript">;</script>';
+																	} else {
+																		echo '<option value="' . $categoryDtoAux->getId() . '">' . $categoryDtoAux->getName() . '</option> ' . "\n";
+																	}
 																}
 ?>
 															</select>
 														</div>
 														<div class="form-group">
-															<input class="form-control" type="number" name="year"
-																id="year"
-																placeholder="A&ntilde;o de fabricaci&oacute;n *"
-																required="required"
-																data-validation-required-message="Por favor, introduzca el a&ntilde;o de fabricaci&oacute;n."
-																min="1900" max="2018" step="1" />
+<?php 
+															// Año actual
+															$dateAux = new \DateTime();
+															$productDateAux = new \DateTime($productDto->getProductDate());
+															echo '<input class="form-control" type="number" name="year"
+																	id="year" placeholder="A&ntilde;o de fabricaci&oacute;n *" title="A&ntilde;o de fabricación del producto"
+																	required="required" min="1900" max="' . $dateAux->format("Y") . '" step="1"
+																	data-validation-required-message="Por favor, introduzca el a&ntilde;o de fabricaci&oacute;n."
+																 	value="' . $productDateAux->format("Y") . '" />' . "\n";
+?>
 														</div>
 														<div class="form-group">
 															<span>Colores:</span> <div id="selectedColor"></div>
-															<select name="colors" class="form-control" id="colors" size="10" multiple onchange="selectedColor(value)">
+															<select name="colors" class="form-control" id="colors" size="13" multiple onchange="selectedColor(value);">
 <?php 
 	// Listado de Colores	
 																for ($i = 0; $i < $colorList->count(); $i++) {
 																	$colorDtoAux = new ColorDto();
 																	$colorDtoAux = $colorList->offsetGet($i);
-																	echo '<option value="' . $colorDtoAux->getId() . '">' . $colorDtoAux->getName() . '</option> ' . "\n";
+																	if (null != $productDto->getColors()) {
+																		$colorSelected = false;
+																		for ($j = 0; $j < $productDto->getColors()->count() && !$colorSelected; $j++) {
+																			$productColorDtoAux = new ProductColorDto();
+																			$productColorDtoAux = $productDto->getColors()->offsetGet($j);
+																			if ($productColorDtoAux->getColor()->getId() == $colorDtoAux->getId()) {
+																				$colorSelected = true;
+																			}
+																		}
+																		if ($colorSelected) {
+																			echo '<option selected="selected" value="' . $colorDtoAux->getId() . '">' . $colorDtoAux->getName() . '</option> ' . "\n";
+																			echo '<script type="text/javascript">selectedColor(' . $colorDtoAux->getId() . ');</script>'; // Para que aparezcan los colores
+																		} else {
+																			echo '<option value="' . $colorDtoAux->getId() . '">' . $colorDtoAux->getName() . '</option> ' . "\n";
+																		}
+																	} else {
+																		echo '<option value="' . $colorDtoAux->getId() . '">' . $colorDtoAux->getName() . '</option> ' . "\n";
+																	}
 																}
 ?>
 															</select>
 														</div>
 														<!-- div class="form-group">
-																<span>&iquest;Alquiler?</span-->
-																<input type="hidden" name="rent" id="rent" value="false" />
-															<!-- /div-->
+															<span>&iquest;Alquiler?</span-->
+															<input type="hidden" name="rent" id="rent" value="false" />
+														<!-- /div-->
 														<div class="form-group">
-															<textarea class="form-control" name="observations"
-																id="observations" placeholder="Observaciones"
-																data-validation-required-message="Por favor, introduzca observaciones."></textarea>
+<?php 
+															echo '<textarea class="form-control" name="observations"
+																	id="observations" placeholder="Observaciones" title="Observaciones del producto"
+																	data-validation-required-message="Por favor, introduzca observaciones.">'
+																	 . $productDto->getObservations() . 
+																'</textarea>' . "\n";
+?>
 														</div>
 														<div class="form-group">
-															<span>&iquest;Mostrar en web?</span> <input
-																type="checkbox" name="active" id="active" checked="checked" />
+															<span>&iquest;Mostrar en web?</span>
+<?php
+															if ($productDto->getActive() || 1 == $productDto->getActive()) {
+																echo '<input type="checkbox" name="active" id="active" checked="checked" title="El producto se muestra en la web" />' . "\n";
+															} else {
+																echo '<input type="checkbox" name="active" id="active"  title="El producto no se muestra en la web" />' . "\n";
+															}
+?>
 														</div>
 													</div>
 												</div>
@@ -425,7 +481,13 @@
 																for ($i = 0; $i < $motoTypeList->count(); $i++) {
 																	$motoTypeDtoAux = new MotoTypeDto();
 																	$motoTypeDtoAux = $motoTypeList->offsetGet($i);
-																	echo '<option value="' . $motoTypeDtoAux->getId() . '">' . $motoTypeDtoAux->getName() . '</option> ' . "\n";
+																	if (null != $productDto->getDetails() && SUB_MOTO == $productDto->getCategory()->getId() 
+																			&& MOTO == $productDto->getSubcategory()->getId() && null != $productDto->getDetails()->getType() 
+																			&& $motoTypeDtoAux->getId() == $productDto->getDetails()->getType()->getId()) { // TODO JPD
+																		echo '<option value="' . $motoTypeDtoAux->getId() . '" selected="selected">' . $motoTypeDtoAux->getName() . '</option> ' . "\n";
+																	} else {
+																		echo '<option value="' . $motoTypeDtoAux->getId() . '">' . $motoTypeDtoAux->getName() . '</option> ' . "\n";
+																	}
 																}
 ?>
 															</select>

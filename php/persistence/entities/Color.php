@@ -10,6 +10,8 @@
 		private $id;
 		private $name;
 		private $originalName;
+		private $createDate;
+		private $lastModifyDate;
 	
 		/**
 		 * Constructor de la clase
@@ -57,6 +59,34 @@
 		 */
 		public function setOriginalName($originalName) {
 			$this->originalName = $originalName;
+		}
+		
+		/**
+		 * @return mixed
+		 */
+		public function getCreateDate() {
+			return $this->createDate;
+		}
+		
+		/**
+		 * @return mixed
+		 */
+		public function getLastModifyDate() {
+			return $this->lastModifyDate;
+		}
+		
+		/**
+		 * @param mixed $createDate
+		 */
+		public function setCreateDate($createDate) {
+			$this->createDate = $createDate;
+		}
+		
+		/**
+		 * @param mixed $lastModifyDate
+		 */
+		public function setLastModifyDate($lastModifyDate) {
+			$this->lastModifyDate = $lastModifyDate;
 		}
 	}
 

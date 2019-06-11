@@ -23,6 +23,7 @@
 	use php\model\MotoTypeDto;
 	use php\model\OtherTypeDto;
 	use php\model\ProductDto;
+	use php\model\ProductColorDto;
 	use php\model\ProductImageDto;
 	use php\model\ProductTypeDto;
 	use php\persistence\entities\Accesory;
@@ -44,6 +45,7 @@
 	use php\persistence\entities\MotoTransmission;
 	use php\persistence\entities\MotoType;
 	use php\persistence\entities\Product;
+	use php\persistence\entities\ProductColor;
 	use php\persistence\entities\ProductImage;
 
 	/**
@@ -469,6 +471,13 @@
 				$productDtoAux->setObservations($product->getObservations());
 				$productDtoAux->setActive($product->getActive());
 				$productDtoAux->setProductDate($product->getProductDate());	
+				if (null != $product->getColors()) { // Colores
+					$productColorList = new \ArrayObject();
+					for ($i = 0; $i < $product->getColors()->count(); $i++) {
+						$productColorList->append($this->productColorToProductColorDto($product->getColors()->offsetGet($i)));
+					}
+					$productDtoAux->setColors($productColorList);
+				}
 				if (null != $product->getImages()) { // Imágenes
 					$productImageList = new \ArrayObject();
 					for ($i = 0; $i < $product->getImages()->count(); $i++) {
@@ -484,6 +493,19 @@
 		}
 		
 		/**
+		 * @param ProductColor $productColor
+		 * @return ProductColorDto
+		 */
+		public function productColorToProductColorDto (ProductColor $productColor) : ProductColorDto {
+			$productColorDtoAux = new ProductColorDto();
+			
+			$productColorDtoAux->setProductId($productColor->getProductId());
+			$productColorDtoAux->setColor($this->colorToColorDto($productColor->getColor()));
+			
+			return $productColorDtoAux;
+		}
+		
+		/**
 		 * @param ProductImage $productImage
 		 * @return ProductImageDto
 		 */
@@ -493,6 +515,7 @@
 			$productImageDtoAux->setProductId($productImage->getProductId());
 			$productImageDtoAux->setImage($this->imageToImageDto($productImage->getImage()));
 			$productImageDtoAux->setMain($productImage->getMain());
+			$productImageDtoAux->setActive($productImage->getActive());
 			
 			return $productImageDtoAux;
 		}
