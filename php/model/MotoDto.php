@@ -6,7 +6,8 @@
 	 * @author JPD
 	 */
 	class MotoDto {
-		private $id;
+		
+	    private $id;
 		private $type;
 		private $numberPlate;
 		private $power;

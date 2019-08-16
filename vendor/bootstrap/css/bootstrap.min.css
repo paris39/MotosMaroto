@@ -741,7 +741,7 @@ hr {
 	/*border:1px solid #ced4da;*/
 	border:1px solid black;
 	border-radius:.25rem;
-	transition:border-color .15s ease-in-out,box-shadow .15s ease-in-out
+	transition:border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 .short {
 	width: 49.5%!important;
@@ -962,6 +962,33 @@ textarea.form-control {
 	opacity:.65;
 }
 .btn:not(:disabled):not(.disabled) {
+	cursor:pointer;
+}
+.btnImg {
+	margin:.35rem .75rem;
+	position:relative;
+	display:block;
+	padding:.5rem .75rem;
+	/*margin-left:-1px;*/
+	line-height:1.25;
+	color: red;
+	background-color: #ced4da; /* #f1f1f1*/
+	border:1px solid black;
+	transition: 0.3s;
+}
+.btnImg:hover {
+	z-index:2;
+	color: white;
+	text-decoration:none;
+	background-color: #824027;
+	border-color: black;
+}
+.btnImg:focus {
+	z-index:2;
+	outline:0;
+	box-shadow:0 0 0 .2rem rgba(0,123,255,.25);
+}
+.btnImg:not(:disabled):not(.disabled) {
 	cursor:pointer;
 }
 a.btn.disabled, fieldset:disabled a.btn {
@@ -1523,6 +1550,13 @@ a.btn.disabled, fieldset:disabled a.btn {
 	border-color: black;
 }
 .page-item.disabled .page-link {
+	color:#6c757d;
+	pointer-events:none;
+	cursor:auto;
+	background-color:#fff;
+	border-color:#dee2e6;
+}
+.page-item .disabled {
 	color:#6c757d;
 	pointer-events:none;
 	cursor:auto;

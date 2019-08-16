@@ -54,7 +54,6 @@
 	const EQUIPMENT = 3;
 	const ACCESORY = 4;
 	const OTHER = 5;
-	const SUB_OTHER = 3;
 	const SUB_BIKE = 1;
 	const SUB_MOTO = 2;
 	const SUB_OTHER = 5;
@@ -87,6 +86,7 @@
 		 */
 		$productController = new ProductController();
 		$bikeAccesoryTypeList = $initController->listAccesoryTypeByCategory(BIKE);
+		$bikeAux = new BikeDto();
 		$bikeEquipmentTypeList = $initController->listEquipmentTypeByCategory(BIKE);
 		$bikeTypeList = $initController->listBikeType(); // Listar tipos de bicicleta
 		$bikeSizeList = $initController->listBikeSize(); // Listar tallas de bicicleta
@@ -95,6 +95,7 @@
 		$equipmentSizeList = $initController->listEquipmentSize(); // Listar tallas de equipamiento
 		$genderList = $initController->listGenders(); // Listar géneros
 		$motoAccesoryTypeList = $initController->listAccesoryTypeByCategory(MOTO);
+		$motoAux = new MotoDto();
 		$motoContaminationList = $initController->listMotoContamination(); // Listar distintivos anticontaminación de motos
 		$motoEquipmentTypeList = $initController->listEquipmentTypeByCategory(MOTO);
 		$motoFuelList = $initController->listMotoFuel(); // Listar combustibles de motos
@@ -120,7 +121,7 @@
 		echo '		<script src="../../content/js/intranet.js" type="text/javascript"></script>' . "\n"; */
 	}
 ?>
-<!DOCTYPE html>
+<!DOCTYPE html >
 <html lang="es">
 	<head>
 		<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
@@ -172,6 +173,9 @@
 						<div class="resume-content">
 							<div class="tabcontainer">
 								<div id="newProductTab" class="tabcontent">
+									<img src="../../../img/warning.jpg" id="warning" />
+									<span class="information">Los campos indicados con un asterisco rojo (<span class="mandatory">*</span>) son obligatorios de cumplimentar</span>
+									<br /><br />
 									<div class="row">
 										<div class="col-lg-12">
 											<form id="productForm" method="post" name="modifyProductForm" action="/MotosMaroto/php/controller/ProductController.php">
@@ -179,9 +183,10 @@
 													<div class="col-md-6">
 														<div class="form-group">
 															<div class="productImg">
-																<span>Imagen principal:</span>
+																<span><span class="mandatory">*</span> Imagen principal:</span>
 																<div id="mainImg">
 <?php 
+    // Imagen principal
 																	$main = false;
 																	if (null != $productDto->getImages()) {
 																		for ($i = 0; $i < $productDto->getImages()->count() && !$main; $i++) {
@@ -195,14 +200,13 @@
 																		}
 																	}
 																	if (!$main) {
-																		echo '<img src="../../../img/no-image.png" id="productMainImg" alt="Imagen principal" onclick="changeImg(\'fileToUpload\')"; />' . "\n";
+																		echo '<img src="../../../img/no-image.png" id="productMainImg" alt="Imagen principal" title="Imagen principal" onclick="changeImg(\'fileToUpload\')"; />' . "\n";
 																	}
 ?>
 																</div>
 																<span>Cambiar imagen principal:</span>
-																<input class="form-control" type="file" name="fileToUpload" id="fileToUpload" accept="image/*" 
-																		placeholder="Imagen principal *" required="required" onchange="filePreview(this);"
-																		data-validation-required-message="Por favor, cargue una imagen." />
+																<input class="form-control" type="file" name="fileToUpload" id="fileToUpload" accept="image/*" placeholder="Imagen principal *" 
+																	required="required" onchange="filePreview(this);" data-validation-required-message="Por favor, cargue una imagen." />
 															</div>
 														</div>
 														<div class="form-group">
@@ -210,25 +214,29 @@
 																<span>Otras im&aacute;genes:</span> 
 																<div id="otherImg">
 <?php 
+    // Otras imágenes
 																	echo $outputImages;
 ?>
 																</div>
 																<span>A&ntilde;adir m&aacute;s im&aacute;genes:</span>
 																<input class="form-control"
-																	type="file" name="filesToUpload" id="filesToUpload"
-																	multiple="multiple" accept="image/*" placeholder="Otras im&aacute;genes"
+																	type="file" name="filesToUpload" id="filesToUpload" multiple="multiple" accept="image/*" placeholder="Otras im&aacute;genes"
 																	data-validation-required-message="" onchange="filePreview(this);" />
 															</div>
 														</div>
 														<div class="form-group">
+															<span><span class="mandatory">*</span> Nombre:</span> 
 <?php 
+    // Nombre de producto
 															echo '<input class="form-control" type="text" name="name" id="name" placeholder="Nombre *" 
 																	required="required" data-validation-required-message="Por favor, introduzca un nombre." 
 																	title="Nombre del producto" value="' . $productDto->getName() . '"/>' . "\n";
 ?>
 														</div>
 														<div class="form-group">
+															<span><span class="mandatory">*</span> Descripci&oacute;n:</span> 
 <?php 
+    // Descripción
 															echo '<textarea class="form-control" name="description"
 																	id="description" placeholder="Descripci&oacute;n *"
 																	required="required" title="Descripci&oacute;n del producto"
@@ -238,7 +246,9 @@
 ?>
 														</div>
 														<div class="form-group">
+															<span><span class="mandatory">*</span> Marca:</span> 
 <?php 
+    // Marca
 															echo '<input class="form-control" type="text" name="mark"
 																	id="mark" placeholder="Marca *" required="required" title="Marca del producto"
 																	data-validation-required-message="Por favor, introduzca la marca del producto." 
@@ -246,7 +256,9 @@
 ?>
 														</div>
 														<div class="form-group">
+															<span><span class="mandatory">*</span> Modelo:</span> 
 <?php 
+    // Modelo
 															echo '<input class="form-control" type="text" name="model"
 																	id="model" placeholder="Modelo *" required="required" title="Modelo del producto"
 																	data-validation-required-message="Por favor, introduzca el modelo del producto." 
@@ -254,7 +266,9 @@
 ?>
 														</div>
 														<div class="form-group">
+															<span><span class="mandatory">*</span> Precio:</span> 
 <?php 
+    // Precio
 															echo '<input class="form-control" type="number" name="price" id="price" placeholder="Precio (&euro;) *"
 																 	required="required" title="Precio del producto en euros (&euro;)" 
 																	data-validation-required-message="Por favor, introduzca el precio del producto."
@@ -262,7 +276,9 @@
 ?>
 														</div>
 														<div class="form-group">
+															<span><span class="mandatory">*</span> Existencias:</span> 
 <?php 
+    // Stock
 															echo '<input class="form-control" type="number" name="stock"
 																id="stock" placeholder="Existencias *" required="required" title="Existencias del producto"
 																data-validation-required-message="Por favor, introduzca las existencias del producto."
@@ -272,7 +288,7 @@
 													</div>
 													<div class="col-md-6">
 														<div class="form-group">
-															<span>Categor&iacute;a:</span> 
+															<span><span class="mandatory">*</span> Categor&iacute;a:</span> 
 															<select
 																name="productCategory" class="form-control"
 																id="productCategory" title="Categor&iacute;a"
@@ -294,12 +310,13 @@
 															</select>
 														</div>
 														<div class="form-group">
+															<span><span class="mandatory">*</span> A&ntilde;o:</span> 
 <?php 
-															// Año actual
+	// Año de fabricación
 															$dateAux = new \DateTime();
 															$productDateAux = new \DateTime($productDto->getProductDate());
 															echo '<input class="form-control" type="number" name="year"
-																	id="year" placeholder="A&ntilde;o de fabricaci&oacute;n *" title="A&ntilde;o de fabricación del producto"
+																	id="year" placeholder="A&ntilde;o de fabricaci&oacute;n *" title="A&ntilde;o de fabricaci&oacute;n del producto"
 																	required="required" min="1900" max="' . $dateAux->format("Y") . '" step="1"
 																	data-validation-required-message="Por favor, introduzca el a&ntilde;o de fabricaci&oacute;n."
 																 	value="' . $productDateAux->format("Y") . '" />' . "\n";
@@ -340,7 +357,9 @@
 															<input type="hidden" name="rent" id="rent" value="false" />
 														<!-- /div-->
 														<div class="form-group">
+															<span>Observaciones:</span> 
 <?php 
+    // Observaciones del producto
 															echo '<textarea class="form-control" name="observations"
 																	id="observations" placeholder="Observaciones" title="Observaciones del producto"
 																	data-validation-required-message="Por favor, introduzca observaciones.">'
@@ -351,6 +370,7 @@
 														<div class="form-group">
 															<span>&iquest;Mostrar en web?</span>
 <?php
+    // Producto activo/inactivo
 															if ($productDto->getActive() || 1 == $productDto->getActive()) {
 																echo '<input type="checkbox" name="active" id="active" checked="checked" title="El producto se muestra en la web" />' . "\n";
 															} else {
@@ -368,53 +388,109 @@
 													</div>
 													<div class="col-md-6">
 														<div class="form-group">
-															<span>Tipo de bicicleta:</span> <select name="bikeKind"
-																class="form-control" id="bikeKind"
-																title="Tipo de bicicleta">
+															<span>Tipo de bicicleta:</span> 
+															<select name="bikeKind" class="form-control" id="bikeKind" title="Tipo de bicicleta">
 																<option value="none">Seleccionar tipo...</option>
 <?php 
 	// Listado de Tipos de bicicleta
 																for ($i = 0; $i < $bikeTypeList->count(); $i++) {
 																	$bikeTypeDtoAux = new BikeTypeDto();
 																	$bikeTypeDtoAux = $bikeTypeList->offsetGet($i);
-																	echo '<option value="' . $bikeTypeDtoAux->getId() . '">' . $bikeTypeDtoAux->getName() . '</option> ' . "\n";
+																	if (null != $productDto->getDetails() && SUB_BIKE == $productDto->getCategory()->getId()
+																	    && BIKE == $productDto->getSubcategory()->getId() && null != $productDto->getDetails()->getType() 
+																	    && $bikeTypeDtoAux->getId() == $productDto->getDetails()->getType()->getId()) {
+																	    $bikeAux = $productDto->getDetails();
+    																	echo '<option value="' . $bikeTypeDtoAux->getId() . '" selected="selected">' . $bikeTypeDtoAux->getName() . '</option> ' . "\n";
+																    } else {
+																        echo '<option value="' . $bikeTypeDtoAux->getId() . '">' . $bikeTypeDtoAux->getName() . '</option> ' . "\n";
+																    }
 																}
 ?>
 															</select>
 														</div>
 														<div class="form-group">
-															<input class="form-control" type="text" name="bikeFrame"
-																id="bikeFrame" placeholder="Cuadro" />
+															<span>Cuadro:</span>
+<?php 
+    // Cuadro
+                                                            if (null != $bikeAux) {
+                                                                echo '<input class="form-control" type="text" name="bikeFrame" title="Cuadro de la bicicleta"
+																    id="bikeFrame" placeholder="Cuadro" value="' . $bikeAux->getFrame() . '" />';
+                                                            } else {
+                                                                echo '<input class="form-control" type="text" name="bikeFrame" id="bikeFrame" placeholder="Cuadro" title="Cuadro de la bicicleta />';
+                                                            }
+?>
 														</div>
 														<div class="form-group">
-															<input class="form-control" type="text" name="bikeFork"
-																id="bikeFork" placeholder="Horquilla" />
+															<span>Manillar:</span>
+<?php 
+    // Manillar
+                                                            if (null != $bikeAux) {
+                                                                echo '<input class="form-control" type="text" name="bikeHandlebars" id="bikeHandlebars" title="Manillar de la bicicleta"
+																    placeholder="Manillar" value="' . $bikeAux->getHandlebars() . '" />';
+                                                            } else {
+                                                                echo '<input class="form-control" type="text" name="bikeHandlebars" id="bikeHandlebars" placeholder="Manillar" title="Manillar de la bicicleta" />';
+                                                            }
+?>
 														</div>
 														<div class="form-group">
-															<input class="form-control" type="text"
-																name="bikeHandlebars" id="bikeHandlebars"
-																placeholder="Manillar" />
+															<span>Sill&iacute;n:</span>
+<?php 
+    // Sillín
+                                                            if (null != $bikeAux) {
+                                                                echo '<input class="form-control" type="text" name="bikeSeat" title="Sill&iacute;n de la bicicleta"
+																    id="bikeSeat" placeholder="Sill&iacute;n" value="' . $bikeAux->getSeat() . '" />';
+                                                            } else {
+                                                                echo '<input class="form-control" type="text" name="bikeSeat" id="bikeSeat" placeholder="Sill&iacute;n" title="Sill&iacute;n de la bicicleta" />';
+                                                            }
+?>
 														</div>
 														<div class="form-group">
-															<input class="form-control" type="text" name="bikeSeat"
-																id="bikeSeat" placeholder="Sill&iacute;n" />
+															<span>Cambio:</span>
+<?php 
+    // Cambio
+                                                            if (null != $bikeAux) {
+                                                                echo '<input class="form-control" type="text" name="bikeShift" title="Cambio" title="Cambio de la bicicleta"
+																    id="bikeShift" placeholder="Cambio" value="' . $bikeAux->getShift() . '" />';
+                                                            } else {
+                                                                echo '<input class="form-control" type="text" name="bikeShift" id="bikeShift" placeholder="Cambio" title="Cambio de la bicicleta" />';
+                                                            }
+?>
 														</div>
 														<div class="form-group">
-															<input class="form-control" type="text" name="bikeChange"
-																id="bikeChange" placeholder="Cambio" />
+															<span>Desviador:</span>
+<?php 
+    // Desviador
+                                                            if (null != $bikeAux) {
+                                                                echo '<input class="form-control" type="text" name="bikeDerailleur" id="bikeDerailleur"
+																    placeholder="Desviador" title="Desviador de la bicicleta" value="' . $bikeAux->getDerailleur() . '" />';
+                                                            } else {
+                                                                echo '<input class="form-control" type="text" name="bikeDerailleur" id="bikeDerailleur" placeholder="Desviador" title="Desviador de la bicicleta" />';
+                                                            }
+?>
 														</div>
 														<div class="form-group">
-															<input class="form-control" type="text"
-																name="bikeDeflector" id="bikeDeflector"
-																placeholder="Desviador" />
+															<span>Mando:</span>
+<?php 
+    // Mando
+                                                            if (null != $bikeAux) {
+                                                                echo '<input class="form-control" type="text" name="bikeTwistShifters"
+																    id="bikeTwistShifters" title="Mando de la bicicleta" placeholder="Mando" value="' . $bikeAux->getTwistShifters() . '" />';
+                                                            } else {
+                                                                echo '<input class="form-control" type="text" name="bikeTwistShifters" id="bikeTwistShifters" title="Mando" placeholder="Mando de la bicicleta" />';
+                                                            }
+?>
 														</div>
 														<div class="form-group">
-															<input class="form-control" type="text" name="bikeControl"
-																id="bikeControl" placeholder="Mando" />
-														</div>
-														<div class="form-group">
-															<input class="form-control" type="text" name="bikeGroup"
-																id="bikeGroup" placeholder="Grupo" />
+															<span>Grupo:</span>
+<?php 
+    // Grupo
+                                                            if (null != $bikeAux) {
+                                                                echo '<input class="form-control" type="text" name="bikeSpeedGroupset"
+																    id="bikeSpeedGroupset" placeholder="Grupo" title="Grupo de la bicicleta" value="'. $bikeAux->getSpeedGroupset() .'" />';
+                                                            } else {
+                                                                echo '<input class="form-control" type="text" name="bikeSpeedGroupset" id="bikeSpeedGroupset" placeholder="Grupo" title="Grupo de la bicicleta" />';
+                                                            }
+?>
 														</div>
 													</div>
 													<div class="col-md-6">
@@ -433,35 +509,89 @@
 															</select>
 														</div>
 														<div class="form-group">
-															<input class="form-control" type="text" name="bikePedals"
-																id="bikePedals" placeholder="Pedales" />
+															<span>Horquilla:</span>
+<?php 
+    // Horquilla
+                                                            if (null != $bikeAux) {
+                                                                echo '<input class="form-control" type="text" name="bikeFork" title="Horquilla de la bicicleta"
+																    id="bikeFork" placeholder="Horquilla" value="' . $bikeAux->getFork() . '" />';
+                                                            } else {
+                                                                echo '<input class="form-control" type="text" name="bikeFork" id="bikeFork" placeholder="Horquilla" title="Horquilla de la bicicleta" />';
+                                                            }
+?>
 														</div>
 														<div class="form-group">
-															<input class="form-control" type="text" name="bikeCrank"
-																id="bikeCrank" placeholder="Bielas" />
+															<span>Pedales:</span>
+<?php 
+    // Pedales
+                                                            if (null != $bikeAux) {
+                                                                echo '<input class="form-control" type="text" name="bikePedals" title="Pedales de la bicicleta"
+																    id="bikePedals" placeholder="Pedales" value="' . $bikeAux->getPedals() . '" />';
+                                                            } else {
+                                                                echo '<input class="form-control" type="text" name="bikePedals" title="Pedales de la bicicleta" id="bikePedals" placeholder="Pedales" />';
+                                                            }
+?>
 														</div>
 														<div class="form-group">
-															<input class="form-control" type="text"
-																name="bikeCassette" id="bikeCassette"
-																placeholder="Cassette" />
+															<span>Bielas:</span>
+<?php 
+    // Bielas
+                                                            if (null != $bikeAux) {
+                                                                echo '<input class="form-control" type="text" name="bikeCranks" id="bikeCranks" 
+                                                                    placeholder="Bielas" title="Bielas de la bicicleta" value="' . $bikeAux->getCranks() . '" />';
+                                                            } else {
+                                                                echo '<input class="form-control" type="text" name="bikeCranks" id="bikeCranks" placeholder="Bielas" title="Bielas de la bicicleta" />';
+                                                            }
+?>
 														</div>
 														<div class="form-group">
-															<input class="form-control" type="text" name="bikeWheels"
-																id="bikeWheels" placeholder="Llantas" />
+															<span>Cassette:</span>
+<?php 
+    // Cassette
+                                                            if (null != $bikeAux) {
+                                                                echo '<input class="form-control" type="text" name="bikeCassette" id="bikeCassette"
+																    placeholder="Cassette" title="Cassette de la bicicleta" value="' . $bikeAux->getCassette() . '" />';
+                                                            } else {
+                                                                echo '<input class="form-control" type="text" name="bikeCassette" id="bikeCassette" placeholder="Cassette" title="Cassette de la bicicleta" />';
+                                                            }
+?>
 														</div>
 														<div class="form-group">
-															<input class="form-control" type="text" name="bikeTyres"
-																id="bikeTyres" placeholder="Cubiertas" />
+															<span>Llantas:</span>
+<?php 
+    // Llantas
+                                                            if (null != $bikeAux) {
+                                                                echo '<input class="form-control" type="text" name="bikeWheels" title="Llantas de la bicicleta"
+																    id="bikeWheels" placeholder="Llantas" value="' . $bikeAux->getWheels() . '" />';
+                                                            } else {
+                                                                echo '<input class="form-control" type="text" name="bikeWheels" title="Llantas de la bicicleta" id="bikeWheels" placeholder="Llantas" />';
+                                                            }
+?>
 														</div>
 														<div class="form-group">
-															<input class="form-control" type="text"
-																name="bikeDeflector" id="bikeDeflector"
-																placeholder="Desviador" />
+															<span>Cubiertas:</span>
+<?php 
+    // Cubiertas
+                                                            if (null != $bikeAux) {
+                                                                echo '<input class="form-control" type="text" name="bikeTyres" title="Cubiertas de la bicicleta"
+																    id="bikeTyres" placeholder="Cubiertas" value="' . $bikeAux->getTyres() . '" />';
+                                                            } else {
+                                                                echo '<input class="form-control" type="text" name="bikeTyres" title="Cubiertas de la bicicleta" id="bikeTyres" placeholder="Cubiertas" />';
+                                                            }
+?>
 														</div>
 														<div class="form-group">
-															<input class="form-control" type="number"
-																name="bikeWeight" id="bikeWeight"
-																placeholder="Peso (kg.)" min="0.00" step="0.01" />
+														<span>Peso (kg.):</span>
+<?php 
+    // Peso
+                                                        if (null != $bikeAux) {
+                                                            echo '<input class="form-control" type="number" name="bikeWeight" id="bikeWeight" title="Peso de la bicicleta en kilos"
+																placeholder="Peso (kg.)" min="0.00" step="0.01" value="' . $bikeAux->getWeight() . '" />';
+                                                        } else {
+															echo '<input class="form-control" type="number" name="bikeWeight" id="bikeWeight" title="Peso de la bicicleta en kilos"
+																placeholder="Peso (kg.)" min="0.00" step="0.01" />';
+                                                        }
+?>
 														</div>
 													</div>
 												</div>
@@ -484,6 +614,7 @@
 																	if (null != $productDto->getDetails() && SUB_MOTO == $productDto->getCategory()->getId() 
 																			&& MOTO == $productDto->getSubcategory()->getId() && null != $productDto->getDetails()->getType() 
 																			&& $motoTypeDtoAux->getId() == $productDto->getDetails()->getType()->getId()) { // TODO JPD
+                                                                        $motoAux = $productDto->getDetails();
 																		echo '<option value="' . $motoTypeDtoAux->getId() . '" selected="selected">' . $motoTypeDtoAux->getName() . '</option> ' . "\n";
 																	} else {
 																		echo '<option value="' . $motoTypeDtoAux->getId() . '">' . $motoTypeDtoAux->getName() . '</option> ' . "\n";
@@ -493,50 +624,88 @@
 															</select>
 														</div>
 														<div class="form-group">
-															<input class="form-control" type="number" name="motoCubic"
-																id="motoCubic" placeholder="Cilindrada (cc&sup3;)"
-																title="Cilindrada (cc&sup3;)" min="0" step="10" />
+															<span>Cilindrada (cc&sup3;):</span>
+<?php
+    // Cilindrada
+                                                            if (null != $motoAux) {
+                                                                echo '<input class="form-control" type="number" name="motoCubic" id="motoCubic" placeholder="Cilindrada (cc&sup3;)" 
+                                                                    title="Cilindrada (cc&sup3;) de la motocicleta" min="0" step="10" value="' . $motoAux->getCylinderCapacity() . '" />';
+                                                            } else {
+                                                                echo '<input class="form-control" type="number" name="motoCubic"
+																    id="motoCubic" placeholder="Cilindrada (cc&sup3;)" title="Cilindrada (cc&sup3;) de la motocicleta" min="0" step="10" />';
+                                                            }
+?>
 														</div>
 														<div class="form-group">
-															<input class="form-control" type="number"
-																name="motoCylinder" id="motoCylinder"
-																placeholder="N&ordm; cilindros" title="N&ordm; cilindros"
-																min="0" step="1" />
+															<span>N&ordm; cilindros:</span>
+<?php
+    // Nº de cilindros
+                                                            if (null != $motoAux) {
+    															echo '<input class="form-control" type="number" name="motoCylinder" id="motoCylinder" placeholder="N&ordm; cilindros" 
+    																title="N&ordm; cilindros de la motocicleta" value="' . $motoAux->getCylinders() . '" min="0" step="1" />';
+                                                            } else {
+                                                                echo '<input class="form-control" type="number" name="motoCylinder" id="motoCylinder"
+    																placeholder="N&ordm; cilindros" title="N&ordm; cilindros de la motocicleta" min="0" step="1" />';
+                                                            }
+?>
 														</div>
 														<div class="form-group">
-															<input class="form-control" type="number" name="motoPower"
-																id="motoPower" placeholder="Potencia (cv)"
-																title="Potencia (cv)" min="0.0" step="0.1" />
+															<span>Potencia (cv):</span>
+<?php 
+    // Potencia
+                                                            if (null != $motoAux) {
+                                                                echo '<input class="form-control" type="number" name="motoPower" id="motoPower" placeholder="Potencia (cv)" 
+                                                                    value="' . $motoAux->getPower() . '" title="Potencia (cv) de la motocicleta" min="0.0" step="0.1" />';
+                                                            } else {
+                                                                echo '<input class="form-control" type="number" name="motoPower" id="motoPower" 
+                                                                    placeholder="Potencia (cv)" title="Potencia (cv) de la motocicleta" min="0.0" step="0.1" />';
+                                                            }
+?>
 														</div>
 														<div class="form-group">
-															<input class="form-control" type="number" name="motoGears"
-																id="motoGears" placeholder="Velocidades"
-																title="Velocidades/Marchas" min="1" max="10" step="1" />
+															<span>Marchas / Velocidades:</span>
+<?php 
+    // Marchas / Velocidades
+                                                            if (null != $motoAux) {
+                                                                echo '<input class="form-control" type="number" name="motoGears" id="motoGears" placeholder="Velocidades" 
+                                                                    value="' . $motoAux->getGears() . '" title="Velocidades/Marchas de la motocicleta" min="1" max="10" step="1" />';
+                                                            } else {
+                                                                echo '<input class="form-control" type="number" name="motoGears"
+    																id="motoGears" placeholder="Velocidades" title="Velocidades/Marchas de la motocicleta" min="1" max="10" step="1" />';
+                                                            }
+?>
 														</div>
 														<div class="form-group">
-															<input class="form-control" type="text"
-																name="motoFrontBrake" id="motoFrontBrake"
-																placeholder="Freno delantero (1 disco, 2 discos, tambor...)"
-																title="Freno delantero" />
+															<span>Freno delantero:</span>
+<?php 
+    // Freno delantero
+                                                            if (null != $motoAux) {
+                                                                echo '<input class="form-control" type="text" name="motoFrontBrake" id="motoFrontBrake" placeholder="Freno delantero (1 disco, 2 discos, tambor...)" 
+                                                                    title="Freno delantero de la motocicleta" value="' . $motoAux->getFrontBrake() . '" />';
+                                                            } else {
+                                                                echo '<input class="form-control" type="text" name="motoFrontBrake" id="motoFrontBrake"
+																    placeholder="Freno delantero (1 disco, 2 discos, tambor...)" title="Freno delantero de la motocicleta" />';
+                                                            }
+?>
 														</div>
 														<div class="form-group">
-															<input class="form-control" type="text"
-																name="motoRearBrake" id="motoRearBrake"
-																placeholder="Freno trasero (1 disco, tambor...)"
-																title="Freno trasero" />
-														</div>
-														<div class="form-group">
-															<input class="form-control" type="number"
-																name="motoKilometers" id="motoKilometers"
-																placeholder="Kil&oacute;metros" title="Kil&oacute;metros"
-																min="0" step="1" />
+															<span>Freno trasero:</span>
+<?php 
+    // Freno trasero
+                                                            if (null != $motoAux) {
+    															echo '<input class="form-control" type="text" name="motoRearBrake" id="motoRearBrake"
+    																placeholder="Freno trasero (1 disco, tambor...)" title="Freno trasero de la motocicleta" value="' . $motoAux->getRearBrake() . '" />';
+                                                            } else {
+                                                                echo '<input class="form-control" type="text" name="motoRearBrake" id="motoRearBrake"
+    																placeholder="Freno trasero (1 disco, tambor...)" title="Freno trasero de la motocicleta" />';
+                                                            }
+?>
 														</div>
 													</div>
 													<div class="col-md-6">
 														<div class="form-group">
-															<span>Carnet:</span> <select name="motoLicense"
-																class="form-control" id="motoLicense"
-																title="Carnet de moto">
+															<span>Carnet:</span> 
+															<select name="motoLicense" class="form-control" id="motoLicense" title="Carnet de moto m&iacute;nimo">
 																<option value="none">Seleccionar carnet...</option>
 <?php 
 	// Listado de Permisos de conducir motocicleta
@@ -553,13 +722,21 @@
 															</select>
 														</div>
 														<div class="form-group">
-															<input class="form-control" type="number"
-																name="motoPlaces" id="motoPlaces"
-																placeholder="Plazas homologadas" min="1" max="3" step="1" />
+															<span>Plazas homologadas:</span>
+<?php
+    // Plazas homologadas
+                                                            if (null != $motoAux) {
+                                                                echo '<input class="form-control" type="number" name="motoPlaces" id="motoPlaces" value="' . $motoAux->getPlaces() . '"
+																    placeholder="Plazas homologadas de la motocicleta" min="1" max="3" step="1" />';
+                                                            } else {
+                                                                echo '<input class="form-control" type="number" name="motoPlaces" id="motoPlaces"
+																    placeholder="Plazas homologadas de la motocicleta" min="1" max="3" step="1" />';
+                                                            }
+?>
 														</div>
 														<div class="form-group">
-															<span>Combustible:</span> <select class="form-control"
-																name="motoFuel" id="motoFuel" title="Combustible">
+															<span>Combustible:</span> 
+															<select class="form-control" name="motoFuel" id="motoFuel" title="Combustible de la motocicleta">
 																<option value="none">Seleccionar combustible...</option>
 <?php 
 	// Listado de Combustibles de motocicleta
@@ -572,9 +749,8 @@
 															</select>
 														</div>
 														<div class="form-group">
-															<span>Distintivo anticontaminaci&oacute;n:</span> <select
-																class="form-control" name="motoContamination"
-																id="motoContamination" title="Distintivo anticontaminaci&oacute;n">
+															<span>Distintivo anticontaminaci&oacute;n:</span> 
+															<select class="form-control" name="motoContamination" id="motoContamination" title="Distintivo anticontaminaci&oacute;n de la motocicleta">
 																<option value="none">Seleccionar categor&iacute;a...</option>
 <?php 
 	// Listado de Distintivos anticontaminación de motocicleta
@@ -591,9 +767,8 @@
 															</select>
 														</div>
 														<div class="form-group">
-															<span>Transmisi&oacute;n:</span> <select
-																class="form-control" name="motoTransmission"
-																id="motoTransmission" title="Transmisi&oacute;n">
+															<span>Transmisi&oacute;n:</span> 
+																<select class="form-control" name="motoTransmission" id="motoTransmission" title="Transmisi&oacute;n de la motocicleta">
 																<option value="none">Seleccionar transmisi&oacute;n...</option>
 <?php 
 	// Listado de tipos de Transmisión de motocicleta
@@ -606,8 +781,28 @@
 															</select>
 														</div>
 														<div class="form-group">
-															<span>&iquest;Segunda mano?</span> <input type="checkbox"
-																name="motoSecondHand" id="motoSecondHand" />
+															<span>Kil&oacute;metros:</span>
+<?php 
+    // Kilómetros
+                                                            if (null != $motoAux) {
+                                                                echo '<input class="form-control" type="number" name="motoKilometers" id="motoKilometers"
+																    placeholder="Kil&oacute;metros" title="Kil&oacute;metros de la motocicleta" min="0" step="1" value="' . $motoAux->getKilometers() . '" />';
+                                                            } else {
+                                                                echo '<input class="form-control" type="number" name="motoKilometers" id="motoKilometers" 
+                                                                    placeholder="Kil&oacute;metros" title="Kil&oacute;metros" min="0" step="1" />';
+                                                            }
+?>
+														</div>
+														<div class="form-group">
+															<span>&iquest;Segunda mano?</span> 
+<?php 
+    // ¿Segunda mano?
+                                                            if (null != $motoAux && null != $motoAux->getSecondHand() && 1 == $motoAux->getSecondHand()) {
+                                                                echo '<input type="checkbox" name="motoSecondHand" id="motoSecondHand" title="Indica si la motocicleta es de segunda mano" checked />';
+                                                            } else {
+                                                                echo '<input type="checkbox" name="motoSecondHand" id="motoSecondHand" title="Indica si la motocicleta es de segunda mano" />';
+                                                            }
+?>
 														</div>
 													</div>
 												</div>
