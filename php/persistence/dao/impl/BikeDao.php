@@ -108,6 +108,7 @@
 						. "AND BT.ID = BK.TYPE "
 						. "AND BS.ID = BK.SIZE ";
 			
+			error_log("Consulta a ejecutar: " . $query, 0);
 			$result = mysqli_query($this->connection, $query) or die ("No funciona");
 			
 			$bikeList = new \ArrayObject();
@@ -179,6 +180,15 @@
 		}
 		
 		/**
+		 * @param int $id
+		 * @param Bike $bike
+		 * @param int $userId
+		 */
+		public function newBike(int $id, Bike $bike, int $userId) : void {
+			$this->save($id, $bike, $userId);
+		}
+		
+		/**
 		 * @param array $row
 		 * @return Bike
 		 */
@@ -239,6 +249,55 @@
 			$bikeTypeAux->setName(utf8_encode($row['name']));
 			
 			return $bikeTypeAux;
+		}
+		
+		/**
+		 * Guarda en Base de Datos una nueva bicicleta
+		 *
+		 * @param int $id
+		 * @param Bike $bike
+		 * @param int $userId
+		 * @return int
+		 */
+		private function save (int $id, Bike $bike, int $userId) : int {
+			// Conexión de la base de datos
+			$this->getConnection();
+			
+			$query = "INSERT INTO BIKE "
+						. "(id, type, size, gears, frame, fork, brakes, wheels, tyres, seat, handlebars, shift, derailleur, twist_shifters, speed_groupset, weight, pedals, crank, cassette, active, observation_active, create_date, last_modify_date, last_modify_user) "
+					. " VALUES "
+						. " (" . $id . ", "
+						. "'" . $bike->getType() . "', "
+						. "'" . $bike->getSize() . "', "
+						. "'" . $bike->getGears() . "', "
+						. "'" . $bike->getFrame() . "', "
+						. "'" . $bike->getFork() . "', "
+						. "'" . $bike->getBrakes() . "', "
+						. "'" . $bike->getWheels() . "', "
+						. "'" . $bike->getTyres() . "', "
+						. "'" . $bike->getSeat() . "', "
+						. "'" . $bike->getHandlebars() . "', "
+						. "'" . $bike->getShift() . "', "
+						. "'" . $bike->getDerailleur() . "', "
+						. "'" . $bike->getTwistShifters() . "', "
+						. "'" . $bike->getSpeedGroupset() . "', "
+						. "'" . $bike->getWeight() . "', "
+						. "'" . $bike->getPedals() . "', "
+						. "'" . $bike->getCrank() . "', "
+						. "'" . $bike->getCassette() . "', "
+						. "'" . $accesory->getActive() . "', "
+						. "CURRENT_TIMESTAMP, "
+						. "CURRENT_TIMESTAMP, "
+						. "'" . $userId . "'"
+					. " )";
+																							
+			error_log("Consulta a ejecutar: " . $query, 0);
+			mysqli_query($this->connection, $query);
+			
+			$id = mysqli_insert_id($this->connection); // Último ID asignado
+			error_log("ID Asignado: " . $id, 0);
+			
+			return $id;
 		}
 
 	}

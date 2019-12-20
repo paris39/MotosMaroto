@@ -10,6 +10,8 @@
 		private $type;
 		private $size;
 		private $gender;
+		private $active;
+		private $observationActive;
 		
 		/**
 		 * @return mixed
@@ -73,6 +75,34 @@
 		public function __construct() {
 		}
 		
+		/**
+		 * @return mixed
+		 */
+		public function getActive () {
+			return $this->active;
+		}
+	
+		/**
+		 * @return mixed
+		 */
+		public function getObservationActive () {
+			return $this->observationActive;
+		}
+	
+		/**
+		 * @param mixed $active
+		 */
+		public function setActive ($active) {
+			$this->active = $active;
+		}
+	
+		/**
+		 * @param mixed $observationActive
+		 */
+		public function setObservationActive ($observationActive) {
+			$this->observationActive = $observationActive;
+		}
+	
 	}
 
 ?>

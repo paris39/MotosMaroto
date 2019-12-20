@@ -30,7 +30,16 @@
 		 * @param int $category
 		 * @return \ArrayObject
 		 */
-		public function listAccesoryTypeByCategory(int $category) : \ArrayObject;
+		public function listAccesoryTypeByCategory (int $category) : \ArrayObject;
+		
+		/**
+		 * Función que añade un nuevo accesorio a la base de datos
+		 * 
+		 * @param int $id
+		 * @param Accesory $accesory
+		 * @param int $userId
+		 */
+		public function newAccesory(int $id, Accesory $accesory, int $userId) : void;
 		
 	}
 

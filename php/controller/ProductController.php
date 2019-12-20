@@ -72,13 +72,14 @@
 		private const CATEGORY_EQUIPMENT = 3;
 		private const CATEGORY_ACCESORY = 4;
 		private const CATEGORY_OTHER = 5;
+		private const TOTAL_CATEGORIES = 5;
 		
 		/* CONSTANTES DE BOTÓN DE OTRAS IMÁGENES */
 		private const BUTTON_ORIGIN_PREVIOUS = "previous";
 		private const BUTTON_ORIGIN_NEXT = "next";
 		private const BUTTON_PREVIOUS = "previous";
 		private const BUTTON_NEXT = "next";
-		private const OTHER_IMAGES_VISIBLES = 3; 
+		private const OTHER_IMAGES_VISIBLES = 3;
 		
 		/**
 		 * Constructor de la clase
@@ -91,23 +92,26 @@
 		 */
 		public function newProduct() {
 			if (null != $_POST['productCategory'] && 0 != strcasecmp("", trim($_POST['productCategory']))) {
-				switch ($_POST['productCategory']) {
-					case 1:
-						$id = $this->addNewProduct($this->marshallProduct(self::CATEGORY_BIKE));
-						break;
-					case 2: 
-						$id = $this->addNewProduct($this->marshallProduct(self::CATEGORY_MOTO));
-						break;
-					case 3:
-						$id = $this->addNewProduct($this->marshallProduct(self::CATEGORY_EQUIPMENT));
-						break;
-					case 4:
-						$id = $this->addNewProduct($this->marshallProduct(self::CATEGORY_ACCESORY));
-						break;
-					case 5:
-						$id = $this->addNewProduct($this->marshallProduct(self::CATEGORY_OTHER));
-						break;
-					default;
+				if (isset($_POST['userId']) && (null != $_POST['userId'])) {
+					$userId = $_POST['userId'];
+					switch ($_POST['productCategory']) {
+						case 1:
+							$id = $this->addNewProduct($this->marshallProduct(self::CATEGORY_BIKE), $userId);
+							break;
+						case 2: 
+							$id = $this->addNewProduct($this->marshallProduct(self::CATEGORY_MOTO), $userId);
+							break;
+						case 3:
+							$id = $this->addNewProduct($this->marshallProduct(self::CATEGORY_EQUIPMENT), $userId);
+							break;
+						case 4:
+							$id = $this->addNewProduct($this->marshallProduct(self::CATEGORY_ACCESORY), $userId);
+							break;
+						case 5:
+							$id = $this->addNewProduct($this->marshallProduct(self::CATEGORY_OTHER), $userId);
+							break;
+						default;
+					}
 				}
 			}
 		}
@@ -125,7 +129,7 @@
 			$productDto->setDescription($_POST["description"]); // Descripción
 			$productDto->setPrice($_POST["price"]); // Precio
 			$productDto->setCategory($category); // Categoría
-			$productDto->setSubcategory($_POST["productCategory"]); // Subategoría
+			$productDto->setSubcategory($_POST["accesoryKind"]); // Subcategoría
 			$productDto->setStock($_POST["stock"]); // Existencias
 			$productDto->setRent($_POST["rent"]); // Alquiler
 			$productDto->setObservations($_POST["observations"]); // Observaciones
@@ -147,13 +151,15 @@
 		 * Inserta un nuevo producto en Base de Datos
 		 * 
 		 * @param ProductDto $productDto
+		 * @param int $userId
 		 * @return int
 		 */
-		private function addNewProduct(ProductDto $productDto) : int {
+		private function addNewProduct(ProductDto $productDto, int $userId) : int {
 			$productDao = new ProductDao();
+			$utility = new Utility();
 			$product = $utility->productDtoToProduct($productDto);
 			
-			return $productDao->newProduct($product);
+			return $productDao->newProduct($product, $userId);
 		}
 		
 		/**
@@ -181,6 +187,47 @@
 			}
 			
 			return $productListAux;
+		}
+		
+		/**
+		 * Modifica un producto en la base de datos
+		 * 
+		 * @param ProductDto $productDto
+		 */
+		private function modifyProduct(ProductDto $productDto) : void {
+			if (null != $_POST['productCategory'] && 0 != strcasecmp("", trim($_POST['productCategory']))) {
+				$productCategory = $_POST['productCategory'];
+				$exist = false;
+			
+				// Buscar restos del producto por si no coincide con la nueva categoría deshabilitarlos.
+				for ($i = 0; $i < self::TOTAL_CATEGORIES && !$exist; $i++) {
+					if ($i == $productCategory) {
+						$i++;
+					} else {
+						switch ($i) {
+							case 1:
+								$this->modifyBike($this->marshallProduct(self::CATEGORY_BIKE));
+								break;
+							case 2:
+								$this->modifyMoto($this->marshallProduct(self::CATEGORY_MOTO));
+								break;
+							case 3:
+								$this->modifyEquipment($this->marshallProduct(self::CATEGORY_EQUIPMENT));
+								break;
+							case 4:
+								$this->modifyAccesory($this->marshallProduct(self::CATEGORY_ACCESORY));
+								break;
+							case 5:
+								//$id = $this->modifyProduct($this->marshallProduct(self::CATEGORY_OTHER));
+								break;
+							default;
+						}
+					}
+				}
+			
+			// Guardar la nueva línea en el caso de que haya cambiado la categoría.
+		    
+			}
 		}
 		
 		/**
@@ -323,7 +370,7 @@
 							$output .= '<div class="productOtherDivNoDisplay" id="productOtherDiv'. $iAux .'">' . "\n";
 						}
 						$output .= '	<img id="productOtherImg'. $iAux .'" src="../../../img/products/' . $images->offsetGet($i)->getImage()->getUrl() . '" title="' . $images->offsetGet($i)->getImage()->getName() . ' (' . $images->offsetGet($i)->getImage()->getUrl() . ')" />' . "\n";
-						$output .= '	<input type="button" class="btn btnImg" value="Eliminar foto" title="Eliminar foto: ' . $images->offsetGet($i)->getImage()->getUrl() . '" id="productOtherDeleteButton'. $iAux .'" />' . "\n";
+						$output .= '	<input type="button" class="btn btnImg" value="Eliminar foto" title="Eliminar foto: ' . $images->offsetGet($i)->getImage()->getUrl() . '" id="productOtherDeleteButton'. $iAux .'" onclick="javascript:deletePhoto(this, \'productOtherImg'. $iAux .'\', ' . $iAux . ');" />' . "\n";
 						$output .= '</div>' . "\n";
 						
 						$iAux++;
@@ -465,7 +512,7 @@
 					echo '		</td>' . "\n";
 				}
 			} else {
-				echo '		<td colspan=10 class="center"> NO HAY PRODUCTOS </td>' . "\n";
+				echo '		<td colspan=11 class="center"> NO HAY PRODUCTOS </td>' . "\n";
 			}
 
 			echo '</table>' . "\n";
@@ -476,16 +523,22 @@
 	}
 	
 	// Control de entrada
-	if (isset($_POST['newProductButton'])) { // newProduct.php
+	/*if (isset($_POST['newProductButton'])) { // newProduct.php
 		$productControlerObj = new ProductController();
 		$productControlerObj->newProduct();
-	} else if (isset($_GET['productId'])) {
+	} else*/ if (isset($_GET['productId'])) {
 		/*
 		$productControlerObj = new ProductController($_GET['productId']);
 		return $productControlerObj->getProductById();
 		*/
+	} else if (isset($_POST['newProductProperty']) && ("true" == $_POST['newProductProperty'])) {
+		$productControlerObj = new ProductController();
+		$productControlerObj->newProduct();
+	} else if (isset($_POST['modifyProperty']) && ("true" == $_POST['modifyProperty'])) {
+		$productControlerObj = new ProductController();
+		$productControlerObj->modifyProduct();
 	} else if (isset($_POST['id']) && isset($_POST['name']) && isset($_POST['mark'])
-			&& isset($_POST['productCategory']) && isset($_POST['bikeSubType'])
+			&& isset($_POST['productSubcategory']) && isset($_POST['bikeSubType'])
 			&& isset($_POST['motoSubType']) && isset($_POST['otherSubType'])
 			&& isset($_POST['accesorySubType']) && isset($_POST['equipmentSubType']) && isset($_POST['active'])) { // listProduct.php
 		
@@ -494,7 +547,7 @@
 		$filters->setName(trim($_POST['name']));
 		$filters->setMark(trim($_POST['mark']));
 		$filters->setActive(trim($_POST['active']));
-		$filters->setProductCategory($_POST['productCategory']);
+		$filters->setProductSubcategory($_POST['productSubcategory']);
 		$filters->setBikeSubType($_POST['bikeSubType']);
 		$filters->setOtherSubType($_POST['otherSubType']);
 		$filters->setAccesorySubType($_POST['accesorySubType']);

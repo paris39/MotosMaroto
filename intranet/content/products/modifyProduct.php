@@ -179,6 +179,7 @@
 									<div class="row">
 										<div class="col-lg-12">
 											<form id="productForm" method="post" name="modifyProductForm" action="/MotosMaroto/php/controller/ProductController.php">
+												<input type="hidden" id="modifyProperty" name="modifyProperty" value="true" />
 												<div class="row">
 													<div class="col-md-6">
 														<div class="form-group">
@@ -205,8 +206,10 @@
 ?>
 																</div>
 																<span>Cambiar imagen principal:</span>
-																<input class="form-control" type="file" name="fileToUpload" id="fileToUpload" accept="image/*" placeholder="Imagen principal *" 
-																	required="required" onchange="filePreview(this);" data-validation-required-message="Por favor, cargue una imagen." />
+<?php 
+    // Imagen principal
+																echo '  <input class="form-control" type="file" name="fileToUpload" id="fileToUpload" accept="image/*" placeholder="Imagen principal *" required="" onchange="filePreview(this);" data-validation-required-message="Por favor, cargue una imagen." value="' . $mainImage->getUrl() . '" />';
+?>
 															</div>
 														</div>
 														<div class="form-group">
@@ -263,26 +266,6 @@
 																	id="model" placeholder="Modelo *" required="required" title="Modelo del producto"
 																	data-validation-required-message="Por favor, introduzca el modelo del producto." 
 																	value="' . $productDto->getModel() .'" />' . "\n";
-?>
-														</div>
-														<div class="form-group">
-															<span><span class="mandatory">*</span> Precio:</span> 
-<?php 
-    // Precio
-															echo '<input class="form-control" type="number" name="price" id="price" placeholder="Precio (&euro;) *"
-																 	required="required" title="Precio del producto en euros (&euro;)" 
-																	data-validation-required-message="Por favor, introduzca el precio del producto."
-																	min="0.00" step="0.01" value="' . $productDto->getPrice() . '" />' . "\n";
-?>
-														</div>
-														<div class="form-group">
-															<span><span class="mandatory">*</span> Existencias:</span> 
-<?php 
-    // Stock
-															echo '<input class="form-control" type="number" name="stock"
-																id="stock" placeholder="Existencias *" required="required" title="Existencias del producto"
-																data-validation-required-message="Por favor, introduzca las existencias del producto."
-																min="0" step="1" value="' . $productDto->getStock() . '" />' . "\n";
 ?>
 														</div>
 													</div>
@@ -365,6 +348,26 @@
 																	data-validation-required-message="Por favor, introduzca observaciones.">'
 																	 . $productDto->getObservations() . 
 																'</textarea>' . "\n";
+?>
+														</div>
+														<div class="form-group">
+															<span><span class="mandatory">*</span> Precio:</span> 
+<?php 
+    // Precio
+															echo '<input class="form-control" type="number" name="price" id="price" placeholder="Precio (&euro;) *"
+																 	required="required" title="Precio del producto en euros (&euro;)" 
+																	data-validation-required-message="Por favor, introduzca el precio del producto."
+																	min="0.00" step="0.01" value="' . $productDto->getPrice() . '" />' . "\n";
+?>
+														</div>
+														<div class="form-group">
+															<span><span class="mandatory">*</span> Existencias:</span> 
+<?php 
+    // Stock
+															echo '<input class="form-control" type="number" name="stock"
+																id="stock" placeholder="Existencias *" required="required" title="Existencias del producto"
+																data-validation-required-message="Por favor, introduzca las existencias del producto."
+																min="0" step="1" value="' . $productDto->getStock() . '" />' . "\n";
 ?>
 														</div>
 														<div class="form-group">
@@ -814,10 +817,8 @@
 													</div>
 													<div class="col-md-6">
 														<div class="form-group">
-															<span>Equipaci&oacute;n de:</span> <select
-																class="form-control" name="equipmentKind"
-																id="equipmentKind" title="Tipo de equipaci&oacute;n"
-																onChange="showSubtypeCategory(this);">
+															<span>Equipaci&oacute;n de:</span> 
+															<select class="form-control" name="equipmentKind" id="equipmentKind" title="Tipo de equipaci&oacute;n" onChange="showSubtypeCategory(this);">
 																<option value="none">Seleccionar tipo...</option>
 <?php 
 	// Listado de subcategorías
@@ -830,8 +831,8 @@
 															</select>
 														</div>
 														<div class="form-group" id="genderSubType">
-															<span>G&eacute;nero:</span> <select class="form-control"
-																name="genderSubType" id="cbGender" title="G&eacute;nero">
+															<span>G&eacute;nero:</span> 
+															<select class="form-control" name="genderSubType" id="cbGender" title="G&eacute;nero">
 																<option value="none">Seleccionar g&eacute;nero...</option>
 <?php 
 	// Listado de subtipo de géneros de personas
@@ -846,16 +847,14 @@
 													</div>
 													<div class="col-md-6">
 														<div class="form-group subtypeCategory exampleSubType" id="exampleEquipmentSubType">
-															<span>Subtipo:</span> <select class="form-control"
-																name="exampleEquipmentSubType" id="cbExampleEquipmentSubType"
-																title="Subtipo de equipaci&oacute;n">
+															<span>Subtipo:</span> 
+															<select class="form-control" name="exampleEquipmentSubType" id="cbExampleEquipmentSubType" title="Subtipo de equipaci&oacute;n">
 																<option value="none">Seleccionar subtipo...</option>
 															</select>
 														</div>
 														<div class="form-group subtypeCategory" id="bikeEquipmentSubType">
-															<span>Subtipo:</span> <select class="form-control"
-																name="bikeEquipmentSubType" id="cbBikeEquipmentSubType"
-																title="Subtipo de equipaci&oacute;n de bicicleta">
+															<span>Subtipo:</span> 
+															<select class="form-control" name="bikeEquipmentSubType" id="cbBikeEquipmentSubType" title="Subtipo de equipaci&oacute;n de bicicleta">
 																<option value="none">Seleccionar subtipo...</option>
 <?php 
 	// Listado de subtipo de equipación de bicicletas
@@ -868,9 +867,8 @@
 															</select>
 														</div>
 														<div class="form-group subtypeCategory" id="motoEquipmentSubType">
-															<span>Subtipo:</span> <select class="form-control"
-																name="motoEquipmentSubType" id="cbMotoEquipmentSubType"
-																title="Subtipo de equipaci&oacute;n de moto">
+															<span>Subtipo:</span> 
+															<select class="form-control" name="motoEquipmentSubType" id="cbMotoEquipmentSubType" title="Subtipo de equipaci&oacute;n de moto">
 																<option value="none">Seleccionar subtipo...</option>
 <?php 
 	// Listado de subtipo de equipación de motos
@@ -883,9 +881,8 @@
 															</select>
 														</div>
 														<div class="form-group subtypeCategory" id="otherEquipmentSubType">
-															<span>Subtipo:</span> <select class="form-control"
-																name="otherEquipmentSubType" id="cbOtherEquipmentSubType"
-																title="Subtipo de equipaci&oacute;n de otros">
+															<span>Subtipo:</span> 
+															<select class="form-control" name="otherEquipmentSubType" id="cbOtherEquipmentSubType" title="Subtipo de equipaci&oacute;n de otros">
 																<option value="none">Seleccionar subtipo...</option>
 <?php 
 	// Listado de subtipo de equipación de otros
@@ -898,8 +895,8 @@
 															</select>
 														</div>
 														<div class="form-group" id="sizeSubType">
-															<span>Talla:</span> <select class="form-control"
-																name="sizeSubType" id="cbSize" title="Talla">
+															<span>Talla:</span> 
+															<select class="form-control" name="sizeSubType" id="cbSize" title="Talla">
 																<option value="none">Seleccionar talla...</option>
 <?php 
 	// Listado de subtipo de tallas de equipación
@@ -921,10 +918,8 @@
 													</div>
 													<div class="col-md-6">
 														<div class="form-group">
-															<span>Accesorio de:</span> <select
-																class="form-control" name="accesoryKind"
-																id="accesoryKind" title="Tipo de accesorio"
-																onChange="showSubtypeCategory(this);">
+															<span>Accesorio de:</span> 
+															<select class="form-control" name="accesoryKind" id="accesoryKind" title="Tipo de accesorio" onChange="showSubtypeCategory(this);">
 																<option value="none">Seleccionar tipo...</option>
 <?php 
 	// Listado de subcategorías
@@ -939,16 +934,14 @@
 													</div>
 													<div class="col-md-6">
 														<div class="form-group subtypeCategory exampleSubType" id="exampleAccesorySubType">
-															<span>Subtipo:</span> <select class="form-control"
-																name="exampleAccesorySubType" id="cbExampleAccesorySubType"
-																title="Subtipo de accesorio">
+															<span>Subtipo:</span> 
+															<select class="form-control" name="exampleAccesorySubType" id="cbExampleAccesorySubType" title="Subtipo de accesorio">
 																<option value="none">Seleccionar subtipo...</option>
 															</select>
 														</div>
 														<div class="form-group subtypeCategory" id="bikeAccesorySubType">
-															<span>Subtipo:</span> <select class="form-control"
-																name="bikeAccesorySubType" id="cbBikeAccesorySubType"
-																title="Subtipo de accesorio de bicicleta">
+															<span>Subtipo:</span> 
+															<select class="form-control" name="bikeAccesorySubType" id="cbBikeAccesorySubType" title="Subtipo de accesorio de bicicleta">
 																<option value="none">Seleccionar subtipo...</option>
 <?php 
 	// Listado de subtipo de accesorio de bicicletas
@@ -961,9 +954,8 @@
 															</select>
 														</div>
 														<div class="form-group subtypeCategory" id="motoAccesorySubType">
-															<span>Subtipo:</span> <select class="form-control"
-																name="motoAccesorySubType" id="cbMotoAccesorySubType"
-																title="Subtipo de accesorio de moto">
+															<span>Subtipo:</span> 
+															<select class="form-control" name="motoAccesorySubType" id="cbMotoAccesorySubType" title="Subtipo de accesorio de moto">
 																<option value="none">Seleccionar subtipo...</option>
 <?php 
 	// Listado de subtipo de accesorio de motos
@@ -976,9 +968,8 @@
 															</select>
 														</div>
 														<div class="form-group subtypeCategory" id="otherAccesorySubType">
-															<span>Subtipo:</span> <select class="form-control"
-																name="otherAccesorySubType" id="cbOtherAccesorySubType"
-																title="Subtipo de accesorio de otros">
+															<span>Subtipo:</span> 
+															<select class="form-control" name="otherAccesorySubType" id="cbOtherAccesorySubType" title="Subtipo de accesorio de otros">
 																<option value="none">Seleccionar subtipo...</option>
 <?php 
 	// Listado de subtipo de accesorio de otros
@@ -999,7 +990,8 @@
 												<div class="col-lg-12 text-center">
 													<div class="form-group">
 														<div id="success"></div>
-														<br /> <a href='./listProducts.php' class="noDecoration">
+														<br /> 
+														<a href='./listProducts.php' class="noDecoration">
 															<button id="cancelProductButton"
 																class="btn btn-primary btn-xl text-uppercase"
 																title="Cancelar el alta de producto y volver al men&uacute; de Administrador">Cancelar</button>

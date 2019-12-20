@@ -25,6 +25,7 @@
 	require $root.'\php\model\OtherTypeDto.php';
 	require $root.'\php\model\ProductDto.php';
 	require $root.'\php\model\ProductImageDto.php';
+	require $root.'\php\model\UserDto.php';
 	require $root.'\php\persistence\dao\impl\BaseDao.php';
 	require $root.'\php\persistence\dao\impl\AccesoryDao.php';
 	require $root.'\php\persistence\dao\impl\BikeDao.php';
@@ -58,6 +59,7 @@
 	use php\model\ProductDto;
 	use php\model\ProductImageDto;
 	use php\model\ProductTypeDto;
+	use php\model\UserDto;
 	use php\persistence\dao\impl\AccesoryDao;
 	use php\persistence\dao\impl\BikeDao;
 	use php\persistence\dao\impl\CategoryDao;
@@ -94,6 +96,38 @@
 			$productDtoAux = $utility->productToProductDto($productDao->getProductById($productId));
 			
 			return $productDtoAux;
+		}
+		
+		/**
+		 * Función que devuelve un usuario en función de su ID
+		 * 
+		 * @param int $id
+		 * @return UserDto
+		 */
+		public function getUserById (int $userId) : UserDto {
+		    $miscellanyDao = new MiscellanyDao();
+		    $utility = new Utility();
+		    
+		    $userDtoAux = new UserDto();
+		    $userDtoAux = $utility->userToUserDto($miscellanyDao->getUserById($userId));
+		    
+		    return $userDtoAux;
+		}
+		
+		/**
+		 * Función que devuelve un usuario en función de su Nick
+		 *
+		 * @param String $nick
+		 * @return UserDto
+		 */
+		public function getUserByNick (String $userNick) : UserDto {
+		    $miscellanyDao = new MiscellanyDao();
+		    $utility = new Utility();
+		    
+		    $userDtoAux = new UserDto();
+		    $userDtoAux = $utility->userToUserDto($miscellanyDao->getUserByNick($userNick));
+		    
+		    return $userDtoAux;
 		}
 		
 		/**

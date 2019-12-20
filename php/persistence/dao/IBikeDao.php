@@ -39,6 +39,16 @@
 		 * @return \ArrayObject
 		 */
 		public function listBikeSize() : \ArrayObject;
+		
+		/**
+		 * Función que añade una nueva bicicleta en la base de datos
+		 * 
+		 * @param int $id
+		 * @param Bike $bike
+		 * @param int $userId
+		 */
+		public function newBike(int $id, Bike $bike, int $userId) : void;
+		
 	}
 
 ?>

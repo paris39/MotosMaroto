@@ -182,6 +182,15 @@
 		}
 		
 		/**
+		 * @param int $id
+		 * @param Equipment $equipment
+		 * @param int $userId
+		 */
+		public function newEquipment(int $id, Equipment $equipment, int $userId) : void {
+			$this->save($id, $equipment, $userId);
+		}
+		
+		/**
 		 * @param array $row
 		 * @return Equipment
 		 */
@@ -230,6 +239,41 @@
 			$equipmentTypeAux->setCategory($categoryAux);
 			
 			return $equipmentTypeAux;
+		}
+		
+		/**
+		 * Guarda en Base de Datos un nuevo equipamiento
+		 *
+		 * @param int $id
+		 * @param Equipment $equipment
+		 * @param int $userId
+		 * @return int
+		 */
+		private function save (int $id, Equipment $equipment, int $userId) : int {
+			// Conexión de la base de datos
+			$this->getConnection();
+			
+			$query = "INSERT INTO EQUIPMENT "
+						. "(id, type, size, gender, active, observation_active, create_date, last_modify_date, last_modify_user) "
+					. " VALUES "
+						. " (" . $id . ", "
+						. "'" . $equipment->getType() . "', "
+						. "'" . $equipment->getSize() . "', "
+						. "'" . $equipment->getGender() . "', "
+						. "'" . $equipment->getActive() . "', "
+						. "'" . $equipment->getObservationActive() . "', "
+						. "CURRENT_TIMESTAMP, "
+						. "CURRENT_TIMESTAMP, "
+						. "'" . $userId . "'"
+					. " )";
+																							
+			error_log("Consulta a ejecutar: " . $query, 0);
+			mysqli_query($this->connection, $query);
+			
+			$id = mysqli_insert_id($this->connection); // Último ID asignado
+			error_log("ID Asignado: " . $id, 0);
+			
+			return $id;
 		}
 		
 	}

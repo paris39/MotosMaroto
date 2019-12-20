@@ -40,6 +40,11 @@ function showProductCategory(selectedIndex) {
 	}	
 }
 
+/**
+ * 
+ * @param selectedIndex
+ * @returns
+ */
 function showSubtypeCategory(selectedIndex) {
 	var divSelected, divs;
 	
@@ -212,7 +217,7 @@ function findProductByFilters() {
 			"id": document.getElementById("txId").value,
             "name": document.getElementById("txName").value,
             "mark": document.getElementById("txMark").value,
-            "productCategory": document.getElementById("cbProductCategory").value,
+            "productSubcategory": document.getElementById("cbProductCategory").value,
             "bikeSubType": document.getElementById("cbBikeSubType").value,
             "motoSubType": document.getElementById("cbMotoSubType").value,
             "otherSubType": document.getElementById("cbOtherSubType").value,
@@ -237,6 +242,8 @@ function findProductByFilters() {
 
 /**
  * 
+ * @param selectedValue
+ * @returns
  */
 function selectedColor(selectedValue) {
 	var select = document.getElementById("colors");
@@ -252,6 +259,8 @@ function selectedColor(selectedValue) {
 
 /**
  * 
+ * @param input
+ * @returns
  */
 function filePreview(input) {
 	if ("fileToUpload" === input.id) {
@@ -278,14 +287,23 @@ function filePreview(input) {
  * @returns
  */
 function showPreviousImage(index, total) {
+	// Ocultar imagen siguiente
 	var hiddenId = index + 3;
 	var hiddenElement = document.getElementById("productOtherDiv".concat(hiddenId));
-	hiddenElement.style.display = "none";
-	// Mostrar imagen siguiente
-	var showElement = document.getElementById("productOtherDiv".concat(index));
-	showElement.style.display = "inline";
 	
-	writeOtherImagesArrowButton(index, total, "previous");
+	if (null != hiddenElement) { // Comprobar si no es una imagen eliminada
+		hiddenElement.style.display = "none";
+		// Mostrar imagen anterior
+		var showElement = document.getElementById("productOtherDiv".concat(index));
+		showElement.style.display = "inline";
+		
+		writeOtherImagesArrowButton(index, total, "previous");
+	} else {
+		if (index < total) {
+			showPreviousImage(index + 1, total);
+		}
+	}
+	
 }
 
 /**
@@ -298,12 +316,19 @@ function showNextImage(index, total) {
 	// Ocultar imagen previa
 	var hiddenId = index - 3;
 	var hiddenElement = document.getElementById("productOtherDiv".concat(hiddenId));
-	hiddenElement.style.display = "none";
-	// Mostrar imagen siguiente
-	var showElement = document.getElementById("productOtherDiv".concat(index));
-	showElement.style.display = "inline";
 	
-	writeOtherImagesArrowButton(index, total, "next");
+	if (null != hiddenElement) { // Comprobar si no es una imagen eliminada
+		hiddenElement.style.display = "none";
+		// Mostrar imagen siguiente
+		var showElement = document.getElementById("productOtherDiv".concat(index));
+		showElement.style.display = "inline";
+	
+		writeOtherImagesArrowButton(index, total, "next");
+	} else {
+		if (index > 0) {
+			showNextImage(index - 1, total);
+		}
+	}
 }
 
 /**
@@ -544,6 +569,29 @@ function modifyProduct() {
 	return validateModifyProduct();
 	
 } // Fin modifyProduct()
+
+/**
+ * 
+ * @param photo
+ * @param name
+ * @returns
+ */
+function deletePhoto(photo, name, index) {
+	if (confirm("Se eliminar" + unescape('%E1') + " la foto seleccionada: " + name + "\n \n" + "¿Desea continuar?")) {
+		// Ocultar div
+		divAux = document.getElementById('productOtherDiv' + index);
+		divAux.style.display = 'none';
+		divAux.className = 'productOtherDivDeleted'; 
+		// Borrar imagen del img
+		imgAux = document.getElementById('productOtherImg' + index);
+		imgAux.src = "../../../img/no-image.png";
+		// reconfigurar flechas izq y derecha
+		
+		
+		
+		alert("Foto eliminada: " + name);
+	}
+}
 
 
 /*** Muestra u oculta la fecha de descatalogación del producto ***/

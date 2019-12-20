@@ -63,6 +63,15 @@
 		 */
 		public function listMotoType() : \ArrayObject;
 		
+		/**
+		 * Función que guarda una nueva moto en la base de datos
+		 * 
+		 * @param int $id
+		 * @param Moto $moto
+		 * @param int $userId
+		 */
+		public function newMoto(int $id, Moto $moto, int $userId) : void;
+		
 	}
 
 ?>

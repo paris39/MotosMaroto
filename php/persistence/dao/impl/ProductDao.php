@@ -6,7 +6,7 @@
 	mb_internal_encoding('UTF-8');
 	
 	$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "\MotosMaroto";
-	require_once $root . '\php\persistence\dao\IProductDao.php';
+	require $root . '\php\persistence\dao\IProductDao.php';
 	require_once $root . '\php\persistence\entities\Color.php';
 	require_once $root . '\php\persistence\entities\Image.php';
 	require_once $root . '\php\persistence\entities\Product.php';
@@ -168,7 +168,7 @@
 			
 			$conditions = $this->getConditions($filters);
 			if (!empty(trim($conditions))) {
-				error_log("Condiciones de busqueda: " . $conditions);
+				error_log("Condiciones de búsqueda: " . $conditions);
 			}
 			
 			// SELECT
@@ -281,10 +281,13 @@
 		
 		/**
 		 * @param Product $product
+		 * @param int $userId
 		 * @return int
 		 */
-		public function newProduct(Product $product) : int {
-			$id = $this->save($product);
+		public function newProduct(Product $product, int $userId) : int {
+			$id = $this->save($product, $userId);
+			
+			// Añadir categoría/subcategoría
 			
 			return $id;
 		}
@@ -293,30 +296,32 @@
 		 * Guarda en Base de Datos un producto devolviendo el ID asignado
 		 * 
 		 * @param Product $product
+		 * @param int $userId
 		 * @return int
 		 */
-		private function save (Product $product) : int {
+		private function save (Product $product, int $userId) : int {
 			// Conexión de la base de datos
 			$this->getConnection();
 			
 			$query = "INSERT INTO PRODUCT " 
-						. "(name, mark, model, description, price, category, subcategory, stock, rent, observations, active, product_date, create_date, last_modify_date) "
+						. "(name, mark, model, description, price, category, subcategory, stock, rent, observations, active, product_date, create_date, last_modify_date, last_modify_user) "
 					. " VALUES "
 						. " ('" . $product->getName() . "', "
-						. "'" . $product->getMark() . "', " 
-						. "'" . $product->getModel() . "', " 
-						. "'" . $product->getDescription() . "', " 
+						. "'" . $product->utf8_encode(getMark()) . "', " 
+						. "'" . $product->utf8_encode(getModel()) . "', " 
+						. "'" . $product->utf8_encode(getDescription()) . "', " 
 						. $product->getPrice() . ", " 
 						. $product->getCategory() . ", " 
 						. $product->getSubcategory() . ", " 
 						. $product->getStock() . ", " 
 						. $product->getRent() . ", " 
-						. "'" . $product->getObservations() . "', " 
-						. "'" . $product->getActive() . "', " 
+						. "'" . $product->utf8_encode(getObservations()) . "', " 
+						. $product->getActive() . "', " 
 						. "'" . $product->getProductDate() . "', " 
 						. "CURRENT_TIMESTAMP, " 
-						. "CURRENT_TIMESTAMP "
-						. " )";
+						. "CURRENT_TIMESTAMP, "
+						. "'" . $userId . "'"
+					. " )";
 			error_log("Consulta a ejecutar: " . $query, 0);
 			mysqli_query($this->connection, $query);
 			

@@ -24,26 +24,31 @@
 	
 	error_log("Inicializado listProducts");
 	
-	/**
-	 * Carga de datos de combos
-	 */
-	$initController = new InitController();
-	$accesoryTypeList = new \ArrayObject();
-	$accesoryTypeList = $initController->listAccesoryType(); // Listar tipos de equipaciones
-	$bikeTypeList = new \ArrayObject();
-	$bikeTypeList = $initController->listBikeType(); // Listar tipos de bicicleta
-	$categoryList = new \ArrayObject();
-	$categoryList = $initController->listCategories(); // Listar categorías de producto
-	$equipmentTypeList = new \ArrayObject();
-	$equipmentTypeList = $initController->listEquipmentType(); // Listar tipos de equipaciones
-	$motoTypeList = new \ArrayObject();
-	$motoTypeList = $initController->listMotoType(); // Listar tipos de motocicleta
-	$otherTypeList = new \ArrayObject();
-	$otherTypeList = $initController->listOtherType(); // Listar tipos de otros
-//	$productList = new \ArrayObject();
-//	$productList = $initController->listProduct("", new ProductForm()); // Listar productos
-	$subcategoryList = new \ArrayObject();
-	$subcategoryList = $initController->listSubcategories(); // Listar subcategorías de producto
+	session_start ();
+	
+	// Comprobar Login
+	if (null != $_SESSION && null != $_SESSION ['user'] && "" != $_SESSION ['user']) { // Usuario logueado en el sistema
+    	/**
+    	 * Carga de datos de combos
+    	 */
+    	$initController = new InitController();
+    	$accesoryTypeList = new \ArrayObject();
+    	$accesoryTypeList = $initController->listAccesoryType(); // Listar tipos de equipaciones
+    	$bikeTypeList = new \ArrayObject();
+    	$bikeTypeList = $initController->listBikeType(); // Listar tipos de bicicleta
+    	$categoryList = new \ArrayObject();
+    	$categoryList = $initController->listCategories(); // Listar categorías de producto
+    	$equipmentTypeList = new \ArrayObject();
+    	$equipmentTypeList = $initController->listEquipmentType(); // Listar tipos de equipaciones
+    	$motoTypeList = new \ArrayObject();
+    	$motoTypeList = $initController->listMotoType(); // Listar tipos de motocicleta
+    	$otherTypeList = new \ArrayObject();
+    	$otherTypeList = $initController->listOtherType(); // Listar tipos de otros
+    //	$productList = new \ArrayObject();
+    //	$productList = $initController->listProduct("", new ProductForm()); // Listar productos
+    	$subcategoryList = new \ArrayObject();
+    	$subcategoryList = $initController->listSubcategories(); // Listar subcategorías de producto
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -291,3 +296,9 @@
 		</div>
 	</body>
 </html>
+<?php 
+	} else {
+	    // Usuario no loguado en el sistema. Redirigir a la página de login 
+	    header('Location: ../../login.php'); // Redirige al index
+	}
+?>

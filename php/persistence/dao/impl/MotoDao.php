@@ -270,6 +270,15 @@
 		}
 		
 		/**
+		 * @param int $id
+		 * @param Moto $moto
+		 * @param int $userId
+		 */
+		public function newMoto(int $id, Moto $moto, int $userId) : void {
+			$this->save($id, $moto, $userId);
+		}
+		
+		/**
 		 * @param array $row
 		 * @return Moto
 		 */
@@ -377,6 +386,53 @@
 			$motoTypeAux->setName(utf8_encode($row['name']));
 			
 			return $motoTypeAux;
+		}
+		
+		/**
+		 * Guarda en Base de Datos un nueva moto
+		 *
+		 * @param int $id
+		 * @param Moto $moto
+		 * @param int $userId
+		 * @return int
+		 */
+		private function save (int $id, Moto $moto, int $userId) : int {
+			// Conexión de la base de datos
+			$this->getConnection();
+			
+			$query = "INSERT INTO MOTO "
+						. "(id, type, number_plate, power, power_unit, cylinder_capacity, cylinders, gears, front_brake, rear_brake, kilometers, license, places, fuel, contamination, transmission, second_hand, observation_active, create_date, last_modify_date, last_modify_user) "
+					. " VALUES "
+						. " (" . $id . ", "
+						. "'" . $moto->getType() . "', "
+						. "'" . $moto->getNumberPlate() . "', "
+						. "'" . $moto->getPower() . "', "
+						. "'" . $moto->getPowerUnit() . "', "
+						. "'" . $moto->getCylinderCapacity() . "', "
+						. "'" . $moto->getCylinders() . "', "
+						. "'" . $moto->getGears() . "', "
+						. "'" . $moto->getFrontBrake() . "', "
+						. "'" . $moto->getRearBrake() . "', "
+						. "'" . $moto->getKilometers() . "', "
+						. "'" . $moto->getLicense() . "', "
+						. "'" . $moto->getPlaces() . "', "
+						. "'" . $moto->getFuel() . "', "
+						. "'" . $moto->getContamination() . "', "
+						. "'" . $moto->getTransmission() . "', "
+						. "'" . $moto->getSecondHand() . "', "
+						. "'" . $equipment->getObservationActive() . "', "
+						. "CURRENT_TIMESTAMP, "
+						. "CURRENT_TIMESTAMP, "
+						. "'" . $userId . "'"
+					. " )";
+																											
+			error_log("Consulta a ejecutar: " . $query, 0);
+			mysqli_query($this->connection, $query);
+			
+			$id = mysqli_insert_id($this->connection); // Último ID asignado
+			error_log("ID Asignado: " . $id, 0);
+			
+			return $id;
 		}
 		
 	}

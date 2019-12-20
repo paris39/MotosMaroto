@@ -39,6 +39,15 @@
 		 */
 		public function listEquipmentTypeByCategory(int $category) : \ArrayObject;
 		
+		/**
+		 * Función que añade un nuevo equipamiento en la base de datos
+		 * 
+		 * @param int $id
+		 * @param Equipment $equipment
+		 * @param int $userId
+		 */
+		public function newEquipment(int $id, Equipment $equipment, int $userId) : void;
+		
 	}
 
 ?>

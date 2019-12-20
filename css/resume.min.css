@@ -326,17 +326,22 @@ section#admin .resume-item .resume-content .tabcontainer .tabcontent .table .rig
 
 section#admin .resume-item .resume-content .tabcontainer .tabcontent .table .adminImg {
 	text-align: center;
+	height: 22px;
+	width: 22px;
 }
 
 section#admin .resume-item .resume-content .tabcontainer .tabcontent .table .adminImg img {
 	height: 20px;
 	width: 20px;
-	text-align: center;
 	margin-bottom: 5px;
+	text-align: center;
+	vertical-align: middle;
 }
 
 section#admin .resume-item .resume-content .tabcontainer .tabcontent .table .adminImg img:hover {
 	cursor: pointer;
+	height: 21px;
+	width: 21px;
 }
 
 section#admin .resume-item .resume-content .tabcontainer .tabcontent .jQueryResults .adminResults {
@@ -784,6 +789,13 @@ section .form-group div .productOtherDivNoDisplay {
 	float: left;
 	width: 28%;
 }
+section .form-group div .productOtherDivDelete {
+	/*border: thin solid black;*/
+	display: none;
+	float: left;
+	width: 28%;
+}
+
 
 section .form-group textarea {
 	border: 1px solid black;
@@ -913,4 +925,9 @@ div #selectedColor .dot {
   display: inline-block;
   height: 18px;
   width: 18px;
+}
+
+div #errorMessage {
+	color: red;
+	font-style: italic;
 }

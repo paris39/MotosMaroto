@@ -2,13 +2,17 @@
 	
 	namespace intranet\content\products;
 	
+
 	/* Establecer la codificación de caracteres interna a UTF-8 */
 	mb_internal_encoding('UTF-8');
  	mb_http_output('UTF-8');
 	
 	// Carga de combos
-	require '../../../php/controller/InitController.php';
-
+ 	$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "\MotosMaroto";
+ 	require_once $root . '\php\controller\InitController.php';
+ 	require_once $root . '\php\controller\ProductController.php';
+	require_once $root . '\php\model\ProductDto.php';
+	
 	use php\controller\InitController;
 	use php\model\AccesoryTypeDto;
 	use php\model\BikeTypeDto;
@@ -23,7 +27,7 @@
 	use php\model\MotoLicenseDto;
 	use php\model\MotoTransmissionDto;
 	use php\model\MotoTypeDto;
-	
+			
 	error_log("Inicializado newProduct");
 	
 	/**
@@ -32,48 +36,61 @@
 	const BIKE = 1;
 	const MOTO = 2;
 	const OTHER = 3;
+
+	session_start ();
 	
 	/**
-	 * Carga de datos de combos
+	 * Función para llamar al Controller y añadir el producto
 	 */
-	$initController = new InitController();
-	$bikeAccesoryTypeList = new \ArrayObject();
-	$bikeAccesoryTypeList = $initController->listAccesoryTypeByCategory(BIKE);
-	$bikeEquipmentTypeList = new \ArrayObject();
-	$bikeEquipmentTypeList = $initController->listEquipmentTypeByCategory(BIKE);
-	$bikeTypeList = new \ArrayObject();
-	$bikeTypeList = $initController->listBikeType(); // Listar tipos de bicicleta
-	$bikeSizeList = new \ArrayObject();
-	$bikeSizeList = $initController->listBikeSize(); // Listar tallas de bicicleta
-	$categoryList = new \ArrayObject();
-	$categoryList = $initController->listCategories(); // Listar categorías de producto
-	$colorList = new \ArrayObject();
-	$colorList = $initController->listColors(); // Listar colores
-	$equipmentSizeList = new \ArrayObject();
-	$equipmentSizeList = $initController->listEquipmentSize(); // Listar tallas de equipamiento
-	$genderList = new \ArrayObject();
-	$genderList = $initController->listGenders(); // Listar géneros
-	$motoAccesoryTypeList = new \ArrayObject();
-	$motoAccesoryTypeList = $initController->listAccesoryTypeByCategory(MOTO);
-	$motoContaminationList = new \ArrayObject();
-	$motoContaminationList = $initController->listMotoContamination(); // Listar distintivos anticontaminación de motos
-	$motoEquipmentTypeList = new \ArrayObject();
-	$motoEquipmentTypeList = $initController->listEquipmentTypeByCategory(MOTO);
-	$motoFuelList = new \ArrayObject();
-	$motoFuelList = $initController->listMotoFuel(); // Listar combustibles de motos
-	$motoLicenseList = new \ArrayObject();
-	$motoLicenseList = $initController->listMotoLicense(); // Listar permisos de conducir motos
-	$motoTransmissionList = new \ArrayObject();
-	$motoTransmissionList = $initController->listMotoTransmission(); // Listar tipos de transmisión de motocicleta
-	$motoTypeList = new \ArrayObject();
-	$motoTypeList = $initController->listMotoType(); // Listar tipos de motocicleta
-	$otherAccesoryTypeList = new \ArrayObject();
-	$otherAccesoryTypeList = $initController->listAccesoryTypeByCategory(OTHER);
-	$otherEquipmentTypeList = new \ArrayObject();
-	$otherEquipmentTypeList = $initController->listEquipmentTypeByCategory(OTHER);
-	$subcategoryList = new \ArrayObject();
-	$subcategoryList = $initController->listSubcategories(); // Listar categorías de producto
+	function addProduct() : void {
+		$productController = new ProductController();
+		$productController->newProduct();
+	}
 	
+	// Comprobar Login
+	if (null != $_SESSION && null != $_SESSION ['user'] && "" != $_SESSION ['user']) { // Usuario logueado en el sistema
+	
+    	/**
+    	 * Carga de datos de combos
+    	 */
+    	$initController = new InitController();
+    	$bikeAccesoryTypeList = new \ArrayObject();
+    	$bikeAccesoryTypeList = $initController->listAccesoryTypeByCategory(BIKE);
+    	$bikeEquipmentTypeList = new \ArrayObject();
+    	$bikeEquipmentTypeList = $initController->listEquipmentTypeByCategory(BIKE);
+    	$bikeTypeList = new \ArrayObject();
+    	$bikeTypeList = $initController->listBikeType(); // Listar tipos de bicicleta
+    	$bikeSizeList = new \ArrayObject();
+    	$bikeSizeList = $initController->listBikeSize(); // Listar tallas de bicicleta
+    	$categoryList = new \ArrayObject();
+    	$categoryList = $initController->listCategories(); // Listar categorías de producto
+    	$colorList = new \ArrayObject();
+    	$colorList = $initController->listColors(); // Listar colores
+    	$equipmentSizeList = new \ArrayObject();
+    	$equipmentSizeList = $initController->listEquipmentSize(); // Listar tallas de equipamiento
+    	$genderList = new \ArrayObject();
+    	$genderList = $initController->listGenders(); // Listar géneros
+    	$motoAccesoryTypeList = new \ArrayObject();
+    	$motoAccesoryTypeList = $initController->listAccesoryTypeByCategory(MOTO);
+    	$motoContaminationList = new \ArrayObject();
+    	$motoContaminationList = $initController->listMotoContamination(); // Listar distintivos anticontaminación de motos
+    	$motoEquipmentTypeList = new \ArrayObject();
+    	$motoEquipmentTypeList = $initController->listEquipmentTypeByCategory(MOTO);
+    	$motoFuelList = new \ArrayObject();
+    	$motoFuelList = $initController->listMotoFuel(); // Listar combustibles de motos
+    	$motoLicenseList = new \ArrayObject();
+    	$motoLicenseList = $initController->listMotoLicense(); // Listar permisos de conducir motos
+    	$motoTransmissionList = new \ArrayObject();
+    	$motoTransmissionList = $initController->listMotoTransmission(); // Listar tipos de transmisión de motocicleta
+    	$motoTypeList = new \ArrayObject();
+    	$motoTypeList = $initController->listMotoType(); // Listar tipos de motocicleta
+    	$otherAccesoryTypeList = new \ArrayObject();
+    	$otherAccesoryTypeList = $initController->listAccesoryTypeByCategory(OTHER);
+    	$otherEquipmentTypeList = new \ArrayObject();
+    	$otherEquipmentTypeList = $initController->listEquipmentTypeByCategory(OTHER);
+    	$subcategoryList = new \ArrayObject();
+    	$subcategoryList = $initController->listSubcategories(); // Listar categorías de producto
+    	
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -85,22 +102,15 @@
 		<script src='../../content/js/intranet.js' type='text/javascript'></script>
 		
 		<!-- Bootstrap core CSS -->
-		<link href="../../../vendor/bootstrap/css/bootstrap.min.css"
-			rel="stylesheet" />
+		<link href="../../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 		
 		<!-- Custom fonts for this template -->
-		<link
-			href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700"
-			rel="stylesheet" />
-		<link
-			href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i"
-			rel="stylesheet" />
-		<link href="../../../vendor/fontawesome-free/css/all.min.css"
-			rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet" />
+		<link href="../../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" />
 		
 		<!-- Custom styles for this template -->
-		<link rel='STYLESHEET' type='text/css'
-			href='../../../css/resume.min.css' />
+		<link rel='STYLESHEET' type='text/css' href='../../../css/resume.min.css' />
 		
 		<!-- Custom scripts for this template -->
 		<script src="../../../js/resume.min.js"></script>
@@ -129,7 +139,9 @@
 								<div id="newProductTab" class="tabcontent">
 									<div class="row">
 										<div class="col-lg-12">
-											<form id="productForm" method="post" name="newProductForm" action="/MotosMaroto/php/controller/ProductController.php">
+											<form id="productForm" method="post" name="newProductForm" onsubmit="addProduct();" action="/MotosMaroto/php/controller/ProductController.php">
+												<input type="hidden" id="userId" name="userId" value="<?php echo $_SESSION['user_id'] ?>" />
+												<input type="hidden" id="newProductProperty" name="newProductProperty" value="true" />
 												<div class="row">
 													<div class="col-md-6">
 														<div class="form-group">
@@ -699,3 +711,9 @@
 		</div>
 	</body>
 </html>
+<?php 
+	} else {
+	    // Usuario no loguado en el sistema. Redirigir a la página de login 
+	    header('Location: ../../login.php'); // Redirige al index
+	}
+?>

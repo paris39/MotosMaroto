@@ -31,9 +31,10 @@
 		 * Función que inserta un producto en Base de Datos
 		 * 
 		 * @param Product $product
+		 * @param int $userId
 		 * @return int
 		 */
-		public function newProduct(Product $product) : int;
+		public function newProduct(Product $product, int $userId) : int;
 
 	}
 

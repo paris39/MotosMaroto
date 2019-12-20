@@ -26,6 +26,7 @@
 	use php\model\ProductColorDto;
 	use php\model\ProductImageDto;
 	use php\model\ProductTypeDto;
+	use php\model\UserDto;
 	use php\persistence\entities\Accesory;
 	use php\persistence\entities\AccesoryType;
 	use php\persistence\entities\Bike;
@@ -47,6 +48,7 @@
 	use php\persistence\entities\Product;
 	use php\persistence\entities\ProductColor;
 	use php\persistence\entities\ProductImage;
+	use php\persistence\entities\User;
 
 	/**
 	 * @author JPD
@@ -68,13 +70,13 @@
 			$accesoryTypeDtoAux = new AccesoryTypeDto();
 			$categoryDtoAux = new CategoryDto();
 			
-			if (null != $accesoryType) {
+			if (null != $accesory) {
 				$accesoryDtoAux->setId($accesory->getId());
-				$accesoryDtoAux->setName($accesory->getName());
 				$accesoryTypeDtoAux = $this->accesoryTypeToAccesoryTypeDto($accesory->getType());
-				$categoryDtoAux->setType($accesoryTypeDtoAux);
-				$categoryDtoAux = $this->categoryToCategoryDto($accesory->getCategory());
-				$accesoryDtoAux->setCategory($categoryDtoAux);
+				$accesoryDtoAux->setType($accesoryTypeDtoAux);
+				$accesoryDtoAux->setSize($accesory->getSize());
+				$accesoryDtoAux->setActive($accesory->getActive());
+				$accesoryDtoAux->setObservationActive($accesory->getObservationActive());
 			} else {
 				return null;
 			}
@@ -493,6 +495,40 @@
 		}
 		
 		/**
+		 * Marshall ProductDto > Product
+		 *
+		 * @param ProductDto $productDto
+		 * @return Product
+		 */
+		public function productDtoToProduct (ProductDto $productDto) : Product {
+		    $product = new Product();
+		    
+		    if (null != $productDto) {
+		        $product->setName($productDto->getName()); // Nombre
+		        $product->setMark($productDto->getMark()); // Marca
+		        $product->setModel($productDto->getModel()); // Modelo
+		        $product->setDescription($productDto->getDescription()); // Descripción
+		        $product->setPrice($productDto->getPrice()); // Precio
+		        $product->setCategory($productDto->getCategory()); // Categoría
+		        $product->setSubcategory($productDto->getSubcategory()); // Subcategoría
+		        $product->setStock($productDto->getStock()); // Existencias
+		        $product->setRent($productDto->getRent()); // Alquiler
+		        $product->setObservations($productDto->getObservations()); // Observaciones
+		        $product->setActive($productDto->getActive()); // Activo en la web
+		        // Año de fabricación
+		        if (is_int($productDto->getProductDate()) || is_numeric($productDto->getProductDate())) {
+		            $product->setProductDate($productDto->getProductDate()."/01/01"); // Fecha en inglés
+		        } else {
+		            $product->setProductDate($productDto->getProductDate());
+		        }
+		    } else {
+		        return null;
+		    }
+		    
+		    return $product;
+		}
+		
+		/**
 		 * @param ProductColor $productColor
 		 * @return ProductColorDto
 		 */
@@ -520,38 +556,22 @@
 			return $productImageDtoAux;
 		}
 		
+
 		/**
-		 * Marshall ProductDto > Product
-		 *
-		 * @param ProductDto $productDto
-		 * @return Product
+		 * @param User $user
+		 * @return UserDto
 		 */
-		public function productDtoToProduct (ProductDto $productDto) : Product {
-			$product = new Product();
-			
-			if (null != $productDto) {
-				$product->setName($productDto->getName()); // Nombre
-				$product->setMark($productDto->getMark()); // Marca
-				$product->setModel($productDto->getModel()); // Modelo
-				$product->setDescription($productDto->getDescription()); // Descripción
-				$product->setPrice($productDto->getPrice()); // Precio
-				$product->setCategory($productDto->getCategory()); // Categoría
-				$product->setSubcategory($productDto->getSubcategory()); // Subcategoría
-				$product->setStock($productDto->getStock()); // Existencias
-				$product->setRent($productDto->getRent()); // Alquiler
-				$product->setObservations($productDto->getObservations()); // Observaciones
-				$product->setActive($productDto->getActive()); // Activo en la web
-				// Año de fabricación
-				if (is_int($productDto->getProductDate()) || is_numeric($productDto->getProductDate())) {
-					$product->setProductDate($productDto->getProductDate()."/01/01"); // Fecha en inglés
-				} else {
-					$product->setProductDate($productDto->getProductDate());
-				}
-			} else {
-				return null;
-			}
-			
-			return $product;
+		public function userToUserDto (User $user) : UserDto {
+		    $userAux = new UserDto();
+		    
+		    $userAux->setId($user->getId());
+		    $userAux->setNick($user->getNick());
+		    $userAux->setName($user->getName());
+		    $userAux->setSurname($user->getSurname());
+		    $userAux->setPassword($user->getPassword());
+		    $userAux->setActive($user->getActive());
+		    
+		    return $userAux;		    
 		}
 	}
 

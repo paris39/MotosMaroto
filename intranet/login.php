@@ -1,6 +1,10 @@
 <?php
 	session_start();
 	
+	/* Establecer la codificación de caracteres interna a UTF-8 */
+	mb_internal_encoding('UTF-8');
+	mb_http_output('UTF-8');
+	
 	// Cerrando sesión
 	if (!isset($_GET ['option']) || $_GET ['option'] == "") {
 	} else {
@@ -54,16 +58,24 @@
 						action="./content/check.php" onSubmit="return validate();">
 						<div class="row">
 							<div class="col-lg-12">
+<?php 
+        if (null != $_SESSION && null != $_SESSION ['error_message']) {
+								echo '<div class="form-group" id="errorMessage">
+								        <span>' . $_SESSION ['error_message'] . '</span>
+                                      </div>';
+			$_SESSION ['error_message'] = '';
+        }
+?>
 								<div class="form-group">
 									<input class="form-control" id="user" name="user" type="text"
-										placeholder="Nombre *" required="required"
+										placeholder="Nombre *" required="required" title="Nombre"
 										data-validation-required-message="Por favor, introduzca su nombre." />
 									<p class="help-block text-danger"></p>
 								</div>
 								<div class="form-group">
 									<input class="form-control" id="password" name="password"
 										type="password" placeholder="Contrase&ntilde;a *"
-										required="required"
+										required="required" title="Contrase&ntilde;a"
 										data-validation-required-message="Por favor, introduzca su contrase&ntilde;a." />
 									<p class="help-block text-danger"></p>
 								</div>

@@ -9,11 +9,11 @@
 	require_once "$root\php\persistence\dao\IMiscellanyDao.php";
 	require_once $root.'\php\persistence\entities\Color.php';
 	require_once $root.'\php\persistence\entities\Gender.php';
+	require_once $root.'\php\persistence\entities\User.php';
 	
-	use php\model\ColorDto;
-	use php\model\GenderDto;
 	use php\persistence\entities\Color;
 	use php\persistence\entities\Gender;
+	use php\persistence\entities\User;
 	use php\persistence\dao\IMiscellanyDao;
 	use php\persistence\dao\impl\BaseDao;
 	
@@ -28,6 +28,62 @@
 		}
 		
 		/**
+		 * Función que devuelve un usuario buscando por su id
+		 * 
+		 * @param int $id
+		 * @return User
+		 */
+		public function getUserById (int $id) : User {
+		    // Conexión de la base de datos
+		    $this->getConnection();
+		    
+		    // SELECT
+		    $query = "SELECT * "
+                    . "FROM "
+                        . "USER "
+                    . "WHERE ID = " . $id . " ";
+		    
+            error_log($query);
+            $result = mysqli_query($this->connection, $query) or die ("No funciona - getUserById");
+            
+            $row = mysqli_fetch_array($result);
+            $userAux = new User();
+            if (null != $row) {
+                $userAux = $this->marshallUser($row); // Si ha devuelto algún valor la consulta
+            }
+            
+            return $userAux;
+		}
+		
+		/**
+		 * Función que devuelve un usuario buscando por su nick
+		 *
+		 * @param String $nick
+		 * @return User
+		 */
+		public function getUserByNick (String $nick) : User {
+		    // Conexión de la base de datos
+		    $this->getConnection();
+		    
+		    // SELECT
+		    $query = "SELECT * "
+                    . "FROM "
+                        . "USER "
+                    . "WHERE NICK LIKE '" . $nick . "' ";
+            
+            error_log($query);
+            $result = mysqli_query($this->connection, $query) or die ("No funciona - getUserByNick");
+            
+            $row = mysqli_fetch_array($result);
+            $userAux = new User();
+            if (null != $row) {
+                $userAux = $this->marshallUser($row); // Si ha devuelto algún valor la consulta
+            }
+            
+            return $userAux;
+		}
+		
+		/**
 		 * Función que devuelve el listado de colores
 		 *
 		 * @return \ArrayObject
@@ -38,11 +94,12 @@
 			
 			// SELECT
 			$query = "SELECT * "
-					. "FROM "
-						. "COLOR "
-					. "ORDER BY NAME ASC";
-					
-			$result = mysqli_query($this->connection, $query) or die ("No funciona");
+                    . "FROM "
+                        . "COLOR "
+                    . "ORDER BY ID";
+            
+            error_log($query);
+			$result = mysqli_query($this->connection, $query) or die ("No funciona - listColors");
 			
 			$colorList = new \ArrayObject();
 			
@@ -72,8 +129,9 @@
 					. "WHERE "
 						. "ACTIVE = 1 "
 					. "ORDER BY ID";
-					
-			$result = mysqli_query($this->connection, $query) or die ("No funciona");
+
+            error_log($query);
+			$result = mysqli_query($this->connection, $query) or die ("No funciona - listGenders");
 			
 			$genderList = new \ArrayObject();
 			
@@ -115,6 +173,23 @@
 			
 			
 			return $genderAux;
+		}
+		
+		/**
+		 * @param array $row
+		 * @return User
+		 */
+		private function marshallUser (array $row) : User {
+		    $userAux = new User();
+		    
+		    $userAux->setId($row['id']);
+		    $userAux->setNick(utf8_encode($row['nick']));
+		    $userAux->setName(utf8_encode($row['name']));
+		    $userAux->setSurname(utf8_encode($row['surname']));
+		    $userAux->setPassword(utf8_encode($row['password']));
+		    $userAux->setActive($row['active']);
+		    
+		    return $userAux;
 		}
 		
 	}

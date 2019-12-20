@@ -25,6 +25,8 @@
 		private $pedals;
 		private $cranks;
 		private $cassette;
+		private $active;
+		private $observationActive;
 		
 		/**
 		 * Constructor de la clase
@@ -335,6 +337,35 @@
 		public function setCassette($cassette) {
 			$this->cassette = $cassette;
 		}
+		
+		/**
+		 * @return mixed
+		 */
+		public function getActive () {
+			return $this->active;
+		}
+	
+		/**
+		 * @return mixed
+		 */
+		public function getObservationActive () {
+			return $this->observationActive;
+		}
+	
+		/**
+		 * @param mixed $active
+		 */
+		public function setActive ($active) {
+			$this->active = $active;
+		}
+	
+		/**
+		 * @param mixed $observationActive
+		 */
+		public function setObservationActive ($observationActive) {
+			$this->observationActive = $observationActive;
+		}
+	
 	}
 
 ?>
