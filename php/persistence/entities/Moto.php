@@ -23,6 +23,8 @@
 		private $contamination;
 		private $transmission;
 		private $secondHand;
+		private $active;
+		private $observationActive;
 		
 		/**
 		 * @return mixed
@@ -267,6 +269,35 @@
 		 */
 		public function __construct() {
 		}
+		
+		/**
+		 * @return mixed
+		 */
+		public function getActive () {
+			return $this->active;
+		}
+	
+		/**
+		 * @param mixed $active
+		 */
+		public function setActive ($active) {
+			$this->active = $active;
+		}
+	
+		/**
+		 * @return mixed
+		 */
+		public function getObservationActive () {
+			return $this->observationActive;
+		}
+	
+		/**
+		 * @param mixed $observationActive
+		 */
+		public function setObservationActive ($observationActive) {
+			$this->observationActive = $observationActive;
+		}
+	
 		
 	}
 

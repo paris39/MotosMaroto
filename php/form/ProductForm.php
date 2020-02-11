@@ -12,6 +12,7 @@
 		private $mark;
 		private $active;
 		private $productCategory;
+		private $productSubcategory;
 		private $bikeSubType;
 		private $motoSubType;
 		private $otherSubType;
@@ -157,12 +158,26 @@
 		public function setEquipmentSubType($equipmentSubType) {
 			$this->equipmentSubType = $equipmentSubType;
 		}
-	
+		
 		/**
 		 * Constructor de la clase
 		 */
 		public function __construct() {
 		}
+		/**
+		 * @return mixed
+		 */
+		public function getProductSubcategory () {
+			return $this->productSubcategory;
+		}
+	
+		/**
+		 * @param mixed $productSubcategory
+		 */
+		public function setProductSubcategory ($productSubcategory) {
+			$this->productSubcategory = $productSubcategory;
+		}
+	
 		
 		
 		

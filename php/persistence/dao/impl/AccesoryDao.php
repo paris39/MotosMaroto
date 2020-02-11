@@ -7,16 +7,15 @@
 	
 	$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "\MotosMaroto";
 	error_log("RooT: " . $root);
-	require $root.'\php\persistence\dao\IAccesoryDao.php';
-	require $root.'\php\persistence\entities\Accesory.php';
-	require $root.'\php\persistence\entities\AccesoryType.php';
+	require_once $root. '\php\persistence\dao\IAccesoryDao.php';
+	require_once $root. '\php\persistence\entities\Accesory.php';
+	require_once $root. '\php\persistence\entities\AccesoryType.php';
 	
 	use php\persistence\dao\IAccesoryDao;
-	use php\persistence\dao\impl\BaseDao;
 	use php\persistence\entities\Accesory;
 	use php\persistence\entities\AccesoryType;
 	use php\persistence\entities\Category;
-
+	
 	/**
 	 * @author JPD
 	 */
@@ -43,7 +42,9 @@
 						. "AT.NAME AS 'AT.NAME', "
 						. "PS.ID AS 'PS.ID', "
 						. "PS.NAME AS 'PS.NAME', "
-						. "AC.SIZE AS 'AC.SIZE' "
+						. "AC.SIZE AS 'AC.SIZE', "
+						. "AC.ACTIVE AS 'AC.ACTIVE', " 
+						. "AC.OBSERVATION_ACTIVE AS 'AC.OBSERVATION_ACTIVE' "
 					. "FROM "
 						. "ACCESORY AC, "
 						. "ACCESORY_TYPE AT, "
@@ -52,19 +53,57 @@
 						. "AC.ID = " . $id . " "
 						. "AND AT.ID = AC.TYPE "
 						. "AND PS.ID = AT.CATEGORY ";																				
-						
+			
+			error_log("Consulta a ejecutar (AccesoryDao:getAccesoryById): " . $query, 0);
 			$result = mysqli_query($this->connection, $query) or die ("No funciona");
 			
-			$accesoryList = new \ArrayObject();
+			$row = mysqli_fetch_array($result);
+			$accesoryAux = new Accesory();
+			$accesoryAux = $this->marshallAccesory($row);
 			
-			while ($row = mysqli_fetch_array($result)) {
-				$accesoryAux = new Accesory();
-				$accesoryAux = $this->marshallAccesory($row);
-				
-				$accesoryList->append($accesoryAux);
-			}
+			return $accesoryAux;
+		}
+		
+		/**
+		 * @param int $id
+		 * @param Accesory $accesory
+		 * @param int $userId
+		 */
+		public function newAccesory(int $id, Accesory $accesory, int $userId) : void {
+			$this->save($id, $accesory, $userId);
+		}
+		
+		/**
+		 * Guarda en Base de Datos un nuevo accesorio
+		 *
+		 * @param int $id
+		 * @param Accesory $accesory
+		 * @param int $userId
+		 * @return int
+		 */
+		private function save (int $id, Accesory $accesory, int $userId) : int {
+			// Conexión de la base de datos
+			$this->getConnection();
 			
-			return $accesoryList;
+			$query = "INSERT INTO ACCESORY "
+						. "(id, type, size, active, observation_active, create_date, last_modify_date, last_modify_user) "
+					. " VALUES "
+						. " (" . $id . ", "
+						. "'" . $accesory->getType() . "', "
+						. "'" . $accesory->getSize() . "', "
+						. "'" . $accesory->getActive() . "', "
+						. "CURRENT_TIMESTAMP, "
+						. "CURRENT_TIMESTAMP, "
+						. "'" . $userId . "'"
+					. " )";
+			
+			error_log("Consulta a ejecutar (AccesoryDao:save): " . $query, 0);
+			mysqli_query($this->connection, $query);
+			
+			$id = mysqli_insert_id($this->connection); // Último ID asignado
+			error_log("ID Asignado: " . $id, 0);
+			
+			return $id;
 		}
 		
 		/**
@@ -89,7 +128,8 @@
 					. "ORDER BY "
 						. "AT.CATEGORY ASC, "
 						. "AT.NAME ASC";
-																									
+			
+			error_log("Consulta a ejecutar (AccesoryDao:listAccesoryType): " . $query, 0);
 			$result = mysqli_query($this->connection, $query) or die ("No funciona");
 			
 			$accesoryTypeList = new \ArrayObject();
@@ -125,7 +165,8 @@
 						. "PS.ID = AT.CATEGORY "
 						. "AND AT.CATEGORY = " . $category . " "
 					. "ORDER BY AT.NAME";
-									
+				
+			error_log("Consulta a ejecutar (AccesoryDao:listAccesoryTypeByCategory): " . $query, 0);
 			$result = mysqli_query($this->connection, $query) or die ("No funciona");
 			
 			$accesoryTypeList = new \ArrayObject();
@@ -157,6 +198,8 @@
 			$accesoryTypeAux->setCategory($categoryAux);
 			$accesoryAux->setType($accesoryTypeAux);
 			$accesoryAux->setSize(utf8_encode($row['AC.SIZE']));
+			$accesoryAux->setActive($row['AC.ACTIVE']);
+			$accesoryAux->setObservationActive($row['AC.OBSERVATION_ACTIVE']);
 			
 			return $accesoryAux;
 		}
