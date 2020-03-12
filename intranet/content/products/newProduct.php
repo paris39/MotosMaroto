@@ -274,6 +274,10 @@
 															</select>
 														</div>
 														<div class="form-group">
+															<input class="form-control" type="text" name="bikeGears"
+																id="bikeGears" placeholder="Velocidades" />
+														</div>
+														<div class="form-group">
 															<input class="form-control" type="text" name="bikeFrame"
 																id="bikeFrame" placeholder="Cuadro" />
 														</div>
@@ -291,17 +295,17 @@
 																id="bikeSeat" placeholder="Sill&iacute;n" />
 														</div>
 														<div class="form-group">
-															<input class="form-control" type="text" name="bikeChange"
-																id="bikeChange" placeholder="Cambio" />
+															<input class="form-control" type="text" name="bikeShift"
+																id="bikeShift" placeholder="Cambio" />
 														</div>
 														<div class="form-group">
 															<input class="form-control" type="text"
-																name="bikeDeflector" id="bikeDeflector"
+																name="bikeDerailleur" id="bikeDerailleur"
 																placeholder="Desviador" />
 														</div>
 														<div class="form-group">
-															<input class="form-control" type="text" name="bikeControl"
-																id="bikeControl" placeholder="Mando" />
+															<input class="form-control" type="text" name="bikeTwistShifter"
+																id="bikeTwistShifter" placeholder="Mando" />
 														</div>
 														<div class="form-group">
 															<input class="form-control" type="text" name="bikeGroup"
@@ -345,11 +349,6 @@
 																id="bikeTyres" placeholder="Cubiertas" />
 														</div>
 														<div class="form-group">
-															<input class="form-control" type="text"
-																name="bikeDeflector" id="bikeDeflector"
-																placeholder="Desviador" />
-														</div>
-														<div class="form-group">
 															<input class="form-control" type="number"
 																name="bikeWeight" id="bikeWeight"
 																placeholder="Peso (kg.)" min="0.00" step="0.01" />
@@ -376,6 +375,11 @@
 																}
 ?>
 															</select>
+														</div>
+														<div class="form-group">
+															<input class="form-control" type="text" name="motoNumberPlate"
+																id="motoNumberPlate" placeholder="Matr&iacute;cula"
+																title="Matr&iacute;cula" min="0" step="10" />
 														</div>
 														<div class="form-group">
 															<input class="form-control" type="number" name="motoCubic"
@@ -692,7 +696,8 @@
 														<br /> <a href='../admin.php' class="noDecoration">
 															<button id="cancelProductButton"
 																class="btn btn-primary btn-xl text-uppercase"
-																title="Cancelar el alta de producto y volver al men&uacute; de Administrador">Cancelar</button>
+																title="Cancelar el alta de producto y volver al men&uacute; de Administrador"
+																type="button">Cancelar</button>
 														</a>
 														<button id="addProductButton"
 															class="btn btn-primary btn-xl text-uppercase" name="newProductButton"

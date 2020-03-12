@@ -88,7 +88,7 @@
 		}
 		
 		/**
-		 * 
+		 * Dependiendo de la categoría seleccionada hay que convertir un tipo de producto u otro
 		 */
 		public function newProduct() {
 			if (null != $_POST['productCategory'] && 0 != strcasecmp("", trim($_POST['productCategory']))) {
@@ -97,12 +97,16 @@
 					switch ($_POST['productCategory']) {
 						case 1:
 							$id = $this->addNewProduct($this->marshallProduct(self::CATEGORY_BIKE), $userId);
+							// Añadir nueva bicicleta
+							$this->addNewBike($this->marshallBike($id), $userId);
 							break;
 						case 2: 
 							$id = $this->addNewProduct($this->marshallProduct(self::CATEGORY_MOTO), $userId);
+							$this->addNewMoto($this->marshallMoto($id), $userId);
 							break;
 						case 3:
 							$id = $this->addNewProduct($this->marshallProduct(self::CATEGORY_EQUIPMENT), $userId);
+							$this->addNewEquipment($this->marshallEquipment($id), $userId);
 							break;
 						case 4:
 							$id = $this->addNewProduct($this->marshallProduct(self::CATEGORY_ACCESORY), $userId);
@@ -114,6 +118,38 @@
 					}
 				}
 			}
+		}
+
+		/**
+		 * @param BikeDto $bike
+		 * @param int $userId
+		 */
+		private function addNewBike(BikeDto $bike, int $userId) : void {
+			
+		}
+		
+		/**
+		 * @param MotoDto $moto
+		 * @param int $userId
+		 */
+		private function addNewMoto(MotoDto $moto, int $userId) : void {
+			
+		}
+		
+		/**
+		 * @param EquipmentDto $equipment
+		 * @param int $userId
+		 */
+		private function addNewEquipment(EquipmentDto $equipment, int $userId) : void {
+			
+		}
+		
+		/**
+		 * @param AccesoryDto $accesory
+		 * @param int $userId
+		 */
+		private function addNewAccesory(AccesoryDto $accesory, int $userId) : void {
+			
 		}
 		
 		/**
@@ -146,6 +182,121 @@
 						
 			return $productDto;
 		}
+
+		/**
+		 * @param int $id
+		 * @return BikeDto
+		 */
+		private function marshallBike(int $id) : BikeDto {
+			$bikeDto = new BikeDto();
+			
+			$bikeDto->setId($id); // Id de la bicicleta, el mismo que el del producto
+			$bikeDto->setType($_POST["bikeKind"]); // Tipo
+			$bikeDto->setSize($_POST["bikeSize"]); // Talla
+			$bikeDto->setGears($_POST["bikeGears"]); // Velocidades
+			$bikeDto->setFrame($_POST["bikeFrame"]); // Cuadro
+			$bikeDto->setFork($_POST["bikeFork"]); // Horquilla
+			$bikeDto->setBrakes($_POST["bikeBrakes"]); // Frenos
+			$bikeDto->setWheels($_POST["bikeWheels"]); // Llantas
+			$bikeDto->setTyres($_POST["bikeTyres"]); // Neumáticos
+			$bikeDto->setSeat($_POST["bikeSeat"]); // Sillín
+			$bikeDto->setHandlebars($_POST["bikeHandlebars"]); // Manillar
+			$bikeDto->setShift($_POST["bikeShift"]); // Sistema de cambio
+			$bikeDto->setDerailleur($_POST["bikeDerailleur"]); // Desviador del cambio
+			$bikeDto->setTwistShifters($_POST["bikeTwistShifters"]); // Mandos del cambio
+			$bikeDto->setSpeedGroupset($_POST["bikeSpeedGroupset"]); // Grupo del cambio
+			$bikeDto->setWeight($_POST["bikeWeight"]); // Peso (kg)
+			$bikeDto->setPedals($_POST["bikePedals"]); // Pedales
+			$bikeDto->setCranks($_POST["bikeCranks"]); // Bielas
+			$bikeDto->setCassette($_POST["bikeCassette"]); // Cassette
+			if (null != $_POST["active"]) {  // Activo en la web
+				if (strcasecmp("on", $_POST["active"]) == 0) {
+					$bikeDto->setActive(1);
+				} else {
+					$bikeDto->setActive(0); // No está activo
+				}
+			} else {
+				$bikeDto->setActive(null);
+			} 
+			
+			return $bikeDto;			
+		}
+		
+		/**
+		 * @param int $id
+		 * @return MotoDto
+		 */
+		private function marshallMoto(int $id) : MotoDto {
+			$motoDto = new MotoDto();
+			
+			$motoDto->setId($id); // Id de la moto, el mismo que el del producto
+			$motoDto->setType($_POST["motoKind"]); // Tipo
+			$motoDto->setNumberPlate($_POST["motoNumberPlate"]); // Matrícula
+			$motoDto->setPower($_POST["motoPower"]); // Potencia
+			$motoDto->setPowerUnit($_POST["motoPowerUnit"]); // Unidad de potencia
+			$motoDto->setCylinderCapacity($_POST["motoCylinderCapacity"]); // Cilindrada
+			$motoDto->setCylinders($_POST["motoCylinders"]); // Número de cilindros
+			$motoDto->setGears($_POST["motoGears"]); // Número de marchas
+			$motoDto->setFrontBrake($_POST["motoFrontBrake"]); // Freno delantero
+			$motoDto->setRearBrake($_POST["motoRearBrake"]); // Freno trasero
+			$motoDto->setKilometers($_POST["motoKilometers"]); // Kilómetros
+			$motoDto->setLicense($_POST["motoLicense"]); // Permiso de conducir mínimo
+			$motoDto->setPlaces($_POST["motoPlaces"]); // Número de plazas
+			$motoDto->setFuel($_POST["motoFuel"]); // Combustible
+			$motoDto->setContamination($_POST["motoContamination"]); // Distintivo contaminación
+			$motoDto->setTransmission($_POST["motoTransmission"]); // Tipo de transmisión
+			$motoDto->setSecondHand($_POST["motoSecondHand"]); // Segunda mano
+			if (null != $_POST["active"]) {  // Activo en la web
+				if (strcasecmp("on", $_POST["active"]) == 0) {
+					$motoDto->setActive(1);
+				} else {
+					$motoDto->setActive(0); // No está activo
+				}
+			} else {
+				$motoDto->setActive(null);
+			} 
+			
+			return $motoDto;
+		}
+		
+		/**
+		 * @param int $id
+		 * @return EquipmentDto
+		 */
+		private function marshallEquipment(int $id) : EquipmentDto {
+			$equipmentDto = new EquipmentDto();
+			
+			$equipmentDto->setId($id); // Id de la equipación, el mismo que el del producto
+			if (null != $_POST["equipmentKind"] && 0 != strcasecmp("", trim($_POST['equipmentKind']))) {
+				switch ($_POST["equipmentKind"]) {
+					case 1: 
+						$equipmentDto->setType($_POST["bikeEquipmentSubType"]); // Equipamiento de bicicleta
+						break;
+					case 2: 
+						$equipmentDto->setType($_POST["motoEquipmentSubType"]); // Equipamiento de moto
+						break;
+					case 3: 
+						$equipmentDto->setType($_POST["otherEquipmentSubType"]); // Equipamiento de otros
+						break;
+					default:
+						break;
+				}
+			}
+			$equipmentDto->setGender($_POST["equipmentGender"]); // Género
+			$equipmentDto->setSize($_POST["equipmentSize"]); // Talla
+			if (null != $_POST["active"]) {  // Activo en la web
+				if (strcasecmp("on", $_POST["active"]) == 0) {
+					$equipmentDto->setActive(1);
+				} else {
+					$equipmentDto->setActive(0); // No está activo
+				}
+			} else {
+				$equipmentDto->setActive(null);
+			} 
+			
+			return $equipmentDto;
+		}
+		
 		
 		/**
 		 * Inserta un nuevo producto en Base de Datos
@@ -225,8 +376,8 @@
 					}
 				}
 			
-			// Guardar la nueva línea en el caso de que haya cambiado la categoría.
-		    
+				// Guardar la nueva línea en el caso de que haya cambiado la categoría.
+		    	
 			}
 		}
 		

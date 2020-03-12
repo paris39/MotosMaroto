@@ -286,9 +286,7 @@
 		 */
 		public function newProduct(Product $product, int $userId) : int {
 			$id = $this->save($product, $userId);
-			
-			// Añadir categoría/subcategoría
-			
+
 			return $id;
 		}
 		

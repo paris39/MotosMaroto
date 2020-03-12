@@ -412,6 +412,18 @@
 															</select>
 														</div>
 														<div class="form-group">
+															<span>Velocidades:</span>
+<?php 
+    // Cuadro
+                                                            if (null != $bikeAux) {
+                                                                echo '<input class="form-control" type="text" name="bikeFrame" title="Velocidades de la bicicleta"
+																    id="bikeGears" placeholder="Velocidades" value="' . $bikeAux->getGears() . '" />';
+                                                            } else {
+                                                                echo '<input class="form-control" type="text" name="bikeGears" id="bikeGears" placeholder="Velocidades" title="Velocidades de la bicicleta />';
+                                                            }
+?>
+														</div>
+														<div class="form-group">
 															<span>Cuadro:</span>
 <?php 
     // Cuadro
@@ -994,7 +1006,8 @@
 														<a href='./listProducts.php' class="noDecoration">
 															<button id="cancelProductButton"
 																class="btn btn-primary btn-xl text-uppercase"
-																title="Cancelar el alta de producto y volver al men&uacute; de Administrador">Cancelar</button>
+																title="Cancelar el alta de producto y volver al men&uacute; de Administrador"
+																type="button">Cancelar</button>
 														</a>
 														<button id="modifyProductButton"
 															class="btn btn-primary btn-xl text-uppercase" name="modifyProductButton"
