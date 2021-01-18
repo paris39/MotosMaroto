@@ -38,6 +38,8 @@
 			//$link = mysqli_connect($host, $user, $pass, $database, $port, null);
 			$this->setConnection($link);
 			
+			//mysqli_query($link, "SET NAMES 'utf8mb4'");
+			
 			//mysqli_query($link, $query);
 		}
 		

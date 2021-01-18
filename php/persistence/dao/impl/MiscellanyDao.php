@@ -156,7 +156,6 @@
 			$colorAux->setName(utf8_encode($row['name']));
 			$colorAux->setOriginalName(utf8_encode($row['original_name']));
 			
-			
 			return $colorAux;
 		}
 		
@@ -171,7 +170,6 @@
 			$genderAux->setName(utf8_encode($row['name']));
 			$genderAux->setActive($row['active']);
 			
-			
 			return $genderAux;
 		}
 		
@@ -185,6 +183,7 @@
 		    $userAux->setId($row['id']);
 		    $userAux->setNick(utf8_encode($row['nick']));
 		    $userAux->setName(utf8_encode($row['name']));
+		    error_log("Nombre: " .  $userAux->getName());
 		    $userAux->setSurname(utf8_encode($row['surname']));
 		    $userAux->setPassword(utf8_encode($row['password']));
 		    $userAux->setActive($row['active']);

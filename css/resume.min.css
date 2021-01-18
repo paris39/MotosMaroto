@@ -367,6 +367,7 @@ section#admin .resume-item .resume-content .tabcontainer .tabcontent .jQueryResu
 }
 
 .resume-item .resume-content .tabcontainer .tabcontent .order {
+	display: none;
 	float: right;
 	font-size: 12px;
 }
@@ -391,6 +392,7 @@ section#admin .resume-item .resume-content .tabcontainer .tabcontent .jQueryResu
 .resume-item .resume-content .tabcontainer .tabcontent .formDiv .categoriesFilter .categoriesFilters
 	{
 	color: black;
+	display: none;
 }
 
 .resume-item .resume-content .tabcontainer .tabcontent .formDiv .categoriesFilter .categoriesFilters span
@@ -407,7 +409,7 @@ section#admin .resume-item .resume-content .tabcontainer .tabcontent .jQueryResu
 .resume-item .resume-content .tabcontainer .tabcontent .formDiv .categoriesFilter .categoriesFilters .childFilter input
 	{
 	color: red;
-	margin-left: 30px;
+	margin-left: 20px;
 	margin-right: 10px;
 }
 
@@ -447,19 +449,24 @@ section#admin .resume-item .resume-content .tabcontainer .tabcontent .jQueryResu
 /* RESULTADO INDIVIDUAL */
 .resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result
 	{
+	/*background-color: #f1f1f1;*/
+	background: linear-gradient(to bottom, #f1f1f1, white 45%, #f1f1f1);
+	border-left-color: black;
+	border-left-style: inset;
+	border-left-width: thin;
 	float: left;
 	position: relative;
-	text-align: center;
+	text-align: left;
 	/* width: 190px!important; */
 	height: auto;
+	margin-bottom: 20px;
+	margin-right: 20px;
 	width: 100%;
 }
 
 .resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultImage
 	{
 	float: left;
-	height: 100%;
-	width: 100%;
 }
 
 .resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultImage img
@@ -471,21 +478,47 @@ section#admin .resume-item .resume-content .tabcontainer .tabcontent .jQueryResu
 .resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultTitle
 	{
 	color: black;
+	font-weight: bold;
+	margin-left: 5px;
+}
+
+.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultSubtitle
+	{
+	margin-left: 5px;
+}
+
+.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultOldPrice {
+	font-size: 11px;
+	text-align: right;
+	text-decoration: line-through;
+	vertical-align: middle;
 }
 
 .resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultPrice
 	{
 	color: red;
-	text-align: center;
+	font-weight: bold;
+	text-align: right;
 }
 
 .resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultTitle,
-	.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultSubtitle,
-	.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultPrice
-	{
+	.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultSubtitle {
 	float: left;
 	font-size: 13px;
-	width: 100%;
+	width: 58%;
+}
+
+.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultPrices {
+	float: right;
+	font-size: 13px;
+	margin-right: 10px;
+	width: 60%;
+}
+
+.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultPrices .resultPrice,
+.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultPrices .resultOldPrice {
+	float: right;
+	min-width: 40%;
 }
 
 .resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .pages
@@ -544,36 +577,55 @@ to {
 @media ( min-width : 410px) {
 	.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result
 		{
-		width: 380px !important;
+		/*width: 380px !important;*/
+		width: 100%;
 	}
 	.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultImage
 		{
 		clear: none;
+		float: left;
 		height: 80px;
 		width: 125px;
 	}
 	.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultTitle,
-		.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultSubtitle,
-		.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultPrice
-		{
+		.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultSubtitle {
+		float: left;
 		font-size: 13px;
-		width: 210px;
+		max-width: 250px;
+		min-width: 220px;
 	}
+	
+	.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultPrices	{
+		float: right;
+		font-size: 13px;
+		min-width: 210px;
+		max-width: 240px;
+	}
+
+	.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultPrices .resultPrice,
+		.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultPrices .resultOldPrice {
+		float: right;
+		min-width: 35%;
+		text-align: right;
+	}
+	
+	.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultPrices .resultOldPrice {
+		font-size: 12px;
+	}
+	
 	.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultTitle,
 		.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultSubtitle
 		{
 		text-align: left;
 	}
-	.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultPrice
-		{
-		text-align: center;
-	}
+
 }
 
 @media ( min-width : 450px) {
 	.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result
 		{
-		width: 360px !important;
+		/*width: 360px !important;*/
+		width: 100%;
 	}
 	.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultImage
 		{
@@ -582,21 +634,32 @@ to {
 		width: 125px;
 	}
 	.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultTitle,
-		.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultSubtitle,
-		.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultPrice
-		{
-		font-size: 14px;
-		width: 225px;
-	}
-	.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultTitle,
 		.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultSubtitle
 		{
+		float: left;
+		font-size: 14px;
+		min-width: 240px;
 		text-align: left;
 	}
-	.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultPrice
-		{
-		text-align: center;
+	
+	.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultPrices	{
+		float: right;
+		font-size: 14px;
+		min-width: 225px;
+		max-width: 255px;
 	}
+	
+	.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultPrices .resultPrice,
+		.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultPrices .resultOldPrice {
+		float: right;
+		min-width: 35%;
+		text-align: right;
+	}
+	
+	#barraaceptacion {
+		height: 75px !important;
+	}
+
 }
 
 @media ( min-width : 630px) {
@@ -623,7 +686,7 @@ to {
 	.resume-item .resume-content .tabcontainer .tabcontent .formDiv .categoriesFilter
 		{
 		border-radius: .25rem;
-		width: 180px;
+		width: 225px;
 	}
 	.resume-item .resume-content .tabcontainer .tabcontent .formDiv .categoriesFilter #minFilterBikes,
 		.resume-item .resume-content .tabcontainer .tabcontent .formDiv .categoriesFilter #maxFilterBikes
@@ -641,7 +704,7 @@ to {
 	}
 	.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result
 		{
-		width: 360px !important;
+		/*width: 360px !important;*/
 	}
 	.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultImage
 		{
@@ -650,33 +713,55 @@ to {
 		width: 125px;
 	}
 	.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultTitle,
-		.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultSubtitle,
-		.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultPrice
-		{
-		font-size: 14px;
-		width: 225px;
-	}
-	.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultTitle,
 		.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultSubtitle
 		{
+		font-size: 14px;
+		width: 100%;
 		text-align: left;
 	}
+
 	.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultPrice
 		{
-		text-align: center;
+		float: right;
+		text-align: right;
+	}
+	
+	.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultPrices .resultPrice,
+		.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultPrices .resultOldPrice {
+		float: right;
+		min-width: 35%;
+		text-align: right;
 	}
 }
 
 @media ( min-width : 670px) {
 	.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result
 		{
-		width: 380px !important;
+		/*width: 420px !important;*/
 	}
 	.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultTitle,
 		.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultSubtitle
 		{
+		float: left;
 		font-size: 15px;
-		width: 250px;
+		min-width: 250px;
+	}
+	
+	.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultPrices
+		{
+		float: right;
+		text-align: right;
+	}
+	
+	.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultPrices .resultPrice,
+		.resume-item .resume-content .tabcontainer .tabcontent .formDiv .resultContainer .results .result .resultPrices .resultOldPrice {
+		float: right;
+		min-width: 35%;
+	}
+	
+	/* BARRA COOKIES */
+	#barraaceptacion {
+		height: 50px !important;
 	}
 }
 
@@ -849,20 +934,20 @@ section :-ms-input-placeholder {
 /* BARRA COOKIES */
 #barraaceptacion {
 	display: none;
-	position: fixed;
-	left: 0px;
-	right: 0px;
-	bottom: 0px;
-	padding-bottom: 20px;
-	width: 100%;
-	text-align: center;
-	min-height: 40px;
 	background-color: rgba(0, 0, 0, 1);
-	color: #fff;
 	border-top-color: #ced4da;
 	border-top-style: solid;
 	border-top-width: 3px;
 	border-radius: .25rem;
+	bottom: 0px;
+	color: #fff;
+	height: 90px;
+	padding-bottom: 20px;
+	position: fixed;
+	left: 0px;
+	right: 0px;
+	text-align: center;
+	width: 100%;
 	z-index: 99999;
 }
 
@@ -872,7 +957,7 @@ section :-ms-input-placeholder {
 	padding-left: 5px;
 	font-family: verdana;
 	font-size: 12px;
-	top: 30%;
+	top: 10%;
 }
 
 .inner a.ok {

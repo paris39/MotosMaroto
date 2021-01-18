@@ -4,6 +4,7 @@
 	/* Establecer la codificación de caracteres interna a UTF-8 */
 	mb_internal_encoding('UTF-8');
 	mb_http_output('UTF-8');
+	header('Content-Type: text/html; charset=utf-8');
 	
 	// Cerrando sesión
 	if (!isset($_GET ['option']) || $_GET ['option'] == "") {
@@ -22,7 +23,7 @@
 	if (null == $_SESSION || null == $_SESSION ['user'] || $_SESSION ['user'] == "" || "root" != $_SESSION ['user']) { // Usuario no logueado en el sistema
 ?>
     <head>
-		<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+		<meta http-equiv='Content-type' content='text/html; charset=utf-8' />
 		<title>INTRANET - Bicicletas y Motos Maroto</title>
 		<link rel='icon' type='image/x-icon' href='../img/mm_logo.ico' />
 		
@@ -59,7 +60,7 @@
 						<div class="row">
 							<div class="col-lg-12">
 <?php 
-        if (null != $_SESSION && null != $_SESSION ['error_message']) {
+        if (!isset($_SESSION) && null != $_SESSION && null != $_SESSION ['error_message']) {
 								echo '<div class="form-group" id="errorMessage">
 								        <span>' . $_SESSION ['error_message'] . '</span>
                                       </div>';

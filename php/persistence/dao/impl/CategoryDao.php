@@ -60,7 +60,7 @@
 						. "PRODUCT_SUBCATEGORY "
 					. "ORDER BY NAME";
 					
-			$result = mysqli_query($this->connection, $query) or die ("No funciona");
+			$result = mysqli_query($this->connection, $query) or die ("No funciona, listSubcategories()");
 			
 			$subcategoryList = new \ArrayObject();
 			
@@ -83,6 +83,7 @@
 			
 			$categoryAux->setId($row['id']);
 			$categoryAux->setName(utf8_encode($row['name']));
+			$categoryAux->setOriginalName(utf8_encode($row['original_name']));
 			
 			return $categoryAux;
 		}

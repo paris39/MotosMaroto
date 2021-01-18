@@ -12,6 +12,7 @@ namespace php\persistence\entities;
 		private $model;
 		private $description;
 		private $price;
+		private $oldPrice;
 		private $category;
 		private $subcategory;
 		private $stock;
@@ -74,6 +75,14 @@ namespace php\persistence\entities;
 		 */
 		public function getPrice() {
 			return $this->price;
+		}
+		
+		/**
+		 *
+		 * @return mixed
+		 */
+		public function getOldPrice() {
+			return $this->oldPrice;
 		}
 		
 		/**
@@ -178,6 +187,14 @@ namespace php\persistence\entities;
 		 */
 		public function setPrice($price) {
 			$this->price = $price;
+		}
+		
+		/**
+		 *
+		 * @param mixed $oldPrice
+		 */
+		public function setOldPrice($oldPrice) {
+			$this->oldPrice = $oldPrice;
 		}
 		
 		/**

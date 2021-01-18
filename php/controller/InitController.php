@@ -69,7 +69,6 @@
 	use php\persistence\dao\impl\OtherDao;
 	use php\persistence\dao\impl\ProductDao;
 	use php\utility\Utility;
-
 	
 	/**
 	 * @author JPD
@@ -452,6 +451,54 @@
 			return $productDao->listProduct($order, $filters);
 		}
 		
+		/**
+		 * Función que devuelve un listado de productos según su subcategoría
+		 *
+		 * @param int $idSubcategory
+		 * @return \ArrayObject
+		 */
+		public function getProductBySubcategory(int $idSubcategory) : \ArrayObject {
+			$productDao = new ProductDao();
+			
+			return $productDao->getProductBySubcategory($idSubcategory);
+		}
+		
+		/**
+		 * Función que devuelve un listado de tipos de producto según su subcategoría
+		 *
+		 * @param int $idSubcategory
+		 * @return \ArrayObject
+		 */
+		public function getProductTypeBySubcategory(int $idSubcategory) : \ArrayObject {
+			$productDao = new ProductDao();
+			
+			return $productDao->getProductTypeBySubcategory($idSubcategory);
+		}
+		
+		/**
+		 * Función que devuelve un listado de accesorios según su subcategoría
+		 *
+		 * @param int $idSubcategory
+		 * @return \ArrayObject
+		 */
+		public function getAccesoriesBySubcategory(int $idSubcategory) : \ArrayObject {
+			$accesoryDao = new AccesoryDao();
+			
+			return $accesoryDao->listAccesoryTypeByCategory($idSubcategory);
+		}
+		
+		/**
+		 * Función que devuelve un listado de equipaciones según su subcategoría
+		 *
+		 * @param int $idSubcategory
+		 * @return \ArrayObject
+		 */
+		public function getEquipmentsBySubcategory(int $idSubcategory) : \ArrayObject {
+			$equipmentDao = new EquipmentDao();
+			
+			return $equipmentDao->listEquipmentTypeByCategory($idSubcategory);
+		}
+
 	} // End InitController
 	
 	// Control de entrada

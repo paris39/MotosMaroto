@@ -11,6 +11,7 @@
     /* Establecer la codificación de caracteres interna a UTF-8 */
     mb_internal_encoding('UTF-8');
     mb_http_output('UTF-8');
+    header('Content-Type: text/html; charset=utf-8');
     
     // Comprobar Login
     if (null != $_SESSION && null != $_SESSION ['user'] && "" != $_SESSION ['user']) { // Usuario logueado en el sistema
@@ -24,7 +25,7 @@
 <!DOCTYPE html>
 <html lang="es">
 	<head>
-		<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+		<meta http-equiv='Content-type' content='text/html; charset=utf-8' />
 		<title>INTRANET (ADMIN) - Bicicletas y Motos Maroto</title>
 		<link rel='icon' type='image/x-icon' href='../../img/mm_logo.ico' />
 		<script src='../content/js/intranet.js' type='text/javascript'></script>

@@ -9,6 +9,7 @@
 		
 		private $id;
 		private $name;
+		private $originalName;
 		
 		/**
 		 * Constructor de la clase 
@@ -29,6 +30,13 @@
 		public function getName() {
 			return $this->name;
 		}
+		
+		/**
+		 * @return mixed
+		 */
+		public function getOriginalName() {
+			return $this->originalName;
+		}
 	
 		/**
 		 * @param mixed $id
@@ -42,6 +50,13 @@
 		 */
 		public function setName($name) {
 			$this->name = $name;
+		}
+		
+		/**
+		 * @param mixed $originalName
+		 */
+		public function setOriginalName($originalName) {
+			$this->originalName = $originalName;
 		}
 	
 	}
