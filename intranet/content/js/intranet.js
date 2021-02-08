@@ -214,17 +214,17 @@ function addProduct() {
 function findProductByFilters() {
 	// Recorrer campos de búsqueda
 	var params = {
-			"id": document.getElementById("txId").value,
-            "name": document.getElementById("txName").value,
-            "mark": document.getElementById("txMark").value,
-            "productSubcategory": document.getElementById("cbProductCategory").value,
-            "bikeSubType": document.getElementById("cbBikeSubType").value,
-            "motoSubType": document.getElementById("cbMotoSubType").value,
-            "otherSubType": document.getElementById("cbOtherSubType").value,
-            "accesorySubType": document.getElementById("cbAccesorySubType").value,
-            "equipmentSubType": document.getElementById("cbEquipmentSubType").value,
-            "active": document.getElementById("chbActive").checked,
-            "listProduct": true
+		"id": document.getElementById("txId").value,
+		"name": document.getElementById("txName").value,
+		"mark": document.getElementById("txMark").value,
+		"productSubcategory": document.getElementById("cbProductCategory").value,
+		"bikeSubType": document.getElementById("cbBikeSubType").value,
+		"motoSubType": document.getElementById("cbMotoSubType").value,
+		"otherSubType": document.getElementById("cbOtherSubType").value,
+		"accesorySubType": document.getElementById("cbAccesorySubType").value,
+		"equipmentSubType": document.getElementById("cbEquipmentSubType").value,
+		"active": document.getElementById("chbActive").checked,
+		"listProduct": true
     };
 		
 	$.ajax({

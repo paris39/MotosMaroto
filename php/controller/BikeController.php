@@ -2,9 +2,9 @@
 
 	namespace php\controller;
 	
-	$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "\MotosMaroto";
-	require $root.'\php\persistence\dao\impl\BikeDao.php';
-	require "$root\php\persistence\dao\impl\BaseDao.php";
+	$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "/MotosMaroto";
+	require $root . '/php/persistence/dao/impl/BikeDao.php';
+	require $root . '/php/persistence/dao/impl/BaseDao.php';
 	
 	use php\model\BikeDto;
 	use php\persistence\dao\BikeDao;

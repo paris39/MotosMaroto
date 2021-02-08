@@ -5,10 +5,10 @@
 	/* Establecer la codificación de caracteres interna a UTF-8 */
 	mb_internal_encoding('UTF-8');
 	
-	$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "\MotosMaroto";
+	$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "/MotosMaroto";
 	error_log("RooT: " . $root);
-	require $root.'\php\persistence\dao\IOtherDao.php';
-	require $root.'\php\persistence\entities\OtherType.php';
+	require $root.'/php/persistence/dao/IOtherDao.php';
+	require $root.'/php/persistence/entities/OtherType.php';
 	
 	use php\persistence\dao\IOtherDao;
 	use php\persistence\dao\impl\BaseDao;

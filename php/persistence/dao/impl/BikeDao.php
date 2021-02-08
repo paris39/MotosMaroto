@@ -1,16 +1,16 @@
 <?php
 
-namespace php\persistence\dao\Impl;
+namespace php\persistence\dao\impl;
 
 /* Establecer la codificación de caracteres interna a UTF-8 */
 mb_internal_encoding('UTF-8');
 
-$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "\MotosMaroto";
+$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "/MotosMaroto";
 error_log("RooT: " . $root);
-require $root . '\php\persistence\dao\IBikeDao.php';
-require $root . '\php\persistence\entities\Bike.php';
-require $root . '\php\persistence\entities\BikeType.php';
-require $root . '\php\persistence\entities\BikeSize.php';
+require $root . '/php/persistence/dao/IBikeDao.php';
+require $root . '/php/persistence/entities/Bike.php';
+require $root . '/php/persistence/entities/BikeType.php';
+require $root . '/php/persistence/entities/BikeSize.php';
 
 // require $root.'\php\persistence\dao\impl\BaseDao.php';
 

@@ -7,8 +7,8 @@ mb_internal_encoding('UTF-8');
 mb_http_output('UTF-8');
 
 // Carga de combos
-$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "\MotosMaroto";
-require $root . '\php\controller\InitController.php';
+$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "/MotosMaroto";
+require $root . '/php/controller/InitController.php';
 
 use php\controller\InitController;
 use php\form\ProductForm;
@@ -74,8 +74,7 @@ if (null != $_SESSION && null != $_SESSION['user'] && "" != $_SESSION['user']) {
 	</head>
 	<body class="noMargin" style="padding-top: 0px;" id="page-top" onload="findProductByFilters(); openTab(event, 'listProductsTab');" >
 		<div class="container-fluid p-0">
-			<section class="resume-section p-3 p-lg-5 d-flex flex-column"
-				id="admin">
+			<section class="resume-section p-3 p-lg-5 d-flex flex-column" id="admin">
 				<div class="my-auto">
 					<div id="mainTitle" class="mainTitle">
 						<h1 class="mb-0">
@@ -99,20 +98,17 @@ if (null != $_SESSION && null != $_SESSION['user'] && "" != $_SESSION['user']) {
 												<div class="row">
 													<div class="col-md-6">
 														<div class="form-group">
-															<input type="search" class="form-control short" id="txId"
-																name="id" placeholder="ID" onkeyup="findProductByFilters();" />
+															<input type="search" class="form-control short" id="txId" name="id" placeholder="ID" onkeyup="findProductByFilters();" />
 														</div>
 														<div class="form-group">
-															<input type="search" class="form-control" id="txName"
-																name="name" placeholder="Nombre" onkeyup="findProductByFilters();" />
+															<input type="search" class="form-control" id="txName" name="name" placeholder="Nombre" onkeyup="findProductByFilters();" />
 														</div>
 													</div>
 													<div class="col-md-6">
 														<div class="form-group">
 															<div class="form-group noBlock">
 																<!-- span>Categor&iacute;a:</span-->
-																<select name="productCategory"
-																	class="form-control short noBlock" id="cbProductCategory" title="Categor&iacute;a"
+																<select name="productCategory" class="form-control short noBlock" id="cbProductCategory" title="Categor&iacute;a"
 																	onChange="showSubtypeSubCategory(this); findProductByFilters();">
 																	<option value="none">Seleccionar categor&iacute;a...</option>
 <?php
@@ -127,14 +123,13 @@ if (null != $_SESSION && null != $_SESSION['user'] && "" != $_SESSION['user']) {
 															</div>
 															<!-- SUBCATEGORÍAS -->
 															<div class="form-group subtypeCategory exampleSubTypeInline" id="exampleSubType">
-																<select class="form-control short noBlock" name="exampleSubType" id="cbExampleSubType"
-																	title="Subtipo de equipaci&oacute;n">
+																<select class="form-control short noBlock" name="exampleSubType" id="cbExampleSubType" title="Subtipo de equipaci&oacute;n" >
 																	<option value="none">Seleccionar subtipo...</option>
 																</select>
 															</div>
 															<div class="form-group subtypeCategory noBlock" id="bikeSubType">
-																<select name="bikeSubType" class="form-control short noBlock" id="cbBikeSubType"
-																	title="Tipo de bicicleta" onchange="findProductByFilters();">
+																<select name="bikeSubType" class="form-control short noBlock" id="cbBikeSubType" title="Tipo de bicicleta" 
+																	onchange="findProductByFilters();">
 																	<option value="none">Seleccionar tipo...</option>
 <?php
 	// Listado de tipos de bicicletas
@@ -147,8 +142,8 @@ if (null != $_SESSION && null != $_SESSION['user'] && "" != $_SESSION['user']) {
 																</select>
 															</div>
 															<div class="form-group subtypeCategory noBlock" id="motoSubType">
-																<select name="motoSubType" class="form-control short noBlock" id="cbMotoSubType"
-																	title="Tipo de moto" onchange="findProductByFilters();">
+																<select name="motoSubType" class="form-control short noBlock" id="cbMotoSubType" title="Tipo de moto" 
+																	onchange="findProductByFilters();">
 																	<option value="none">Seleccionar tipo...</option>
 <?php
 	// Listado de tipos de motocicletas
@@ -161,8 +156,7 @@ if (null != $_SESSION && null != $_SESSION['user'] && "" != $_SESSION['user']) {
 																</select>
 															</div>
 															<div class="form-group subtypeCategory noBlock" id="otherSubType" onchange="findProductByFilters();">
-																<select name="otherSubType" class="form-control short noBlock" id="cbOtherSubType"
-																	title="Tipo de Otros">
+																<select name="otherSubType" class="form-control short noBlock" id="cbOtherSubType" title="Tipo de Otros (No disponible)" disabled>
 																	<option value="none">Seleccionar tipo...</option>
 <?php
 	// Listado de tipos de otros
@@ -177,8 +171,7 @@ if (null != $_SESSION && null != $_SESSION['user'] && "" != $_SESSION['user']) {
 															<!-- FIN SUBCATEGORÍAS -->
 
 															<div class="form-group subtypeCategory noBlock" id="accesorySubType" onchange="findProductByFilters();">
-																<select class="form-control short noBlock" name="accesorySubType" id="cbAccesorySubType"
-																	title="Subtipo de accesorio">
+																<select class="form-control short noBlock" name="accesorySubType" id="cbAccesorySubType" title="Subtipo de accesorio">
 																	<option value="none">Seleccionar subtipo...</option>
 <?php
 	// Listado de tipos de accesorios
@@ -205,8 +198,8 @@ if (null != $_SESSION && null != $_SESSION['user'] && "" != $_SESSION['user']) {
 															</div>
 
 															<div class="form-group subtypeCategory noBlock" id="equipmentSubType">
-																<select class="form-control short noBlock" name="equipmentSubType" id="cbEquipmentSubType"
-																	title="Subtipo de equipaci&oacute;n" onchange="findProductByFilters();">
+																<select class="form-control short noBlock" name="equipmentSubType" id="cbEquipmentSubType" title="Subtipo de equipaci&oacute;n" 
+																	onchange="findProductByFilters();">
 																	<option value="none">Seleccionar subtipo...</option>
 <?php
 	// Listado de tipos de equipación
@@ -237,8 +230,7 @@ if (null != $_SESSION && null != $_SESSION['user'] && "" != $_SESSION['user']) {
 
 														<div class="form-group">
 															<div class="form-group noBlock">
-																<input type="search" class="form-control short noBlock" id="txMark"
-																	name="mark" placeholder="Marca" onkeyup="findProductByFilters();" />
+																<input type="search" class="form-control short noBlock" id="txMark" name="mark" placeholder="Marca" onkeyup="findProductByFilters();" />
 															</div>
 															<div class="form-group noBlock">
 																<span style="color: black;">S&oacute;lo productos activos: </span> <input type="checkbox" name="active" id="chbActive" checked="checked" onchange="findProductByFilters();" />
@@ -256,9 +248,7 @@ if (null != $_SESSION && null != $_SESSION['user'] && "" != $_SESSION['user']) {
 									<div class="col-lg-12 text-center">
 										<div class="form-group">
 											<a href='../admin.php' class="noDecoration">
-												<button id="returnButton"
-													class="btn btn-primary btn-xl text-uppercase"
-													title="Volver al men&uacute; de Administrador">Volver</button>
+												<button id="returnButton" class="btn btn-primary btn-xl text-uppercase" title="Volver al men&uacute; de Administrador">Volver</button>
 											</a>
 										</div>
 									</div>

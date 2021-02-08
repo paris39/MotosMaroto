@@ -5,15 +5,15 @@ namespace php\persistence\dao\Impl;
 /* Establecer la codificación de caracteres interna a UTF-8 */
 mb_internal_encoding('UTF-8');
 
-$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "\MotosMaroto";
+$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "/MotosMaroto";
 error_log("RooT: " . $root);
-require $root . '\php\persistence\dao\IMotoDao.php';
-require $root . '\php\persistence\entities\Moto.php';
-require $root . '\php\persistence\entities\MotoContamination.php';
-require $root . '\php\persistence\entities\MotoFuel.php';
-require $root . '\php\persistence\entities\MotoLicense.php';
-require $root . '\php\persistence\entities\MotoTransmission.php';
-require $root . '\php\persistence\entities\MotoType.php';
+require $root . '/php/persistence/dao/IMotoDao.php';
+require $root . '/php/persistence/entities/Moto.php';
+require $root . '/php/persistence/entities/MotoContamination.php';
+require $root . '/php/persistence/entities/MotoFuel.php';
+require $root . '/php/persistence/entities/MotoLicense.php';
+require $root . '/php/persistence/entities/MotoTransmission.php';
+require $root . '/php/persistence/entities/MotoType.php';
 
 use php\persistence\dao\IMotoDao;
 use php\persistence\dao\impl\BaseDao;

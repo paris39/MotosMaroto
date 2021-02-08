@@ -2,8 +2,8 @@
     
     namespace intranet\content;
 
-    $root = realpath($_SERVER["DOCUMENT_ROOT"]) . "\MotosMaroto";
-    require $root.'\php\model\UserDto.php';
+    $root = realpath($_SERVER["DOCUMENT_ROOT"]) . "/MotosMaroto";
+    require $root.'/php/model/UserDto.php';
     use php\model\UserDto;
 
     session_start ();

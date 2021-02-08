@@ -5,8 +5,8 @@
 	mb_http_output('UTF-8');
 
 	// Carga de combos
-	$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "\MotosMaroto";
-	require $root . '\php\controller\InitController.php';
+	$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "/MotosMaroto";
+	require $root . '/php/controller/InitController.php';
 
 	use php\controller\InitController;
 	use php\model\AccesoryDto;

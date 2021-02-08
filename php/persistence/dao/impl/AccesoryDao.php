@@ -5,12 +5,12 @@ namespace php\persistence\dao\impl;
 /* Establecer la codificación de caracteres interna a UTF-8 */
 mb_internal_encoding('UTF-8');
 
-$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "\MotosMaroto";
+$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "/MotosMaroto";
 error_log("RooT: " . $root);
-require_once $root . '\php\persistence\dao\IAccesoryDao.php';
-require_once $root . '\php\persistence\entities\Accesory.php';
-require_once $root . '\php\persistence\entities\AccesoryType.php';
-require_once $root . '\php\persistence\dao\impl\BaseDao.php';
+require_once $root . '/php/persistence/dao/IAccesoryDao.php';
+require_once $root . '/php/persistence/entities/Accesory.php';
+require_once $root . '/php/persistence/entities/AccesoryType.php';
+require_once $root . '/php/persistence/dao/impl/BaseDao.php';
 
 use php\persistence\dao\IAccesoryDao;
 use php\persistence\entities\Accesory;

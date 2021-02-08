@@ -5,8 +5,8 @@
 	session_start ();
 	
 	// Carga de combos
-	$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "\MotosMaroto";
-	require $root . '\php\controller\InitController.php';
+	$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "/MotosMaroto";
+	require $root . '/php/controller/InitController.php';
 	
 	use php\controller\InitController;
 	

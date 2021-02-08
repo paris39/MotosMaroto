@@ -5,9 +5,9 @@
 	/* Establecer la codificación de caracteres interna a UTF-8 */
 	mb_internal_encoding('UTF-8');
 	
-	$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "\MotosMaroto";
-	require $root.'\php\persistence\dao\ICategoryDao.php';
-	require $root.'\php\persistence\entities\Category.php';
+	$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "/MotosMaroto";
+	require $root.'/php/persistence/dao/ICategoryDao.php';
+	require $root.'/php/persistence/entities/Category.php';
 	
 	use php\persistence\dao\ICategoryDao;
 	use php\persistence\dao\impl\BaseDao;

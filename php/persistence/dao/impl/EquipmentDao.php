@@ -2,12 +2,12 @@
 
 namespace php\persistence\dao\impl;
 
-$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "\MotosMaroto";
+$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "/MotosMaroto";
 error_log("RooT: " . $root);
-require $root . '\php\persistence\dao\IEquipmentDao.php';
-require $root . '\php\persistence\entities\Equipment.php';
-require $root . '\php\persistence\entities\EquipmentSize.php';
-require $root . '\php\persistence\entities\EquipmentType.php';
+require $root . '/php/persistence/dao/IEquipmentDao.php';
+require $root . '/php/persistence/entities/Equipment.php';
+require $root . '/php/persistence/entities/EquipmentSize.php';
+require $root . '/php/persistence/entities/EquipmentType.php';
 
 use php\persistence\dao\IEquipmentDao;
 use php\persistence\dao\impl\BaseDao;

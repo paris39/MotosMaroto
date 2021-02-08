@@ -2,36 +2,36 @@
 
 namespace php\controller;
 
-$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "\MotosMaroto";
-require_once $root . '\php\config\Config.php';
-require_once $root . '\php\form\ProductForm.php';
-require_once $root . '\php\model\AccesoryDto.php';
-require_once $root . '\php\model\AccesoryTypeDto.php';
-require_once $root . '\php\model\BikeDto.php';
-require_once $root . '\php\model\BikeSizeDto.php';
-require_once $root . '\php\model\BikeTypeDto.php';
-require_once $root . '\php\model\CategoryDto.php';
-require_once $root . '\php\model\ColorDto.php';
-require_once $root . '\php\model\EquipmentDto.php';
-require_once $root . '\php\model\EquipmentSizeDto.php';
-require_once $root . '\php\model\EquipmentTypeDto.php';
-require_once $root . '\php\model\ImageDto.php';
-require_once $root . '\php\model\MotoDto.php';
-require_once $root . '\php\model\MotoContaminationDto.php';
-require_once $root . '\php\model\MotoFuelDto.php';
-require_once $root . '\php\model\MotoLicenseDto.php';
-require_once $root . '\php\model\MotoTransmissionDto.php';
-require_once $root . '\php\model\MotoTypeDto.php';
-require_once $root . '\php\model\ProductDto.php';
-require_once $root . '\php\model\ProductColorDto.php';
-require_once $root . '\php\model\ProductImageDto.php';
-require_once $root . '\php\persistence\dao\impl\BaseDao.php';
-require_once $root . '\php\persistence\dao\impl\AccesoryDao.php';
-require_once $root . '\php\persistence\dao\impl\BikeDao.php';
-require_once $root . '\php\persistence\dao\impl\CategoryDao.php';
-require_once $root . '\php\persistence\dao\impl\MotoDao.php';
-require_once $root . '\php\persistence\dao\impl\ProductDao.php';
-require_once $root . '\php\utility\Utility.php';
+$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "/MotosMaroto";
+require_once $root . '/php/config/Config.php';
+require_once $root . '/php/form/ProductForm.php';
+require_once $root . '/php/model/AccesoryDto.php';
+require_once $root . '/php/model/AccesoryTypeDto.php';
+require_once $root . '/php/model/BikeDto.php';
+require_once $root . '/php/model/BikeSizeDto.php';
+require_once $root . '/php/model/BikeTypeDto.php';
+require_once $root . '/php/model/CategoryDto.php';
+require_once $root . '/php/model/ColorDto.php';
+require_once $root . '/php/model/EquipmentDto.php';
+require_once $root . '/php/model/EquipmentSizeDto.php';
+require_once $root . '/php/model/EquipmentTypeDto.php';
+require_once $root . '/php/model/ImageDto.php';
+require_once $root . '/php/model/MotoDto.php';
+require_once $root . '/php/model/MotoContaminationDto.php';
+require_once $root . '/php/model/MotoFuelDto.php';
+require_once $root . '/php/model/MotoLicenseDto.php';
+require_once $root . '/php/model/MotoTransmissionDto.php';
+require_once $root . '/php/model/MotoTypeDto.php';
+require_once $root . '/php/model/ProductDto.php';
+require_once $root . '/php/model/ProductColorDto.php';
+require_once $root . '/php/model/ProductImageDto.php';
+require_once $root . '/php/persistence/dao/impl/BaseDao.php';
+require_once $root . '/php/persistence/dao/impl/AccesoryDao.php';
+require_once $root . '/php/persistence/dao/impl/BikeDao.php';
+require_once $root . '/php/persistence/dao/impl/CategoryDao.php';
+require_once $root . '/php/persistence/dao/impl/MotoDao.php';
+require_once $root . '/php/persistence/dao/impl/ProductDao.php';
+require_once $root . '/php/utility/Utility.php';
 
 use php\form\ProductForm;
 use php\model\AccesoryDto;
@@ -60,7 +60,6 @@ use php\persistence\dao\impl\EquipmentDao;
 use php\persistence\dao\impl\MotoDao;
 use php\persistence\dao\impl\ProductDao;
 use php\utility\Utility;
-
 
 /**
  *
@@ -888,16 +887,16 @@ class ProductController {
 		echo '<table class="table">' . "\n";
 		echo '	<tr>' . "\n";
 		echo '		<th style="width: 5%;" title="ID del producto">ID</th>' . "\n";
-		echo '		<th style="width: 15%;" title="Nombre del producto">Nombre</th>' . "\n";
+		echo '		<th style="width: 16%;" title="Nombre del producto">Nombre</th>' . "\n";
 		echo '		<th style="width: 11%;" title="Marca del producto">Marca</th>' . "\n";
-		echo '		<th style="width: 11%;" title="Modelo del producto">Modelo</th>' . "\n";
+		echo '		<th style="width: 13%;" title="Modelo del producto">Modelo</th>' . "\n";
 		echo '		<th style="width: 10%;" title="Categor&iacute;a del producto">Categor&iacute;a</th>' . "\n";
 		echo '		<th style="width: 10%;" title="Tipo de producto">Tipo</th>' . "\n";
 		echo '		<th style="width: 11%;" title="Subtipo de producto">Subtipo</th>' . "\n";
-		echo '		<th style="width: 6%;" title="Existencias del producto">Stock</th>' . "\n";
-		echo '		<th style="width: 10%;" title="Precio del producto">Precio</th>' . "\n";
-		echo '		<th style="width: 5%;" title="Activo">Activo</th>' . "\n";
-		echo '		<th style="width: 6%;" colspan="2" title="Acciones sobre el producto">Acciones</th>' . "\n";
+		echo '		<th style="width: 4%;" title="Existencias del producto">Stock</th>' . "\n";
+		echo '		<th style="width: 12%;" title="Precio del producto">Precio</th>' . "\n";
+		echo '		<th style="width: 4%;" title="Activo">Activo</th>' . "\n";
+		echo '		<th style="width: 4%;" colspan="2" title="Acciones sobre el producto">Acciones</th>' . "\n";
 		echo '	</tr>' . "\n";
 
 		// Listado de productos
@@ -935,13 +934,13 @@ class ProductController {
 				echo '		<td class="action">' . "\n";
 				echo '			<div class="adminImg">' . "\n";
 				echo '				<a href="./modifyProduct.php?productId=' . $productAux->getId() . '">' . "\n";
-				echo '					<img src="../img/modify.png" title="Modificar producto" />' . "\n";
+				echo '					<img src="../img/modify.png" title="Modificar producto id=\'' . $productAux->getId() . '\'" />' . "\n";
 				echo '				</a>' . "\n";
 				echo '			</div>' . "\n";
 				echo '		</td>' . "\n";
 				echo '		<td class="action">' . "\n";
 				echo '			<div class="adminImg">' . "\n";
-				echo '				<img src="../img/delete.png" title="Eliminar producto" />' . "\n";
+				echo '				<img src="../img/delete.png" title="Eliminar producto id=\'' . $productAux->getId() . '\'" />' . "\n";
 				echo '			</div>' . "\n";
 				echo '		</td>' . "\n";
 			}
@@ -980,8 +979,9 @@ if (isset($_GET['productId'])) {
 	$filters->setName(trim($_POST['name']));
 	$filters->setMark(trim($_POST['mark']));
 	$filters->setActive(trim($_POST['active']));
-	$filters->setProductSubcategory($_POST['productSubcategory']);
+	$filters->setProductCategory($_POST['productSubcategory']);
 	$filters->setBikeSubType($_POST['bikeSubType']);
+	$filters->setMotoSubType($_POST['motoSubType']);
 	$filters->setOtherSubType($_POST['otherSubType']);
 	$filters->setAccesorySubType($_POST['accesorySubType']);
 	$filters->setEquipmentSubType($_POST['equipmentSubType']);

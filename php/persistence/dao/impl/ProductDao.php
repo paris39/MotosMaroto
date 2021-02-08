@@ -5,15 +5,15 @@ namespace php\persistence\dao\impl;
 /* Establecer la codificación de caracteres interna a UTF-8 */
 mb_internal_encoding('UTF-8');
 
-$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "\MotosMaroto";
-require $root . '\php\persistence\dao\IProductDao.php';
-require_once $root . '\php\persistence\entities\Color.php';
-require_once $root . '\php\persistence\entities\Image.php';
-require_once $root . '\php\persistence\entities\AccesoryType.php';
-require_once $root . '\php\persistence\entities\EquipmentType.php';
-require_once $root . '\php\persistence\entities\Product.php';
-require_once $root . '\php\persistence\entities\ProductColor.php';
-require_once $root . '\php\persistence\entities\ProductImage.php';
+$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "/MotosMaroto";
+require $root . '/php/persistence/dao/IProductDao.php';
+require_once $root . '/php/persistence/entities/Color.php';
+require_once $root . '/php/persistence/entities/Image.php';
+require_once $root . '/php/persistence/entities/AccesoryType.php';
+require_once $root . '/php/persistence/entities/EquipmentType.php';
+require_once $root . '/php/persistence/entities/Product.php';
+require_once $root . '/php/persistence/entities/ProductColor.php';
+require_once $root . '/php/persistence/entities/ProductImage.php';
 
 use php\form\ProductForm;
 use php\persistence\dao\IProductDao;
@@ -204,15 +204,15 @@ class ProductDao extends BaseDao implements IProductDao {
 		// Conexión de la base de datos
 		$this->getConnection();
 
-		$conditions = $this->getConditions($filters);
-		if (! empty(trim($conditions))) {
-			error_log("Condiciones de búsqueda: " . $conditions);
+		$arrayResult = $this->getConditions($filters);
+		if (! empty($arrayResult)) {
+			error_log("Condiciones de búsqueda: " . $arrayResult[0] . " " . $arrayResult[1]);
 		}
 
 		// SELECT
 		$query = "SELECT " . "PT.ID AS 'PT.ID', " . "PT.NAME AS 'PT.NAME', " . "PT.MARK AS 'PT.MARK', " . "PT.MODEL AS 'PT.MODEL', " . "PT.DESCRIPTION AS 'PT.DESCRIPTION', " . "PT.OBSERVATIONS AS 'PT.OBSERVATIONS', " . "PC.ID AS 'PC.ID', " . "PC.NAME AS 'PC.NAME', " . "PS.ID AS 'PS.ID', " . "PS.NAME AS 'PS.NAME', " . "PT.STOCK AS 'PT.STOCK', " . "PT.PRICE AS 'PT.PRICE', " . "PT.OLD_PRICE AS 'PT.OLD_PRICE', " . "PT.RENT AS 'PT.RENT', " . "PT.ACTIVE AS 'PT.ACTIVE' ";
-		$query .= "FROM " . "PRODUCT PT, " . "PRODUCT_CATEGORY PC, " . "PRODUCT_SUBCATEGORY PS ";
-		$query .= "WHERE " . "PC.ID = PT.CATEGORY " . "AND PS.ID = PT.SUBCATEGORY " . $conditions . "ORDER BY " . "PT.ID ASC ";
+		$query .= "FROM " . "PRODUCT PT, " . "PRODUCT_CATEGORY PC, " . "PRODUCT_SUBCATEGORY PS " . $arrayResult[0];
+		$query .= "WHERE " . "PC.ID = PT.CATEGORY " . "AND PS.ID = PT.SUBCATEGORY " . $arrayResult[1] . "ORDER BY " . "PT.ID ASC ";
 		
 		error_log($query);
 		$result = mysqli_query($this->connection, $query) or die("No funciona - listProduct");
@@ -403,7 +403,8 @@ class ProductDao extends BaseDao implements IProductDao {
 	 * @param ProductForm $filters
 	 * @return string
 	 */
-	private function getConditions (ProductForm $filters): string {
+	private function getConditions (ProductForm $filters): array {
+		$tables = " ";
 		$conditions = " ";
 
 		if (! empty($filters->getId())) {
@@ -422,22 +423,26 @@ class ProductDao extends BaseDao implements IProductDao {
 			switch ($filters->getProductCategory()) {
 				case self::BIKE:
 					if (! empty($filters->getBikeSubType()) && 0 != strcasecmp("none", $filters->getBikeSubType())) {
-						$conditions .= "AND PT.SUBCATEGORY = " . $filters->getBikeSubType() . " ";
+						$tables .= ", BIKE BIKE "; 
+						$conditions .= "AND BIKE.ID = PT.ID AND BIKE.TYPE = " . $filters->getBikeSubType() . " ";
 					}
 					break;
 				case self::MOTO:
 					if (! empty($filters->getMotoSubType()) && 0 != strcasecmp("none", $filters->getMotoSubType())) {
-						$conditions .= "AND PT.SUBCATEGORY = " . $filters->getMotoSubType() . " ";
+						$tables .= ", MOTO MOTO "; 
+						$conditions .= "AND MOTO.ID = PT.ID AND MOTO.TYPE = " . $filters->getMotoSubType() . " ";
 					}
 					break;
 				case self::EQUIPMENT:
 					if (! empty($filters->getEquipmentSubType()) && 0 != strcasecmp("none", $filters->getEquipmentSubType())) {
-						$conditions .= "AND PT.SUBCATEGORY = " . $filters->getEquipmentSubType() . " ";
+						$tables .= ", EQUIPMENT EQUIPMENT "; 
+						$conditions .= "AND EQUIPMENT.ID = PT.ID AND EQUIPMENT.TYPE = " . $filters->getEquipmentSubType() . " ";
 					}
 					break;
 				case self::ACCESORY:
 					if (! empty($filters->getAccesorySubType()) && 0 != strcasecmp("none", $filters->getAccesorySubType())) {
-						$conditions .= "AND PT.SUBCATEGORY = " . $filters->getAccesorySubType() . " ";
+						$tables .= ", ACCESORY ACCESORY "; 
+						$conditions .= "AND ACCESORY.ID = PT.ID AND ACCESORY.TYPE = " . $filters->getAccesorySubType() . " ";
 					}
 					break;
 				case self::OTHER:
@@ -453,7 +458,7 @@ class ProductDao extends BaseDao implements IProductDao {
 			}
 		}
 
-		return $conditions;
+		return array ($tables, $conditions);
 	}
 }
 

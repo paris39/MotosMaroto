@@ -5,11 +5,11 @@
 	/* Establecer la codificación de caracteres interna a UTF-8 */
 	mb_internal_encoding('UTF-8');
 	
-	$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "\MotosMaroto";
-	require_once "$root\php\persistence\dao\IMiscellanyDao.php";
-	require_once $root.'\php\persistence\entities\Color.php';
-	require_once $root.'\php\persistence\entities\Gender.php';
-	require_once $root.'\php\persistence\entities\User.php';
+	$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "/MotosMaroto";
+	require_once $root . '/php/persistence/dao/IMiscellanyDao.php';
+	require_once $root . '/php/persistence/entities/Color.php';
+	require_once $root . '/php/persistence/entities/Gender.php';
+	require_once $root . '/php/persistence/entities/User.php';
 	
 	use php\persistence\entities\Color;
 	use php\persistence\entities\Gender;

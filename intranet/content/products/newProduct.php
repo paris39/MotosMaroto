@@ -8,10 +8,10 @@
  	mb_http_output('UTF-8');
 	
 	// Carga de combos
- 	$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "\MotosMaroto";
- 	require_once $root . '\php\controller\InitController.php';
- 	require_once $root . '\php\controller\ProductController.php';
-	require_once $root . '\php\model\ProductDto.php';
+ 	$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "/MotosMaroto";
+ 	require_once $root . '/php/controller/InitController.php';
+ 	require_once $root . '/php/controller/ProductController.php';
+	require_once $root . '/php/model/ProductDto.php';
 	
 	use php\controller\InitController;
 	use php\model\AccesoryTypeDto;
