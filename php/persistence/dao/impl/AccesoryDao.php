@@ -39,7 +39,10 @@ class AccesoryDao extends BaseDao implements IAccesoryDao {
 		$this->getConnection();
 
 		// SELECT
-		$query = "SELECT " . "AC.ID AS 'AC.ID', " . "AT.ID AS 'AT.ID', " . "AT.NAME AS 'AT.NAME', " . "PS.ID AS 'PS.ID', " . "PS.NAME AS 'PS.NAME', " . "AC.SIZE AS 'AC.SIZE', " . "AC.ACTIVE AS 'AC.ACTIVE', " . "AC.OBSERVATION_ACTIVE AS 'AC.OBSERVATION_ACTIVE' " . "FROM " . "ACCESORY AC, " . "ACCESORY_TYPE AT, " . "PRODUCT_SUBCATEGORY PS " . "WHERE " . "AC.ID = " . $id . " " . "AND AT.ID = AC.TYPE " . "AND PS.ID = AT.CATEGORY ";
+		$query = "SELECT ";
+		$query .= "AC.ID AS 'AC.ID', " . "AT.ID AS 'AT.ID', " . "AT.NAME AS 'AT.NAME', " . "PS.ID AS 'PS.ID', " . "PS.NAME AS 'PS.NAME', " . "AC.SIZE AS 'AC.SIZE', " . "AC.ACTIVE AS 'AC.ACTIVE', " . "AC.OBSERVATION_ACTIVE AS 'AC.OBSERVATION_ACTIVE' ";
+		$query .= "FROM " . "ACCESORY AC, " . "ACCESORY_TYPE AT, " . "PRODUCT_SUBCATEGORY PS "; 
+		$query .= "WHERE " . "AC.ID = " . $id . " " . "AND AT.ID = AC.TYPE " . "AND PS.ID = AT.CATEGORY ";
 
 		error_log("Consulta a ejecutar (AccesoryDao:getAccesoryById): " . $query, 0);
 		$result = mysqli_query($this->connection, $query) or die("No funciona");

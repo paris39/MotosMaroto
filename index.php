@@ -470,19 +470,43 @@
 							</a>
 						</div>
 						<div class="partner">
-							<a href="https://www.sellesmp.com/es/"> 
+							<a href="https://www.montanabike.com/"> 
+								<img src="./img/logos/logo-montana-bn.jpg" alt="Montana VKT" title="Montana VKT"
+									onmouseover="this.src='./img/logos/logo-montana.png';" onmouseout="this.src='./img/logos/logo-montana-bn.png';" />
+							</a>
+						</div>
+						<div class="partner">
+							<a href="https://www.olmo-bikes.eu/en/"> 
+								<img src="./img/logos/logo-olmo-bn.jpg" alt="Olmo Italia · 1939" title="Olmo Italia · 1939"
+									onmouseover="this.src='./img/logos/logo-olmo.png';" onmouseout="this.src='./img/logos/logo-olmo-bn.png';" />
+							</a>
+						</div>
+						<div class="partner">
+							<a href="https://www.focarinibikes.com/"> 
+								<img src="./img/logos/logo-focarini-bn.jpg" alt="Focarini" title="Focarini"
+									onmouseover="this.src='./img/logos/logo-focarini.png';" onmouseout="this.src='./img/logos/logo-focarini-bn.png';" />
+							</a>
+						</div>
+						<div class="partner">
+							<a href="https://www.bikel.tv/"> 
+								<img src="./img/logos/logo-bikel-bn.jpg" alt="Bikel" title="Bikel"
+									onmouseover="this.src='./img/logos/logo-bikel.png';" onmouseout="this.src='./img/logos/logo-bikel-bn.png';" />
+							</a>
+						</div>
+						<div class="partner">
+							<a href="https://www.sellesmp.com/eu_es/"> 
 								<img src="./img/logos/logo-selle-smp-bn.png" alt="Selle SMP" title="Selle SMP"
 									onmouseover="this.src='./img/logos/logo-selle-smp.png';" onmouseout="this.src='./img/logos/logo-selle-smp-bn.png';" />
 							</a>
 						</div>
 						<div class="partner">
-							<a href="https://www.santinisms.it/"> 
+							<a href="https://www.santinicycling.com/es/"> 
 								<img src="./img/logos/logo-santini-bn.jpg" alt="Santini Maglificio Sportivo" title="Santini Maglificio Sportivo"
 									onmouseover="this.src='./img/logos/logo-santini.jpg';" onmouseout="this.src='./img/logos/logo-santini-bn.jpg';" />
 							</a>
 						</div>
 						<div class="partner">
-							<a href="https://www.evofinance.com/"> 
+							<a href="https://www.evobanco.com/financiacion/"> 
 								<img src="./img/logos/logo-evo-finance-bn.png" alt="EVO Finance" title="EVO Finance"
 									onmouseover="this.src='./img/logos/logo-evo-finance.png';" onmouseout="this.src='./img/logos/logo-evo-finance-bn.png';" />
 							</a>

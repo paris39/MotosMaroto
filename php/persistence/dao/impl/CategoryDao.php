@@ -6,8 +6,8 @@
 	mb_internal_encoding('UTF-8');
 	
 	$root = realpath($_SERVER["DOCUMENT_ROOT"]) . "/MotosMaroto";
-	require $root.'/php/persistence/dao/ICategoryDao.php';
-	require $root.'/php/persistence/entities/Category.php';
+	require $root . '/php/persistence/dao/ICategoryDao.php';
+	require $root . '/php/persistence/entities/Category.php';
 	
 	use php\persistence\dao\ICategoryDao;
 	use php\persistence\dao\impl\BaseDao;
@@ -31,8 +31,9 @@
 					. "FROM "
 						. "PRODUCT_CATEGORY "
 					. "ORDER BY ID"; 
-						
-			$result = mysqli_query($this->connection, $query) or die ("No funciona");
+			
+			error_log("Consulta a ejecutar: " . $query, 0);			
+			$result = mysqli_query($this->connection, $query) or die ("No funciona listCategories()");
 			
 			$categoryList = new \ArrayObject();
 			

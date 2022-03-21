@@ -25,9 +25,9 @@
 			//mysqli_init();
 			
 			$host = "localhost";
-			$user = "root";
-			$pass = "root";
-			$database = "maroto";
+			$user = "motosmar_root";
+			$pass = "Jparis39";
+			$database = "motosmar_maroto";
 			$port = 3306;
 			
 			//$link = new mysqli($host, $user, $pass, $database);
